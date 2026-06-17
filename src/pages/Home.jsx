@@ -1,0 +1,776 @@
+import React, { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
+const highlightedProfiles = [
+  {
+    id: 1,
+    name: "Aishwarya R.",
+    age: 26,
+    height: "5'4\"",
+    religion: "Hindu - Nair",
+    education: "M.Tech",
+    profession: "Software Engineer",
+    location: "Bangalore, KA",
+    image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  },
+  {
+    id: 2,
+    name: "Adithya K.",
+    age: 28,
+    height: "5'11\"",
+    religion: "Hindu - Iyer",
+    education: "MBA",
+    profession: "Product Manager",
+    location: "Chennai, TN",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: false
+  },
+  {
+    id: 3,
+    name: "Meera Joseph",
+    age: 25,
+    height: "5'5\"",
+    religion: "Christian - Syrian Catholic",
+    education: "MD - Pediatrics",
+    profession: "Doctor",
+    location: "Kochi, KL",
+    image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  },
+  {
+    id: 4,
+    name: "Sandeep Singh",
+    age: 29,
+    height: "6'0\"",
+    religion: "Sikh - Jat",
+    education: "B.Tech",
+    profession: "Merchant Navy Officer",
+    location: "Pune, MH",
+    image: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  },
+  {
+    id: 5,
+    name: "Neha Sharma",
+    age: 27,
+    height: "5'6\"",
+    religion: "Hindu - Brahmin",
+    education: "M.S. Data Science",
+    profession: "Data Scientist",
+    location: "Hyderabad, TS",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  },
+  {
+    id: 6,
+    name: "Arjun Reddy",
+    age: 30,
+    height: "6'1\"",
+    religion: "Hindu - Reddy",
+    education: "B.Tech + MS",
+    profession: "Hardware Engineer",
+    location: "Austin, USA",
+    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  },
+  {
+    id: 7,
+    name: "Kavya Madhavan",
+    age: 25,
+    height: "5'3\"",
+    religion: "Hindu - Nair",
+    education: "BFA - Design",
+    profession: "UI/UX Designer",
+    location: "Ernakulam, KL",
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: false
+  },
+  {
+    id: 8,
+    name: "Vikram Malhotra",
+    age: 29,
+    height: "5'10\"",
+    religion: "Hindu - Punjabi",
+    education: "Chartered Accountant",
+    profession: "Finance Manager",
+    location: "Delhi, NCR",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400&h=500",
+    verified: true,
+    premium: true
+  }
+];
+
+export default function Home() {
+  const navigate = useNavigate();
+  const scrollContainerRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, clientWidth } = scrollContainerRef.current;
+      const scrollAmount = clientWidth * 0.75;
+      scrollContainerRef.current.scrollTo({
+        left: direction === 'left' ? scrollLeft - scrollAmount : scrollLeft + scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const [fullName, setFullName] = useState('');
+  const [lookingFor, setLookingFor] = useState('Bride'); // 'Bride' corresponds to Female, 'Groom' to Male
+  const [community, setCommunity] = useState('');
+  const [ageMin, setAgeMin] = useState('21');
+  const [ageMax, setAgeMax] = useState('35');
+  const [ageRange, setAgeRange] = useState('21-35');
+  const [phone, setPhone] = useState('');
+
+  const [location, setLocation] = useState('');
+  const [motherTongue, setMotherTongue] = useState('Hindi');
+  const [caste, setCaste] = useState('Open to all');
+  const [heightRange, setHeightRange] = useState('140-170');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log({ fullName, lookingFor, community, ageMin, ageMax, phone });
+    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, Community: ${community || 'None'}`);
+  };
+
+  const handleQuickSearch = () => {
+    navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
+  };
+
+  return (
+    <div className="w-full flex flex-col">
+      {/* Hero Section */}
+      <section className="relative pt-20 overflow-hidden min-h-[85vh] flex items-center">
+        {/* Hero Background Video */}
+        <div className="absolute inset-0 z-0">
+          {/* Dark Overlay for Text/Nav Contrast */}
+          <div className="absolute inset-0 bg-black/45 z-10"></div>
+          <video 
+            className="w-full h-full object-cover object-top" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+          >
+            <source src="/hero-video.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-20 max-w-container-max mx-auto px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-12 items-center py-12">
+          {/* Left Column: Simplified Heading */}
+          <div className="fade-in">
+            <h1 className="font-display-lg text-4xl md:text-5xl text-white mb-6 leading-tight">
+              Two Souls, <br />
+              <span className="text-heritage-gold">One Beautiful Journey</span>
+            </h1>
+          </div>
+
+          {/* Right Column: Quick Registration Form */}
+          <div className="bg-paper-white p-4 sm:p-5 rounded-xl shadow-lg border border-surface-variant/40 border-t-4 border-t-deep-maroon fade-in w-full max-w-[370px] md:justify-self-end md:translate-x-6 md:-translate-y-8 mx-auto" style={{ animationDelay: '0.2s' }}>
+            <div className="mb-3">
+              <h3 className="font-semibold text-sm text-charcoal-text leading-snug">
+                Find Your Partner From <span className="text-deep-maroon font-bold">5 Lakh+</span> Profiles
+              </h3>
+              <p className="text-[10px] text-soft-gray mt-0.5">
+                100% Free matrimonial services
+              </p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-2.5 text-left">
+              <div className="grid grid-cols-2 gap-2.5">
+                <input 
+                  type="text" 
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2.5 text-[11px] font-body-sm bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon placeholder-soft-gray/60" 
+                  placeholder="Full Name" 
+                  required 
+                />
+                <div className="flex items-center border border-surface-variant rounded-lg bg-white overflow-hidden focus-within:ring-1 focus-within:ring-deep-maroon focus-within:border-deep-maroon">
+                  <div className="flex items-center gap-0.5 px-2 py-1 bg-white select-none border-r border-surface-variant/60 cursor-pointer">
+                    <span className="text-xs">🇮🇳</span>
+                    <span className="text-[10px] text-charcoal-text font-medium ml-0.5">+91</span>
+                    <span className="material-symbols-outlined text-[10px] text-soft-gray leading-none">
+                      keyboard_arrow_down
+                    </span>
+                  </div>
+                  <input 
+                    type="tel" 
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    className="w-full border-none py-1.5 px-2 text-[11px] font-body-sm bg-white text-charcoal-text placeholder-soft-gray/60 focus:ring-0 focus:outline-none" 
+                    placeholder="Mobile Number" 
+                    required 
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  onClick={() => setLookingFor('Groom')}
+                  className={`flex items-center justify-center gap-1 border rounded-lg py-1.5 px-1 text-[10px] cursor-pointer transition-all ${
+                    lookingFor === 'Groom'
+                      ? 'border-deep-maroon text-deep-maroon bg-deep-maroon/5 font-semibold'
+                      : 'border-surface-variant text-soft-gray bg-white hover:bg-slate-50'
+                  }`}
+                >
+                  <span 
+                    className="material-symbols-outlined text-[14px] leading-none"
+                    style={{ fontVariationSettings: lookingFor === 'Groom' ? "'FILL' 1" : "'FILL' 0" }}
+                  >
+                    account_circle
+                  </span>
+                  Male
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLookingFor('Bride')}
+                  className={`flex items-center justify-center gap-1 border rounded-lg py-1.5 px-1 text-[10px] cursor-pointer transition-all ${
+                    lookingFor === 'Bride'
+                      ? 'border-deep-maroon text-deep-maroon bg-deep-maroon/5 font-semibold'
+                      : 'border-surface-variant text-soft-gray bg-white hover:bg-slate-50'
+                  }`}
+                >
+                  <span 
+                    className="material-symbols-outlined text-[14px] leading-none"
+                    style={{ fontVariationSettings: lookingFor === 'Bride' ? "'FILL' 1" : "'FILL' 0" }}
+                  >
+                    account_circle
+                  </span>
+                  Female
+                </button>
+                <select 
+                  value={ageRange}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setAgeRange(val);
+                    const [min, max] = val.split('-');
+                    setAgeMin(min);
+                    setAgeMax(max);
+                  }}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-1.5 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                >
+                  <option value="21-35">Age</option>
+                  <option value="18-22">18 - 22</option>
+                  <option value="21-25">21 - 25</option>
+                  <option value="26-30">26 - 30</option>
+                  <option value="31-35">31 - 35</option>
+                  <option value="36-40">36 - 40</option>
+                  <option value="41-50">41 - 50</option>
+                </select>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <select 
+                  value={community}
+                  onChange={(e) => setCommunity(e.target.value)}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                >
+                  <option value="">Religion</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Christian">Christian</option>
+                  <option value="Muslim">Muslim</option>
+                  <option value="Sikh">Sikh</option>
+                </select>
+                <select 
+                  value={caste}
+                  onChange={(e) => setCaste(e.target.value)}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                >
+                  <option value="Open to all">Caste</option>
+                  <option value="Brahmin">Brahmin</option>
+                  <option value="Maratha">Maratha</option>
+                  <option value="Kshatriya">Kshatriya</option>
+                  <option value="Reddy">Reddy</option>
+                </select>
+              </div>
+
+              <div className="flex items-start gap-1.5 pt-0.5">
+                <input 
+                  type="checkbox" 
+                  id="agreeTerms" 
+                  required 
+                  className="mt-0.5 h-3 w-3 rounded border-surface-variant text-deep-maroon focus:ring-deep-maroon cursor-pointer" 
+                />
+                <label htmlFor="agreeTerms" className="font-body-sm text-[9px] text-soft-gray leading-tight select-none cursor-pointer">
+                  I have read and agree to the <span className="font-semibold text-charcoal-text hover:underline">Terms of Use &amp; Privacy Policy</span>
+                </label>
+              </div>
+
+              <button 
+                type="submit" 
+                className="w-full bg-deep-maroon hover:bg-primary text-white font-semibold py-2 rounded-lg mt-0.5 shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer text-center text-[10px] tracking-wider uppercase"
+              >
+                Register Free
+              </button>
+              
+              <div className="flex justify-center gap-6 mt-2.5 pt-2 border-t border-surface-variant/40">
+                <a href="#support" className="flex items-center gap-1 text-soft-gray hover:text-deep-maroon transition-colors text-[10px] font-body-sm">
+                  <span className="material-symbols-outlined text-[13px] leading-none">support_agent</span>
+                  Support
+                </a>
+                <a href="#chat" className="flex items-center gap-1 text-soft-gray hover:text-deep-maroon transition-colors text-[10px] font-body-sm">
+                  <span className="material-symbols-outlined text-[13px] leading-none">chat</span>
+                  Chat for assistance
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <div className="relative z-30 -mt-8 md:-mt-10 mx-auto w-[calc(100%-32px)] md:w-full max-w-[980px] bg-white py-4 px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-center w-full">
+          
+          {/* Looking For Dropdown */}
+          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
+            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">I'm looking for a</label>
+            <select 
+              value={lookingFor}
+              onChange={(e) => setLookingFor(e.target.value)}
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+            >
+              <option value="Bride">Bride</option>
+              <option value="Groom">Groom</option>
+            </select>
+            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+              keyboard_arrow_down
+            </span>
+          </div>
+
+          {/* Age Range Dropdown */}
+          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
+            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Age Range</label>
+            <select 
+              value={ageRange}
+              onChange={(e) => {
+                const val = e.target.value;
+                setAgeRange(val);
+                const [min, max] = val.split('-');
+                setAgeMin(min);
+                setAgeMax(max);
+              }}
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+            >
+              <option value="18-40">18 - 40</option>
+              <option value="18-25">18 - 25</option>
+              <option value="26-30">26 - 30</option>
+              <option value="31-35">31 - 35</option>
+              <option value="36-40">36 - 40</option>
+            </select>
+            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+              keyboard_arrow_down
+            </span>
+          </div>
+
+          {/* Location Dropdown */}
+          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
+            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Location</label>
+            <select 
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+            >
+              <option value="">Any Location</option>
+              <option value="Bangalore">Bangalore</option>
+              <option value="Chennai">Chennai</option>
+              <option value="Kochi">Kochi</option>
+              <option value="Mumbai">Mumbai</option>
+              <option value="Delhi">Delhi</option>
+              <option value="Hyderabad">Hyderabad</option>
+              <option value="USA">USA</option>
+            </select>
+            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+              keyboard_arrow_down
+            </span>
+          </div>
+
+          {/* Religion Dropdown */}
+          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
+            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Religion</label>
+            <select 
+              value={community}
+              onChange={(e) => setCommunity(e.target.value)}
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+            >
+              <option value="">Select...</option>
+              <option value="Hindu">Hindu</option>
+              <option value="Christian">Christian</option>
+              <option value="Muslim">Muslim</option>
+              <option value="Sikh">Sikh</option>
+            </select>
+            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+              keyboard_arrow_down
+            </span>
+          </div>
+
+          {/* Search Button */}
+          <button 
+            onClick={handleQuickSearch}
+            className="flex items-center justify-center gap-2 bg-deep-maroon text-white font-semibold rounded-lg hover:bg-primary transition-all active:scale-95 cursor-pointer text-sm shrink-0 w-full h-[46px] shadow-md hover:shadow-lg"
+          >
+            <span className="material-symbols-outlined text-[18px]">search</span>
+            Search
+          </button>
+
+        </div>
+      </div>
+
+      {/* Success Stories Section */}
+      <section className="bg-gradient-to-br from-white via-rose-50/25 to-amber-50/15 py-20 relative z-10 border-t border-slate-100/60">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
+            
+            {/* Left Column: Storytelling Copy */}
+            <div className="fade-in text-left">
+              <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
+                SUCCESS STORIES
+              </span>
+              <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mb-6 uppercase tracking-wide leading-tight">
+                Everlasting Tales <br />
+                <span className="text-deep-maroon">Of Trust &amp; Love</span>
+              </h2>
+              <p className="font-body-lg text-sm text-soft-gray mb-6 leading-relaxed">
+                Every couple's journey is a beautiful mosaic of emotions, quiet promises, and unforgettable moments. At <span className="text-deep-maroon font-semibold">Bharath Marriage</span>, we specialize in helping families discover compatibility and deep connections. Whether it's a soft smile exchanged under twilight skies or the joyful tears shared with loved ones, we support you in finding the one who truly completes your story. Our trusted matchmaking approach blends elegance and authenticity, turning your search for a life partner into a safe, heritage-rich experience that lasts a lifetime.
+              </p>
+              <div className="border-l-2 border-heritage-gold pl-4 italic text-xs text-soft-gray/80 mt-6 max-w-md">
+                "The most beautiful relationship is the one that was destined, built on compatibility and trust."
+                <span className="block text-[10px] font-semibold text-charcoal-text mt-1.5 not-italic">— Bharath Matrimony Success</span>
+              </div>
+            </div>
+
+            {/* Right Column: Dynamic Visual Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch w-full">
+              
+              {/* Tall Vertical Card */}
+              <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[420px] hover:shadow-lg transition-shadow duration-300">
+                <div className="relative flex-1 min-h-[300px] sm:min-h-auto overflow-hidden">
+                  <img src="/image1.jpg" className="w-full h-full object-cover" alt="Anjali & Arun" />
+                  <div className="absolute top-4 left-4 bg-deep-maroon text-white text-[10px] font-label-caps font-semibold py-1 px-2.5 rounded-full tracking-wider shadow-md">
+                    Featured Story
+                  </div>
+                </div>
+                <div className="p-4 text-center bg-white border-t border-slate-50 shrink-0">
+                  <h4 className="font-semibold text-deep-maroon text-sm">Anjali &amp; Arun</h4>
+                  <p className="text-[10px] text-soft-gray italic mt-0.5">Matched: Bangalore</p>
+                </div>
+              </div>
+
+              {/* Two Stacked Cards Column */}
+              <div className="flex flex-col gap-6">
+                
+                {/* Horizontal card 2 */}
+                <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[198px] hover:shadow-lg transition-shadow duration-300">
+                  <div className="relative h-[130px] w-full overflow-hidden">
+                    <img src="/image2.jpg" className="w-full h-full object-cover" alt="Dhanya & Midhun" />
+                  </div>
+                  <div className="p-3 text-center bg-white border-t border-slate-50 shrink-0">
+                    <h4 className="font-semibold text-deep-maroon text-xs">Dhanya &amp; Midhun</h4>
+                    <p className="text-[9px] text-soft-gray italic mt-0.5">Matched: Kochi</p>
+                  </div>
+                </div>
+
+                {/* Smaller horizontal card */}
+                <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[198px] hover:shadow-lg transition-shadow duration-300">
+                  <div className="relative h-[130px] w-full overflow-hidden">
+                    <img src="/image3.jpg" className="w-full h-full object-cover" alt="Priya & Rajesh" />
+                  </div>
+                  <div className="p-3 text-center bg-white border-t border-slate-50 shrink-0">
+                    <h4 className="font-semibold text-deep-maroon text-xs">Priya &amp; Rajesh</h4>
+                    <p className="text-[9px] text-soft-gray italic mt-0.5">Matched: Chennai</p>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Highlighted Profiles Section */}
+      <section className="bg-white py-20 relative z-10 border-t border-slate-100">
+        <div className="max-w-container-max mx-auto px-margin-desktop text-center">
+          
+          <div className="mb-12">
+            <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
+              PREMIUM MATCHES
+            </span>
+            <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mb-4 uppercase tracking-wide">
+              Highlighted <span className="text-deep-maroon">Profiles</span>
+            </h2>
+            <p className="font-body-lg text-sm text-soft-gray max-w-xl mx-auto">
+              Explore our most active, verified premium members who are looking for serious commitments.
+            </p>
+          </div>
+
+          <div className="relative group/scroll w-full">
+            {/* Left navigation arrow */}
+            <button 
+              onClick={() => scroll('left')}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
+              aria-label="Scroll Left"
+            >
+              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_left</span>
+            </button>
+
+            <div 
+              ref={scrollContainerRef}
+              className="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
+            >
+              {highlightedProfiles.map((profile) => (
+                <div 
+                  key={profile.id}
+                  className="w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
+                >
+                  {/* Image Section with Overlays */}
+                  <div className="relative h-[175px] w-full overflow-hidden bg-slate-50 shrink-0">
+                    <img 
+                      src={profile.image} 
+                      alt={profile.name} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    
+                    {profile.premium && (
+                      <span className="absolute top-3 right-3 bg-heritage-gold/90 backdrop-blur-xs text-white text-[9px] font-label-caps font-semibold py-0.5 px-2 rounded-full border border-heritage-gold/25 tracking-wider">
+                        PREMIUM
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Profile Details */}
+                  <div className="p-3.5 flex flex-col flex-1">
+                    <div className="flex justify-between items-center mb-1">
+                      <h4 className="font-semibold text-charcoal-text text-sm flex items-center gap-1">
+                        {profile.name}
+                        {profile.verified && (
+                          <span 
+                            className="material-symbols-outlined text-[14px] text-emerald-600 leading-none select-none" 
+                            style={{ fontVariationSettings: "'FILL' 1" }}
+                            title="Verified Profile"
+                          >
+                            verified
+                          </span>
+                        )}
+                        <span className="font-normal text-charcoal-text/80">, {profile.age}</span>
+                      </h4>
+                      <span className="text-[10px] text-soft-gray font-medium">
+                        {profile.height}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-deep-maroon font-semibold mb-2">
+                      {profile.profession}
+                    </p>
+
+                    <div className="space-y-1 text-[11px] text-soft-gray flex-1">
+                      <p className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">menu_book</span>
+                        {profile.religion}
+                      </p>
+                      <p className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">school</span>
+                        {profile.education}
+                      </p>
+                      <p className="flex items-center gap-1">
+                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">location_on</span>
+                        {profile.location}
+                      </p>
+                    </div>
+
+                    {/* Connect CTA Button */}
+                    <button className="w-full mt-3 py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 cursor-pointer">
+                      <span className="material-symbols-outlined text-[14px] leading-none text-white">
+                        favorite
+                      </span>
+                      Connect Now
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Right navigation arrow */}
+            <button 
+              onClick={() => scroll('right')}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
+              aria-label="Scroll Right"
+            >
+              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_right</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      {/* Our Signature Style / Approach Section */}
+      <section className="bg-white py-20 relative z-10 border-t border-slate-100">
+        <div className="max-w-container-max mx-auto px-margin-desktop text-center">
+          
+          <div className="mb-12">
+            <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
+              OUR SIGNATURE APPROACH
+            </span>
+            <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mb-4 uppercase tracking-wide">
+              A Matchmaking Experience <br />
+              <span className="text-deep-maroon">Built on Trust &amp; Tradition</span>
+            </h2>
+            <p className="font-body-lg text-sm text-soft-gray max-w-2xl mx-auto leading-relaxed">
+              At Bharath Marriage, we believe finding a life partner is a sacred milestone. Our approach combines time-tested traditional values with modern verification technology to create a safe, dignified, and highly compatible matchmaking environment for families.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center text-left">
+            
+            {/* Left: Storytelling Text */}
+            <div className="space-y-6">
+              <h3 className="font-display-lg text-2xl text-charcoal-text leading-tight">
+                Emotive Matching &amp; <br />
+                <span className="text-deep-maroon">Curated Compatibility</span>
+              </h3>
+              <p className="font-body-lg text-sm text-soft-gray leading-relaxed">
+                We don't believe in random swipes — we focus on true alignment. Whether it's cultural heritage, professional aspirations, or family backgrounds, we design our match profile insights to help you look beyond the surface. We guide you toward connections that share your values, vision, and lifestyle, ensuring a foundation built for a lifetime.
+              </p>
+              <p className="font-body-lg text-sm text-soft-gray leading-relaxed">
+                Every profile undergoes strict manual and digital verification checks, and we maintain complete privacy controls over your photographs and contact information. Your search remains elegant, confidential, and respected at every single step of the way.
+              </p>
+              <div className="pt-2">
+                <a href="#register" className="inline-flex items-center gap-1.5 bg-deep-maroon hover:bg-primary text-white text-xs font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 active:scale-95">
+                  Begin Your Journey
+                  <span className="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Right: Premium Wedding Photo */}
+            <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300">
+              <img 
+                src="https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&q=80&w=800&h=533" 
+                alt="Traditional Wedding Couple" 
+                className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700"
+              />
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section className="bg-slate-50/40 py-20 relative z-10 border-t border-slate-100/60">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="mb-16 text-center">
+            <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
+              MOMENTS
+            </span>
+            <h2 className="font-display-lg text-3xl md:text-4xl text-deep-maroon mb-4 uppercase tracking-wide">
+              How It Works
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative max-w-5xl mx-auto">
+            {/* Curved Connector Path (Desktop) */}
+            <div className="hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[1px] border-t border-dashed border-deep-maroon/30 z-0"></div>
+
+            {/* Step 1: Register */}
+            <div className="flex flex-col items-center text-center relative z-10 group">
+              {/* Concentric Circles */}
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full bg-deep-maroon/5 animate-pulse"></div>
+                {/* Middle Ring */}
+                <div className="absolute w-20 h-20 rounded-full bg-deep-maroon/10 border border-deep-maroon/5"></div>
+                {/* Inner Core */}
+                <div className="absolute w-14 h-14 rounded-full bg-deep-maroon flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[22px] text-white">person_add</span>
+                </div>
+              </div>
+              <h4 className="font-semibold text-sm text-charcoal-text mb-1 flex items-center gap-1.5">
+                <span className="text-deep-maroon">1.</span> Register
+              </h4>
+              <p className="text-[11px] text-soft-gray leading-tight max-w-[170px]">
+                Sign up and create your profile
+              </p>
+            </div>
+
+            {/* Step 2: Search */}
+            <div className="flex flex-col items-center text-center relative z-10 group">
+              {/* Concentric Circles */}
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full bg-heritage-gold/5 animate-pulse"></div>
+                {/* Middle Ring */}
+                <div className="absolute w-20 h-20 rounded-full bg-heritage-gold/15 border border-heritage-gold/10"></div>
+                {/* Inner Core */}
+                <div className="absolute w-14 h-14 rounded-full bg-heritage-gold flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[22px] text-white">search</span>
+                </div>
+              </div>
+              <h4 className="font-semibold text-sm text-charcoal-text mb-1 flex items-center gap-1.5">
+                <span className="text-heritage-gold">2.</span> Search
+              </h4>
+              <p className="text-[11px] text-soft-gray leading-tight max-w-[170px]">
+                Find your perfect match
+              </p>
+            </div>
+
+            {/* Step 3: Connect */}
+            <div className="flex flex-col items-center text-center relative z-10 group">
+              {/* Concentric Circles */}
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full bg-deep-maroon/5 animate-pulse"></div>
+                {/* Middle Ring */}
+                <div className="absolute w-20 h-20 rounded-full bg-deep-maroon/10 border border-deep-maroon/5"></div>
+                {/* Inner Core */}
+                <div className="absolute w-14 h-14 rounded-full bg-deep-maroon flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[22px] text-white">chat</span>
+                </div>
+              </div>
+              <h4 className="font-semibold text-sm text-charcoal-text mb-1 flex items-center gap-1.5">
+                <span className="text-deep-maroon">3.</span> Connect
+              </h4>
+              <p className="text-[11px] text-soft-gray leading-tight max-w-[170px]">
+                Start conversation with them
+              </p>
+            </div>
+
+            {/* Step 4: Marriage */}
+            <div className="flex flex-col items-center text-center relative z-10 group">
+              {/* Concentric Circles */}
+              <div className="relative w-24 h-24 flex items-center justify-center mb-6">
+                {/* Outer Ring */}
+                <div className="absolute inset-0 rounded-full bg-heritage-gold/5 animate-pulse"></div>
+                {/* Middle Ring */}
+                <div className="absolute w-20 h-20 rounded-full bg-heritage-gold/15 border border-heritage-gold/10"></div>
+                {/* Inner Core */}
+                <div className="absolute w-14 h-14 rounded-full bg-heritage-gold flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
+                  <span className="material-symbols-outlined text-[22px] text-white">celebration</span>
+                </div>
+              </div>
+              <h4 className="font-semibold text-sm text-charcoal-text mb-1 flex items-center gap-1.5">
+                <span className="text-heritage-gold">4.</span> Marriage
+              </h4>
+              <p className="text-[11px] text-soft-gray leading-tight max-w-[170px]">
+                Write your success story
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
