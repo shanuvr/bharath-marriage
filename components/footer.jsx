@@ -3,7 +3,7 @@ import React from 'react';
 export default function Footer() {
   return (
     <footer className="bg-on-background dark:bg-surface-container-lowest w-full py-8 text-white">
-      <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-tertiary-container pt-6">
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter border-t border-tertiary-container pt-6">
         <div className="col-span-1 md:col-span-1">
           <div className="font-headline-lg text-heritage-gold text-lg mb-3">Bharath Marriage</div>
           <p className="text-surface-variant dark:text-soft-gray text-[11px] leading-relaxed mb-4">
@@ -54,7 +54,7 @@ export default function Footer() {
         </div>
       </div>
       
-      <div className="max-w-container-max mx-auto px-margin-desktop mt-8 pt-4 border-t border-tertiary/40 text-center">
+      <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-8 pt-4 border-t border-tertiary/40 text-center">
         <p className="text-surface-variant dark:text-soft-gray text-[10px] opacity-60">
           © 2024 Bharath Marriage. Premium Matrimony Services. All Rights Reserved.
         </p>

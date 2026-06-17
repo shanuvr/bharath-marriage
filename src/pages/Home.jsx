@@ -127,20 +127,32 @@ export default function Home() {
   const [fullName, setFullName] = useState('');
   const [lookingFor, setLookingFor] = useState('Bride'); // 'Bride' corresponds to Female, 'Groom' to Male
   const [community, setCommunity] = useState('');
-  const [ageMin, setAgeMin] = useState('21');
-  const [ageMax, setAgeMax] = useState('35');
-  const [ageRange, setAgeRange] = useState('21-35');
   const [phone, setPhone] = useState('');
 
   const [location, setLocation] = useState('');
   const [motherTongue, setMotherTongue] = useState('Hindi');
-  const [caste, setCaste] = useState('Open to all');
   const [heightRange, setHeightRange] = useState('140-170');
+
+  // Quick Search age states
+  const [ageMin, setAgeMin] = useState('18');
+  const [ageMax, setAgeMax] = useState('40');
+  const [ageRange, setAgeRange] = useState('18-40');
+
+  // Registration Date of Birth states
+  const [dobDay, setDobDay] = useState('');
+  const [dobMonth, setDobMonth] = useState('');
+  const [dobYear, setDobYear] = useState('');
+  const [showDobPicker, setShowDobPicker] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ fullName, lookingFor, community, ageMin, ageMax, phone });
-    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, Community: ${community || 'None'}`);
+    if (!dobDay || !dobMonth || !dobYear) {
+      alert("Please select your Date of Birth");
+      return;
+    }
+    const dobString = `${dobDay} ${dobMonth} ${dobYear}`;
+    console.log({ fullName, lookingFor, community, dob: dobString, phone });
+    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, DOB: ${dobString}, Community: ${community || 'None'}`);
   };
 
   const handleQuickSearch = () => {
@@ -168,27 +180,27 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 max-w-container-max mx-auto px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-12 items-center py-12">
+        <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center py-8 md:py-12">
           {/* Left Column: Simplified Heading */}
           <div className="fade-in">
-            <h1 className="font-display-lg text-4xl md:text-5xl text-white mb-6 leading-tight">
+            <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl text-white mb-4 md:mb-6 leading-tight text-center md:text-left">
               Two Souls, <br />
               <span className="text-heritage-gold">One Beautiful Journey</span>
             </h1>
           </div>
 
           {/* Right Column: Quick Registration Form */}
-          <div className="bg-paper-white p-4 sm:p-5 rounded-xl shadow-lg border border-surface-variant/40 border-t-4 border-t-deep-maroon fade-in w-full max-w-[370px] md:justify-self-end md:translate-x-6 md:-translate-y-8 mx-auto" style={{ animationDelay: '0.2s' }}>
-            <div className="mb-3">
-              <h3 className="font-semibold text-sm text-charcoal-text leading-snug">
+          <div className="bg-paper-white p-3 sm:p-4 md:p-5 rounded-xl shadow-lg border border-surface-variant/40 border-t-4 border-t-deep-maroon fade-in w-full max-w-[290px] sm:max-w-[340px] md:max-w-[370px] md:justify-self-end md:translate-x-6 md:-translate-y-8 mx-auto" style={{ animationDelay: '0.2s' }}>
+            <div className="mb-2 sm:mb-3">
+              <h3 className="font-semibold text-xs sm:text-sm text-charcoal-text leading-snug">
                 Find Your Partner From <span className="text-deep-maroon font-bold">5 Lakh+</span> Profiles
               </h3>
-              <p className="text-[10px] text-soft-gray mt-0.5">
+              <p className="text-[9px] sm:text-[10px] text-soft-gray mt-0.5">
                 100% Free matrimonial services
               </p>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-2.5 text-left">
-              <div className="grid grid-cols-2 gap-2.5">
+            <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-2.5 text-left">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                 <input 
                   type="text" 
                   value={fullName}
@@ -216,7 +228,107 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
+                <select 
+                  value={community}
+                  onChange={(e) => setCommunity(e.target.value)}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                >
+                  <option value="">Religion</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Christian">Christian</option>
+                  <option value="Muslim">Muslim</option>
+                  <option value="Sikh">Sikh</option>
+                </select>
+
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setShowDobPicker(!showDobPicker)}
+                    className={`w-full flex items-center justify-between gap-1 border rounded-lg py-1.5 px-2 text-[10px] bg-white text-charcoal-text hover:bg-slate-50 cursor-pointer h-full min-h-[32px] ${
+                      dobDay && dobMonth && dobYear ? 'border-deep-maroon font-semibold text-deep-maroon' : 'border-surface-variant text-soft-gray'
+                    }`}
+                  >
+                    <span className="flex items-center gap-1 overflow-hidden truncate">
+                      <span className="material-symbols-outlined text-[13px] text-soft-gray">calendar_month</span>
+                      <span className="truncate">
+                        {dobDay && dobMonth && dobYear ? `${dobDay} ${dobMonth} ${dobYear}` : 'DOB'}
+                      </span>
+                    </span>
+                    <span className="material-symbols-outlined text-[12px] text-soft-gray">keyboard_arrow_down</span>
+                  </button>
+                  {showDobPicker && (
+                    <>
+                      <div className="fixed inset-0 z-40" onClick={() => setShowDobPicker(false)}></div>
+                      <div className="absolute right-0 top-full mt-1.5 z-50 bg-white border border-slate-200/80 shadow-xl rounded-xl p-3.5 w-[250px] animate-fade-in text-left">
+                        <div className="text-[11px] font-semibold text-charcoal-text mb-2 flex justify-between items-center">
+                          <span>Select Date of Birth</span>
+                          <button 
+                            type="button" 
+                            onClick={() => setShowDobPicker(false)}
+                            className="text-soft-gray hover:text-charcoal-text text-[10px] font-bold p-1"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                        
+                        <div className="grid grid-cols-3 gap-1.5 mb-3">
+                          {/* Day */}
+                          <select 
+                            value={dobDay} 
+                            onChange={(e) => setDobDay(e.target.value)}
+                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                          >
+                            <option value="">Day</option>
+                            {Array.from({ length: 31 }, (_, i) => i + 1).map(d => (
+                              <option key={d} value={d < 10 ? `0${d}` : `${d}`}>{d}</option>
+                            ))}
+                          </select>
+
+                          {/* Month */}
+                          <select 
+                            value={dobMonth} 
+                            onChange={(e) => setDobMonth(e.target.value)}
+                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                          >
+                            <option value="">Month</option>
+                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
+                              <option key={m} value={m}>{m}</option>
+                            ))}
+                          </select>
+
+                          {/* Year */}
+                          <select 
+                            value={dobYear} 
+                            onChange={(e) => setDobYear(e.target.value)}
+                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                          >
+                            <option value="">Year</option>
+                            {Array.from({ length: 58 }, (_, i) => 2008 - i).map(y => (
+                              <option key={y} value={y}>{y}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            if (dobDay && dobMonth && dobYear) {
+                              setShowDobPicker(false);
+                            }
+                          }}
+                          disabled={!dobDay || !dobMonth || !dobYear}
+                          className="w-full bg-deep-maroon text-white font-semibold py-1.5 rounded-lg text-[10px] uppercase tracking-wider hover:bg-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed text-center cursor-pointer"
+                        >
+                          Confirm
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
                 <button
                   type="button"
                   onClick={() => setLookingFor('Groom')}
@@ -251,50 +363,6 @@ export default function Home() {
                   </span>
                   Female
                 </button>
-                <select 
-                  value={ageRange}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setAgeRange(val);
-                    const [min, max] = val.split('-');
-                    setAgeMin(min);
-                    setAgeMax(max);
-                  }}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-1.5 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
-                >
-                  <option value="21-35">Age</option>
-                  <option value="18-22">18 - 22</option>
-                  <option value="21-25">21 - 25</option>
-                  <option value="26-30">26 - 30</option>
-                  <option value="31-35">31 - 35</option>
-                  <option value="36-40">36 - 40</option>
-                  <option value="41-50">41 - 50</option>
-                </select>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <select 
-                  value={community}
-                  onChange={(e) => setCommunity(e.target.value)}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
-                >
-                  <option value="">Religion</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Christian">Christian</option>
-                  <option value="Muslim">Muslim</option>
-                  <option value="Sikh">Sikh</option>
-                </select>
-                <select 
-                  value={caste}
-                  onChange={(e) => setCaste(e.target.value)}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
-                >
-                  <option value="Open to all">Caste</option>
-                  <option value="Brahmin">Brahmin</option>
-                  <option value="Maratha">Maratha</option>
-                  <option value="Kshatriya">Kshatriya</option>
-                  <option value="Reddy">Reddy</option>
-                </select>
               </div>
 
               <div className="flex items-start gap-1.5 pt-0.5">
@@ -331,28 +399,28 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="relative z-30 -mt-8 md:-mt-10 mx-auto w-[calc(100%-32px)] md:w-full max-w-[980px] bg-white py-4 px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 items-center w-full">
+      <div className="relative z-30 -mt-6 sm:-mt-8 md:-mt-10 mx-auto w-full max-w-[290px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[980px] bg-white py-2.5 px-3 sm:py-4 sm:px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3.5 items-center w-full">
           
           {/* Looking For Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
-            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">I'm looking for a</label>
+          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
+            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">I'm looking for a</label>
             <select 
               value={lookingFor}
               onChange={(e) => setLookingFor(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
               <option value="Bride">Bride</option>
               <option value="Groom">Groom</option>
             </select>
-            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
               keyboard_arrow_down
             </span>
           </div>
 
           {/* Age Range Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
-            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Age Range</label>
+          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
+            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Age Range</label>
             <select 
               value={ageRange}
               onChange={(e) => {
@@ -362,7 +430,7 @@ export default function Home() {
                 setAgeMin(min);
                 setAgeMax(max);
               }}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
               <option value="18-40">18 - 40</option>
               <option value="18-25">18 - 25</option>
@@ -370,18 +438,18 @@ export default function Home() {
               <option value="31-35">31 - 35</option>
               <option value="36-40">36 - 40</option>
             </select>
-            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
               keyboard_arrow_down
             </span>
           </div>
 
           {/* Location Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
-            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Location</label>
+          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
+            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Location</label>
             <select 
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
               <option value="">Any Location</option>
               <option value="Bangalore">Bangalore</option>
@@ -392,18 +460,18 @@ export default function Home() {
               <option value="Hyderabad">Hyderabad</option>
               <option value="USA">USA</option>
             </select>
-            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
               keyboard_arrow_down
             </span>
           </div>
 
           {/* Religion Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1.5 px-3 bg-white text-left w-full">
-            <label className="block text-[10px] text-slate-400 font-medium leading-none mb-0.5">Religion</label>
+          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
+            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Religion</label>
             <select 
               value={community}
               onChange={(e) => setCommunity(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6"
+              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
               <option value="">Select...</option>
               <option value="Hindu">Hindu</option>
@@ -411,7 +479,7 @@ export default function Home() {
               <option value="Muslim">Muslim</option>
               <option value="Sikh">Sikh</option>
             </select>
-            <span className="absolute right-3 bottom-2.5 material-symbols-outlined text-[16px] text-slate-400 pointer-events-none">
+            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
               keyboard_arrow_down
             </span>
           </div>
@@ -419,9 +487,9 @@ export default function Home() {
           {/* Search Button */}
           <button 
             onClick={handleQuickSearch}
-            className="flex items-center justify-center gap-2 bg-deep-maroon text-white font-semibold rounded-lg hover:bg-primary transition-all active:scale-95 cursor-pointer text-sm shrink-0 w-full h-[46px] shadow-md hover:shadow-lg"
+            className="col-span-2 lg:col-span-1 flex items-center justify-center gap-1.5 bg-deep-maroon text-white font-semibold rounded-lg hover:bg-primary transition-all active:scale-95 cursor-pointer text-[11px] sm:text-sm shrink-0 w-full h-[36px] sm:h-[46px] shadow-md hover:shadow-lg"
           >
-            <span className="material-symbols-outlined text-[18px]">search</span>
+            <span className="material-symbols-outlined text-[15px] sm:text-[18px]">search</span>
             Search
           </button>
 
@@ -430,7 +498,7 @@ export default function Home() {
 
       {/* Success Stories Section */}
       <section className="bg-gradient-to-br from-white via-rose-50/25 to-amber-50/15 py-20 relative z-10 border-t border-slate-100/60">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
             
             {/* Left Column: Storytelling Copy */}
@@ -452,50 +520,71 @@ export default function Home() {
             </div>
 
             {/* Right Column: Dynamic Visual Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch w-full">
-              
-              {/* Tall Vertical Card */}
-              <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[420px] hover:shadow-lg transition-shadow duration-300">
-                <div className="relative flex-1 min-h-[300px] sm:min-h-auto overflow-hidden">
-                  <img src="/image1.jpg" className="w-full h-full object-cover" alt="Anjali & Arun" />
-                  <div className="absolute top-4 left-4 bg-deep-maroon text-white text-[10px] font-label-caps font-semibold py-1 px-2.5 rounded-full tracking-wider shadow-md">
+            <div className="grid grid-cols-2 gap-4 sm:gap-6 items-stretch w-full">
+                   {/* Tall Vertical Card (Featured Story) */}
+              <div className="col-span-2 sm:col-span-1 sm:row-span-2 bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[350px] sm:h-[420px] hover:shadow-lg transition-shadow duration-300">
+                <div className="relative flex-1 overflow-hidden">
+                  <img src="/image1.jpg" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Anjali & Arun" />
+                  <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-deep-maroon text-white text-[9px] sm:text-[10px] font-label-caps font-semibold py-1 px-2.5 rounded-full tracking-wider shadow-md">
                     Featured Story
                   </div>
                 </div>
-                <div className="p-4 text-center bg-white border-t border-slate-50 shrink-0">
-                  <h4 className="font-semibold text-deep-maroon text-sm">Anjali &amp; Arun</h4>
-                  <p className="text-[10px] text-soft-gray italic mt-0.5">Matched: Bangalore</p>
+                <div className="p-3 sm:p-4 text-center bg-white border-t border-slate-50 shrink-0">
+                  <h4 className="font-bold text-charcoal-text text-sm sm:text-base">Anjali &amp; Arun</h4>
+                  <p className="text-[10px] sm:text-xs text-soft-gray italic mt-1">Destination : bangalore</p>
                 </div>
               </div>
 
-              {/* Two Stacked Cards Column */}
-              <div className="flex flex-col gap-6">
-                
-                {/* Horizontal card 2 */}
-                <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[198px] hover:shadow-lg transition-shadow duration-300">
-                  <div className="relative h-[130px] w-full overflow-hidden">
-                    <img src="/image2.jpg" className="w-full h-full object-cover" alt="Dhanya & Midhun" />
-                  </div>
-                  <div className="p-3 text-center bg-white border-t border-slate-50 shrink-0">
-                    <h4 className="font-semibold text-deep-maroon text-xs">Dhanya &amp; Midhun</h4>
-                    <p className="text-[9px] text-soft-gray italic mt-0.5">Matched: Kochi</p>
+              {/* Card 2: Dhanya & Midhun */}
+              <div className="col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-shadow duration-300">
+                <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3 shrink-0">
+                  {/* Custom Floral Branch Line Art */}
+                  <svg 
+                    className="absolute left-2.5 top-2.5 w-18 h-18 opacity-25 text-soft-gray pointer-events-none" 
+                    viewBox="0 0 100 100" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="0.8"
+                  >
+                    <path d="M15 85 C 35 65, 55 55, 65 35 C 70 25, 65 15, 55 25 C 45 35, 35 55, 15 85" />
+                    <path d="M65 35 C 75 25, 85 25, 95 15 C 85 10, 75 15, 65 35" />
+                    <path d="M35 65 C 45 60, 50 50, 50 40 C 45 40, 40 50, 35 65" />
+                    <circle cx="55" cy="25" r="2.5" fill="currentColor" />
+                    <circle cx="95" cy="15" r="2.5" fill="currentColor" />
+                  </svg>
+                  
+                  {/* Portrait Frame */}
+                  <div className="relative w-[72%] h-full rounded-lg overflow-hidden border border-slate-100 shadow-sm bg-slate-50 shrink-0">
+                    <img 
+                      src="/image2.jpg" 
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
+                      alt="Dhanya & Midhun" 
+                    />
                   </div>
                 </div>
-
-                {/* Smaller horizontal card */}
-                <div className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[198px] hover:shadow-lg transition-shadow duration-300">
-                  <div className="relative h-[130px] w-full overflow-hidden">
-                    <img src="/image3.jpg" className="w-full h-full object-cover" alt="Priya & Rajesh" />
-                  </div>
-                  <div className="p-3 text-center bg-white border-t border-slate-50 shrink-0">
-                    <h4 className="font-semibold text-deep-maroon text-xs">Priya &amp; Rajesh</h4>
-                    <p className="text-[9px] text-soft-gray italic mt-0.5">Matched: Chennai</p>
-                  </div>
+                <div className="p-2 sm:p-3 text-center bg-white border-t border-slate-50 shrink-0 flex-1 flex flex-col justify-center">
+                  <h4 className="font-bold text-charcoal-text text-[11px] sm:text-xs leading-none">Dhanya &amp; Midhun</h4>
+                  <p className="text-[9px] sm:text-[10px] text-soft-gray italic mt-1 leading-none">Destination : Kochi</p>
                 </div>
-
               </div>
 
-            </div>
+              {/* Card 3: Devika & Sreejith */}
+              <div className="col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-shadow duration-300">
+                <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3.5 shrink-0">
+                  {/* Taller Rounded Frame */}
+                  <div className="relative w-[92%] h-full rounded-2xl overflow-hidden shadow-sm bg-slate-50 shrink-0">
+                    <img 
+                      src="/image3.jpg" 
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
+                      alt="Devika & Sreejith" 
+                    />
+                  </div>
+                </div>
+                <div className="p-2 sm:p-3 text-center bg-white border-t border-slate-50 shrink-0 flex-1 flex flex-col justify-center">
+                  <h4 className="font-bold text-charcoal-text text-[11px] sm:text-xs leading-none">Devika &amp; Sreejith</h4>
+                  <p className="text-[9px] sm:text-[10px] text-soft-gray italic mt-1 leading-none">Destination : Thrissur</p>
+                </div>
+              </div>    </div>
 
           </div>
         </div>
@@ -503,7 +592,7 @@ export default function Home() {
 
       {/* Highlighted Profiles Section */}
       <section className="bg-white py-20 relative z-10 border-t border-slate-100">
-        <div className="max-w-container-max mx-auto px-margin-desktop text-center">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
           
           <div className="mb-12">
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
@@ -529,15 +618,15 @@ export default function Home() {
 
             <div 
               ref={scrollContainerRef}
-              className="flex gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
+              className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
             >
               {highlightedProfiles.map((profile) => (
                 <div 
                   key={profile.id}
-                  className="w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
+                  className="w-[210px] sm:w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
                 >
                   {/* Image Section with Overlays */}
-                  <div className="relative h-[175px] w-full overflow-hidden bg-slate-50 shrink-0">
+                  <div className="relative h-[135px] sm:h-[175px] w-full overflow-hidden bg-slate-50 shrink-0">
                     <img 
                       src={profile.image} 
                       alt={profile.name} 
@@ -545,55 +634,55 @@ export default function Home() {
                     />
                     
                     {profile.premium && (
-                      <span className="absolute top-3 right-3 bg-heritage-gold/90 backdrop-blur-xs text-white text-[9px] font-label-caps font-semibold py-0.5 px-2 rounded-full border border-heritage-gold/25 tracking-wider">
+                      <span className="absolute top-2.5 right-2.5 bg-heritage-gold/90 backdrop-blur-xs text-white text-[8px] sm:text-[9px] font-label-caps font-semibold py-0.5 px-2 rounded-full border border-heritage-gold/25 tracking-wider">
                         PREMIUM
                       </span>
                     )}
                   </div>
 
                   {/* Profile Details */}
-                  <div className="p-3.5 flex flex-col flex-1">
+                  <div className="p-3 sm:p-3.5 flex flex-col flex-1">
                     <div className="flex justify-between items-center mb-1">
-                      <h4 className="font-semibold text-charcoal-text text-sm flex items-center gap-1">
-                        {profile.name}
+                      <h4 className="font-semibold text-charcoal-text text-xs sm:text-sm flex items-center gap-0.5 sm:gap-1 truncate max-w-[70%]">
+                        <span className="truncate">{profile.name}</span>
                         {profile.verified && (
                           <span 
-                            className="material-symbols-outlined text-[14px] text-emerald-600 leading-none select-none" 
+                            className="material-symbols-outlined text-[12px] sm:text-[14px] text-emerald-600 leading-none select-none shrink-0" 
                             style={{ fontVariationSettings: "'FILL' 1" }}
                             title="Verified Profile"
                           >
                             verified
                           </span>
                         )}
-                        <span className="font-normal text-charcoal-text/80">, {profile.age}</span>
+                        <span className="font-normal text-charcoal-text/80 shrink-0">, {profile.age}</span>
                       </h4>
-                      <span className="text-[10px] text-soft-gray font-medium">
+                      <span className="text-[9px] sm:text-[10px] text-soft-gray font-medium shrink-0">
                         {profile.height}
                       </span>
                     </div>
 
-                    <p className="text-xs text-deep-maroon font-semibold mb-2">
+                    <p className="text-[10px] sm:text-xs text-deep-maroon font-semibold mb-2 truncate">
                       {profile.profession}
                     </p>
 
-                    <div className="space-y-1 text-[11px] text-soft-gray flex-1">
+                    <div className="space-y-1 text-[9px] sm:text-[11px] text-soft-gray flex-1">
                       <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">menu_book</span>
+                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">menu_book</span>
                         {profile.religion}
                       </p>
                       <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">school</span>
-                        {profile.education}
+                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">school</span>
+                        <span className="truncate">{profile.education}</span>
                       </p>
                       <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">location_on</span>
-                        {profile.location}
+                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">location_on</span>
+                        <span className="truncate">{profile.location}</span>
                       </p>
                     </div>
 
                     {/* Connect CTA Button */}
-                    <button className="w-full mt-3 py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 cursor-pointer">
-                      <span className="material-symbols-outlined text-[14px] leading-none text-white">
+                    <button className="w-full mt-3 py-1.5 sm:py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-[10px] sm:text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 cursor-pointer">
+                      <span className="material-symbols-outlined text-[12px] sm:text-[14px] leading-none text-white">
                         favorite
                       </span>
                       Connect Now
@@ -618,7 +707,7 @@ export default function Home() {
 
       {/* Our Signature Style / Approach Section */}
       <section className="bg-white py-20 relative z-10 border-t border-slate-100">
-        <div className="max-w-container-max mx-auto px-margin-desktop text-center">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
           
           <div className="mb-12">
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
@@ -671,7 +760,7 @@ export default function Home() {
 
       {/* How It Works Section */}
       <section className="bg-slate-50/40 py-20 relative z-10 border-t border-slate-100/60">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
           <div className="mb-16 text-center">
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
               MOMENTS
