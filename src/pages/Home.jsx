@@ -530,7 +530,7 @@ export default function Home() {
               </p>
               <div className="border-l-2 border-heritage-gold pl-4 italic text-xs text-soft-gray/80 mt-6 max-w-md">
                 "The most beautiful relationship is the one that was destined, built on compatibility and trust."
-                <span className="block text-[10px] font-semibold text-charcoal-text mt-1.5 not-italic">— Bharath Matrimony Success</span>
+                <span className="block text-[10px] font-semibold text-charcoal-text mt-1.5 not-italic">— Bharath Marriage</span>
               </div>
             </div>
 
