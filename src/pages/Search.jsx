@@ -151,6 +151,7 @@ export default function Search() {
     const genderParam = params.get('gender');
     const ageParam = params.get('age');
     const religionParam = params.get('religion');
+    const locationParam = params.get('location');
 
     let isFiltered = false;
 
@@ -162,18 +163,19 @@ export default function Search() {
       setReligion(religionParam);
       isFiltered = true;
     }
+    if (locationParam) {
+      setLocation(locationParam);
+      isFiltered = true;
+    }
     if (ageParam) {
-      const [min, max] = ageParam.split('-');
-      if (min) setAgeMin(min);
-      if (max) setAgeMax(max);
       isFiltered = true;
     }
 
     if (isFiltered) {
-      setSearched(true);
       const filtered = searchProfiles.filter(p => {
         if (genderParam && p.gender !== genderParam) return false;
         if (religionParam && p.religion !== religionParam) return false;
+        if (locationParam && p.location !== locationParam) return false;
         if (ageParam) {
           const [min, max] = ageParam.split('-');
           if (p.age < parseInt(min) || p.age > parseInt(max)) return false;
@@ -181,6 +183,11 @@ export default function Search() {
         return true;
       });
       setResults(filtered);
+      setSearched(true);
+      // Scroll to results after a short delay so the DOM has rendered
+      setTimeout(() => {
+        resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
     }
   }, []);
 

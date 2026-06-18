@@ -122,14 +122,14 @@ export default function Navbar() {
             >
               Muhurtham
             </Link>
-            <Link 
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${
+            <button
+              onClick={() => navigate(isLoggedIn ? '/dashboard' : '/login')}
+              className={`font-semibold text-xs transition-all duration-300 active:scale-95 cursor-pointer ${
                 isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
-              }`} 
-              to="/dashboard"
+              }`}
             >
               Matches
-            </Link>
+            </button>
             <a 
               className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${
                 isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
@@ -307,14 +307,16 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-[14px] text-slate-500">calendar_today</span>
                   Muhurtham
                 </Link>
-                <Link 
-                  to="/dashboard"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center gap-2 font-semibold text-charcoal-text hover:text-deep-maroon hover:bg-slate-50 text-xs py-2 px-2.5 rounded-lg transition-colors"
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    navigate(isLoggedIn ? '/dashboard' : '/login');
+                  }}
+                  className="flex items-center gap-2 font-semibold text-charcoal-text hover:text-deep-maroon hover:bg-slate-50 text-xs py-2 px-2.5 rounded-lg transition-colors w-full text-left"
                 >
                   <span className="material-symbols-outlined text-[14px] text-slate-500">group</span>
                   Matches
-                </Link>
+                </button>
                 <a 
                   href="/#contact"
                   onClick={() => setIsMobileMenuOpen(false)}

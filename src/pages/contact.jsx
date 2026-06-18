@@ -1,298 +1,328 @@
-import React from "react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Contact() {
-  return (
-    <div className="w-full bg-white">
+  const [submitted, setSubmitted] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-white via-rose-50/30 to-amber-50/20 pt-32 pb-20 border-b border-slate-100 overflow-hidden">
-        <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none"></div>
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="w-full flex flex-col bg-[#fbfaf9]">
+
+      <section className="relative bg-gradient-to-br from-primary via-deep-maroon to-[#6b0030] pt-28 pb-14 md:pt-36 md:pb-16 overflow-hidden">
+        {/* Decorative background dots */}
+        <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none" />
+        {/* Soft glow blobs */}
+        <div className="absolute -top-20 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -right-16 w-96 h-96 bg-heritage-gold/10 rounded-full blur-3xl pointer-events-none" />
+
         <div className="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-          <span className="font-label-caps text-xs text-heritage-gold tracking-widest font-semibold">
-            CONTACT US
+          {/* Eyebrow */}
+          <span className="inline-flex items-center gap-2 font-label-caps text-[10px] tracking-[0.2em] text-heritage-gold font-semibold uppercase mb-5">
+            <span className="w-8 h-px bg-heritage-gold/50" />
+            Get In Touch
+            <span className="w-8 h-px bg-heritage-gold/50" />
           </span>
 
-          <h1 className="font-display-lg text-4xl md:text-5xl text-charcoal-text mt-4 mb-6 leading-tight uppercase tracking-wide">
-            We'd Love To <br />
-            <span className="text-deep-maroon">Hear From You</span>
+          <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl text-white leading-tight mb-4">
+            We're Here To <span className="text-heritage-gold">Help You</span>
           </h1>
 
-          <p className="max-w-2xl mx-auto font-body-lg text-soft-gray text-sm md:text-base leading-relaxed">
-            Have questions about memberships, profile verification, privacy,
-            or finding the right match? Our dedicated support team is always
-            ready to assist you.
+          <p className="max-w-xl mx-auto text-white/70 text-sm leading-relaxed">
+            Questions about your membership, profile, or finding the right match?
+            Our team is always ready to assist you.
           </p>
         </div>
       </section>
 
-      {/* Quick Contact Strip */}
-      <section className="py-12 md:py-16 bg-white border-b border-slate-100">
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 md:gap-6 max-w-4xl mx-auto">
 
-            {/* Call Card */}
-            <div className="group flex flex-col items-center text-center">
-              <div className="relative w-20 h-20 flex items-center justify-center mb-4">
-                <div className="absolute inset-0 rounded-full bg-deep-maroon/5"></div>
-                <div className="absolute w-[68px] h-[68px] rounded-full bg-deep-maroon/10 border border-deep-maroon/5"></div>
-                <div className="absolute w-12 h-12 rounded-full bg-deep-maroon flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
-                  <span className="material-symbols-outlined text-[20px] text-white">call</span>
-                </div>
-              </div>
-              <h3 className="font-semibold text-sm text-charcoal-text mb-1">Call Us</h3>
-              <p className="text-soft-gray text-xs md:text-sm">+91 98765 43210</p>
-              <p className="text-soft-gray/70 text-[10px] md:text-[11px] mt-0.5">Mon &ndash; Sat, 9am &ndash; 7pm</p>
-            </div>
 
-            {/* Email Card */}
-            <div className="group flex flex-col items-center text-center">
-              <div className="relative w-20 h-20 flex items-center justify-center mb-4">
-                <div className="absolute inset-0 rounded-full bg-heritage-gold/5"></div>
-                <div className="absolute w-[68px] h-[68px] rounded-full bg-heritage-gold/15 border border-heritage-gold/10"></div>
-                <div className="absolute w-12 h-12 rounded-full bg-heritage-gold flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
-                  <span className="material-symbols-outlined text-[20px] text-white">mail</span>
-                </div>
-              </div>
-              <h3 className="font-semibold text-sm text-charcoal-text mb-1">Email Us</h3>
-              <p className="text-soft-gray text-xs md:text-sm break-all">support@bharathmarriage.com</p>
-              <p className="text-soft-gray/70 text-[10px] md:text-[11px] mt-0.5">We reply within 24 hours</p>
-            </div>
+      {/* ── FORM + TRUST PANEL ── */}
+      <section className="py-14 md:py-20 px-margin-mobile md:px-margin-desktop">
+        <div className="max-w-5xl mx-auto grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start">
 
-            {/* Chat Card */}
-            <div className="group flex flex-col items-center text-center">
-              <div className="relative w-20 h-20 flex items-center justify-center mb-4">
-                <div className="absolute inset-0 rounded-full bg-deep-maroon/5"></div>
-                <div className="absolute w-[68px] h-[68px] rounded-full bg-deep-maroon/10 border border-deep-maroon/5"></div>
-                <div className="absolute w-12 h-12 rounded-full bg-deep-maroon flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform duration-300">
-                  <span className="material-symbols-outlined text-[20px] text-white">chat</span>
-                </div>
-              </div>
-              <h3 className="font-semibold text-sm text-charcoal-text mb-1">Live Chat</h3>
-              <p className="text-soft-gray text-xs md:text-sm">Chat with our team</p>
-              <p className="text-soft-gray/70 text-[10px] md:text-[11px] mt-0.5">Available right now</p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form + Info */}
-      <section className="py-16 md:py-20 bg-gradient-to-b from-white to-rose-50/20">
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-12 items-start">
-
-            {/* Contact Form */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-md p-5 md:p-8 border-t-4 border-t-deep-maroon">
-
-              <span className="font-label-caps text-heritage-gold text-[11px] tracking-widest font-semibold">
-                CONTACT FORM
+          {/* Contact Form */}
+          <div className="bg-white rounded-2xl border border-slate-100 shadow-md overflow-hidden">
+            {/* Form header strip */}
+            <div className="bg-gradient-to-r from-primary to-deep-maroon px-6 py-5">
+              <span className="font-label-caps text-[10px] tracking-widest text-heritage-gold font-semibold">
+                SEND A MESSAGE
               </span>
-
-              <h2 className="font-display-lg text-2xl md:text-3xl text-charcoal-text mt-2 mb-6 uppercase tracking-wide">
+              <h2 className="font-display-lg text-xl md:text-2xl text-white mt-1 leading-snug">
                 Let's Start A Conversation
               </h2>
-
-              <form className="space-y-4">
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="text"
-                    placeholder="Full Name"
-                    className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-deep-maroon focus:border-deep-maroon"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email Address"
-                    className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-deep-maroon focus:border-deep-maroon"
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  <input
-                    type="tel"
-                    placeholder="Phone Number"
-                    className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-deep-maroon focus:border-deep-maroon"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Subject"
-                    className="w-full h-11 rounded-xl border border-slate-200 px-4 text-sm focus:outline-none focus:ring-2 focus:ring-deep-maroon focus:border-deep-maroon"
-                  />
-                </div>
-
-                <textarea
-                  rows="4"
-                  placeholder="Tell us how we can help..."
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-deep-maroon focus:border-deep-maroon"
-                />
-
-                <button
-                  type="submit"
-                  className="w-full md:w-auto bg-deep-maroon hover:bg-primary text-white font-semibold px-8 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg active:scale-[0.98] flex items-center justify-center gap-2"
-                >
-                  Send Message
-                  <span className="material-symbols-outlined text-[16px] leading-none">arrow_forward</span>
-                </button>
-
-              </form>
-
             </div>
 
-            {/* Right Side */}
-            <div className="flex flex-col justify-center">
+            <div className="p-6 md:p-8">
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-10 text-center fade-in">
+                  <div className="w-14 h-14 rounded-full bg-emerald-50 flex items-center justify-center mb-4">
+                    <span className="material-symbols-outlined text-[32px] text-emerald-500">check_circle</span>
+                  </div>
+                  <h3 className="font-semibold text-charcoal-text text-lg mb-1">Message Sent!</h3>
+                  <p className="text-soft-gray text-sm">We'll get back to you within 24 hours.</p>
+                  <button
+                    onClick={() => { setSubmitted(false); setForm({ name: '', email: '', phone: '', subject: '', message: '' }); }}
+                    className="mt-6 text-deep-maroon text-xs font-semibold hover:underline cursor-pointer"
+                  >
+                    Send another message
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                        Full Name
+                      </label>
+                      <input
+                        name="name"
+                        value={form.name}
+                        onChange={handleChange}
+                        required
+                        placeholder="e.g. Ananya Menon"
+                        className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-charcoal-text placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-deep-maroon/30 focus:border-deep-maroon transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                        Email Address
+                      </label>
+                      <input
+                        name="email"
+                        type="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        required
+                        placeholder="you@example.com"
+                        className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-charcoal-text placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-deep-maroon/30 focus:border-deep-maroon transition-all"
+                      />
+                    </div>
+                  </div>
 
-              <span className="font-label-caps text-heritage-gold text-[11px] tracking-widest font-semibold">
-                WE'RE HERE FOR YOU
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                        Phone Number
+                      </label>
+                      <input
+                        name="phone"
+                        type="tel"
+                        value={form.phone}
+                        onChange={handleChange}
+                        placeholder="+91 98765 43210"
+                        className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-charcoal-text placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-deep-maroon/30 focus:border-deep-maroon transition-all"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                        Subject
+                      </label>
+                      <select
+                        name="subject"
+                        value={form.subject}
+                        onChange={handleChange}
+                        required
+                        className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-charcoal-text focus:outline-none focus:ring-2 focus:ring-deep-maroon/30 focus:border-deep-maroon transition-all cursor-pointer"
+                      >
+                        <option value="">Select a topic</option>
+                        <option value="account">Account / Login Help</option>
+                        <option value="profile">Profile Verification</option>
+                        <option value="membership">Membership & Plans</option>
+                        <option value="privacy">Privacy & Safety</option>
+                        <option value="match">Finding Matches</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-semibold text-slate-500 mb-1.5 uppercase tracking-wide">
+                      Your Message
+                    </label>
+                    <textarea
+                      name="message"
+                      value={form.message}
+                      onChange={handleChange}
+                      required
+                      rows={4}
+                      placeholder="Tell us how we can help you…"
+                      className="w-full border border-slate-200 rounded-lg px-3 py-2.5 text-sm text-charcoal-text placeholder-slate-300 resize-none focus:outline-none focus:ring-2 focus:ring-deep-maroon/30 focus:border-deep-maroon transition-all"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-deep-maroon hover:bg-primary text-white font-semibold py-3 rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg active:scale-[0.98] transition-all text-sm cursor-pointer"
+                  >
+                    Send Message
+                    <span className="material-symbols-outlined text-[18px] leading-none">send</span>
+                  </button>
+
+                  <p className="text-center text-[10px] text-slate-400">
+                    We respect your privacy. Your data will never be shared.
+                  </p>
+                </form>
+              )}
+            </div>
+          </div>
+
+          {/* Right — Trust & Info panel */}
+          <div className="flex flex-col gap-5 pt-0 lg:pt-2">
+            <div>
+              <span className="font-label-caps text-[10px] tracking-widest text-heritage-gold font-semibold">
+                WHY REACH OUT?
               </span>
-
-              <h2 className="font-display-lg text-2xl md:text-4xl text-charcoal-text mt-3 mb-5 leading-tight uppercase tracking-wide">
-                Dedicated Support For Your Journey
+              <h2 className="font-display-lg text-2xl md:text-3xl text-charcoal-text mt-2 mb-3 leading-tight">
+                Dedicated Support<br />For Every Step
               </h2>
-
-              <p className="font-body-lg text-soft-gray leading-relaxed text-sm md:text-base mb-8">
-                Whether you need assistance with profile verification,
-                membership plans, privacy settings, or finding the right match,
-                our team is always ready to guide you.
+              <p className="text-soft-gray text-sm leading-relaxed">
+                Whether you need help with your account, profile verification,
+                membership plans, or finding the perfect match — our team
+                responds quickly and with care.
               </p>
-
-              <div className="space-y-4">
-
-                <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-deep-maroon/10 flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-deep-maroon text-[20px]">
-                        verified_user
-                      </span>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="font-semibold text-charcoal-text text-sm">
-                        Verified &amp; Secure
-                      </h4>
-                      <p className="text-soft-gray text-xs md:text-sm">
-                        Your privacy and profile information are protected.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-heritage-gold/10 flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-heritage-gold text-[20px]">
-                        support_agent
-                      </span>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="font-semibold text-charcoal-text text-sm">
-                        Quick Assistance
-                      </h4>
-                      <p className="text-soft-gray text-xs md:text-sm">
-                        Fast responses from our support team.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white rounded-xl border border-slate-100 p-4 shadow-sm hover:shadow-md transition-shadow duration-300">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-deep-maroon/10 flex items-center justify-center shrink-0">
-                      <span className="material-symbols-outlined text-deep-maroon text-[20px]">
-                        favorite
-                      </span>
-                    </div>
-                    <div className="text-left">
-                      <h4 className="font-semibold text-charcoal-text text-sm">
-                        Trusted Matchmaking
-                      </h4>
-                      <p className="text-soft-gray text-xs md:text-sm">
-                        Helping families build meaningful relationships.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
             </div>
 
+            {/* Trust items */}
+            <div className="flex flex-col gap-3">
+              {[
+                {
+                  icon: 'verified_user',
+                  color: 'text-deep-maroon',
+                  bg: 'bg-deep-maroon/8',
+                  title: 'Safe & Verified',
+                  desc: 'Every profile goes through a manual verification process.',
+                },
+                {
+                  icon: 'support_agent',
+                  color: 'text-heritage-gold',
+                  bg: 'bg-heritage-gold/10',
+                  title: 'Expert Support',
+                  desc: 'Dedicated relationship counsellors available 6 days a week.',
+                },
+                {
+                  icon: 'lock',
+                  color: 'text-deep-maroon',
+                  bg: 'bg-deep-maroon/8',
+                  title: '100% Privacy',
+                  desc: 'Your contact details are hidden until you choose to reveal them.',
+                },
+                {
+                  icon: 'favorite',
+                  color: 'text-heritage-gold',
+                  bg: 'bg-heritage-gold/10',
+                  title: 'Trusted Matchmaking',
+                  desc: 'Thousands of families have found matches through us.',
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="flex items-start gap-3.5 bg-white rounded-xl border border-slate-100 shadow-sm p-4 hover:shadow-md transition-shadow duration-300"
+                >
+                  <div className={`w-10 h-10 rounded-full ${item.bg} flex items-center justify-center shrink-0 mt-0.5`}>
+                    <span className={`material-symbols-outlined text-[18px] ${item.color}`}>{item.icon}</span>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-charcoal-text text-sm">{item.title}</h4>
+                    <p className="text-soft-gray text-xs leading-relaxed mt-0.5">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-16 md:py-20 bg-slate-50/40 border-t border-slate-100/60">
-        <div className="max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
-
-          <span className="font-label-caps text-heritage-gold text-xs tracking-widest font-semibold">
-            FREQUENTLY ASKED QUESTIONS
-          </span>
-
-          <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mt-3 mb-12 uppercase tracking-wide">
-            Common <span className="text-deep-maroon">Questions</span>
-          </h2>
-
-          <div className="space-y-4 text-left">
-
-            <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <h4 className="font-semibold text-charcoal-text text-sm md:text-base mb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-deep-maroon text-[18px]">help</span>
-                Are profiles verified?
-              </h4>
-              <p className="text-soft-gray text-sm leading-relaxed pl-7">
-                Yes. We perform profile verification checks to maintain a safe
-                and trustworthy community.
-              </p>
-            </div>
-
-            <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <h4 className="font-semibold text-charcoal-text text-sm md:text-base mb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-deep-maroon text-[18px]">help</span>
-                Can I hide my photos?
-              </h4>
-              <p className="text-soft-gray text-sm leading-relaxed pl-7">
-                Yes. You can control who can view your profile photos through
-                privacy settings.
-              </p>
-            </div>
-
-            <div className="bg-white border border-slate-100 rounded-xl p-5 shadow-sm hover:shadow-md transition-shadow duration-300">
-              <h4 className="font-semibold text-charcoal-text text-sm md:text-base mb-2 flex items-center gap-2">
-                <span className="material-symbols-outlined text-deep-maroon text-[18px]">help</span>
-                How can I contact support?
-              </h4>
-              <p className="text-soft-gray text-sm leading-relaxed pl-7">
-                You can reach us through the contact form, phone, or live chat
-                provided above.
-              </p>
-            </div>
-
+      {/* ── FAQ ── */}
+      <section className="py-14 md:py-18 bg-white border-t border-slate-100 px-margin-mobile md:px-margin-desktop">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10">
+            <span className="font-label-caps text-[10px] tracking-widest text-heritage-gold font-semibold">
+              QUICK ANSWERS
+            </span>
+            <h2 className="font-display-lg text-2xl md:text-3xl text-charcoal-text mt-2">
+              Common Questions
+            </h2>
           </div>
 
+          <div className="divide-y divide-slate-100">
+            {[
+              {
+                q: 'Are all profiles on Bharath Marriage verified?',
+                a: 'Yes. Every profile undergoes a manual review. Verified profiles are marked with a green badge so you can trust the information.',
+              },
+              {
+                q: 'How do I contact a match?',
+                a: 'Once you express interest and they accept, you can exchange contact details through our secure messaging system.',
+              },
+              {
+                q: 'Can I hide my photos from everyone?',
+                a: 'Absolutely. You control who can see your photos. Navigate to Privacy Settings in your dashboard to manage this.',
+              },
+              {
+                q: 'What are the membership plan options?',
+                a: 'We offer Free, Silver, and Gold plans. Premium plans unlock unlimited message requests, phone number visibility, and priority listing.',
+              },
+              {
+                q: 'How do I delete my account?',
+                a: 'You can permanently delete your account from Settings → Account → Delete Account. All your data will be removed within 48 hours.',
+              },
+            ].map((item, i) => (
+              <details
+                key={i}
+                className="group py-4 cursor-pointer list-none"
+              >
+                <summary className="flex items-center justify-between gap-4 text-sm font-semibold text-charcoal-text select-none list-none">
+                  {item.q}
+                  <span className="material-symbols-outlined text-[18px] text-deep-maroon shrink-0 group-open:rotate-180 transition-transform duration-200">
+                    keyboard_arrow_down
+                  </span>
+                </summary>
+                <p className="mt-2.5 text-soft-gray text-sm leading-relaxed pr-8">
+                  {item.a}
+                </p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative bg-gradient-to-r from-deep-maroon to-primary py-16 md:py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none"></div>
-        <div className="relative z-10 max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+      {/* ── BOTTOM CTA ── */}
+      <section className="relative bg-gradient-to-r from-primary to-deep-maroon py-14 md:py-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none" />
+        <div className="absolute -top-16 -right-16 w-64 h-64 bg-heritage-gold/10 rounded-full blur-3xl pointer-events-none" />
 
-          <span className="font-label-caps text-xs text-heritage-gold tracking-widest font-semibold block mb-3">
-            JOIN TODAY
+        <div className="relative z-10 max-w-2xl mx-auto px-margin-mobile md:px-margin-desktop text-center">
+          <span className="font-label-caps text-[10px] tracking-widest text-heritage-gold font-semibold block mb-3">
+            JOIN BHARATH MARRIAGE
           </span>
-
-          <h2 className="font-display-lg text-3xl md:text-4xl text-white mb-5 uppercase tracking-wide">
+          <h2 className="font-display-lg text-2xl md:text-4xl text-white mb-4 leading-tight">
             Ready To Begin Your Journey?
           </h2>
-
-          <p className="font-body-lg text-white/80 max-w-2xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
-            Join thousands of members searching for meaningful relationships
-            built on trust, compatibility, and shared values.
+          <p className="text-white/70 text-sm leading-relaxed mb-8 max-w-lg mx-auto">
+            Join thousands of families who found meaningful relationships built
+            on trust, compatibility, and shared values.
           </p>
-
-          <button className="bg-white text-deep-maroon px-8 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 active:scale-95">
-            Register Free
-          </button>
-
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Link
+              to="/login"
+              className="bg-white text-deep-maroon font-semibold text-sm px-7 py-3 rounded-xl hover:shadow-lg active:scale-95 transition-all cursor-pointer"
+            >
+              Register Free
+            </Link>
+            <Link
+              to="/search"
+              className="border border-white/30 text-white font-semibold text-sm px-7 py-3 rounded-xl hover:bg-white/10 active:scale-95 transition-all cursor-pointer"
+            >
+              Browse Profiles
+            </Link>
+          </div>
         </div>
       </section>
 
