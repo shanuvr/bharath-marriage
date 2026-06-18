@@ -8,6 +8,7 @@ import Dashboard from './pages/protected/DashBoard';
 import ProfileDetails from './pages/protected/ProfileDetail';
 import Porutham from './pages/Porutham';
 import Muhurtham from './pages/Muhurtham';
+import Contact from './pages/contact';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/profile/:profileId" element={<ProfileDetails />} />
         <Route path="/porutham" element={<Porutham />} />
         <Route path="/muhurtham" element={<Muhurtham />} />
+        <Route path='/contact-us' element={<Contact/>}/>
       </Routes>
     </UserLayout>
   );

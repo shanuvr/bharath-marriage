@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const searchProfiles = [
@@ -136,12 +136,13 @@ export default function Search() {
   const [lookingFor, setLookingFor] = useState('Bride');
   const [religion, setReligion] = useState('');
   const [caste, setCaste] = useState('Open to all');
-const [location, setLocation] = useState('');
-  const [ageMin, setAgeMin] = useState('18');
-  const [ageMax, setAgeMax] = useState('60');
+  const [location, setLocation] = useState('');
+
+
   const [maritalStatus, setMaritalStatus] = useState('');
   const [searchId, setSearchId] = useState('');
   const [showMore, setShowMore] = useState(false);
+  const resultsRef = useRef(null);
   const [results, setResults] = useState([]);
   const [searched, setSearched] = useState(false);
 
@@ -202,10 +203,8 @@ const [location, setLocation] = useState('');
       if (religion && p.religion !== religion) return false;
       // Caste Match
       if (caste !== 'Open to all' && p.caste !== caste) return false;
-      // Age Match
-      if (p.age < parseInt(ageMin) || p.age > parseInt(ageMax)) return false;
-      // Height Match
-      if (p.heightCm < parseInt(heightMin) || p.heightCm > parseInt(heightMax)) return false;
+      // Age Match (removed)
+
 
       return true;
     });
@@ -216,72 +215,66 @@ const [location, setLocation] = useState('');
   return (
     <div className="w-full flex flex-col pt-16 bg-slate-50 min-h-screen">
       {/* Header Banner */}
-      <section className="relative bg-gradient-to-r from-primary via-deep-maroon to-primary py-12 md:py-16 text-white text-center px-margin-mobile md:px-margin-desktop overflow-hidden">
+      <section className="relative bg-gradient-to-r from-primary via-deep-maroon to-primary py-2.5 sm:py-3.5 text-white text-center px-margin-mobile md:px-margin-desktop overflow-hidden">
         {/* Subtle Background Graphics */}
         <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none"></div>
         <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-        
+
         <div className="max-w-container-max mx-auto relative z-10 w-full">
           {/* Back Navigation */}
-          <div className="absolute left-0 top-0">
-            <Link to="/" className="text-white/80 hover:text-white flex items-center gap-1 font-semibold text-xs transition-colors cursor-pointer group">
-              <span className="material-symbols-outlined text-[18px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+          <div className="flex justify-start mb-1">
+            <Link to="/" className="text-white/85 hover:text-white flex items-center gap-0.5 font-semibold text-[10px] sm:text-xs transition-colors cursor-pointer group">
+              <span className="material-symbols-outlined text-[13px] sm:text-[15px] group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
               Back
             </Link>
           </div>
 
-          <h1 className="font-display-lg text-3xl md:text-4xl text-white mb-2 leading-tight uppercase tracking-wide">
+          <h1 className="font-display-lg text-xs sm:text-sm md:text-base text-white mb-2 leading-none uppercase tracking-wider">
             Search Your Partner Here
           </h1>
-          <p className="font-body-lg text-xs md:text-sm text-white/80 mb-6">
-            Find your perfect partner from 5 Lakh+ profiles
-          </p>
 
           {/* Search by ID Input Bar */}
-          <form onSubmit={handleSearch} className="max-w-md mx-auto relative px-2">
-            <input 
-              type="text" 
-              placeholder="Search by ID" 
+          <form onSubmit={handleSearch} className="max-w-xs sm:max-w-md mx-auto relative px-2">
+            <input
+              type="text"
+              placeholder="Search by ID"
               value={searchId}
               onChange={(e) => setSearchId(e.target.value)}
-              className="w-full bg-white rounded-full py-2.5 px-5 pr-14 text-[13px] font-body-sm text-charcoal-text placeholder-soft-gray/60 focus:outline-none shadow-md border border-slate-100"
+              className="w-full bg-white rounded-full py-1.5 px-4 pr-10 text-[11px] sm:text-xs font-body-sm text-charcoal-text placeholder-soft-gray/60 focus:outline-none shadow border border-slate-100"
             />
-            <button 
+            <button
               type="submit"
-              className="absolute right-3 top-1/2 -translate-y-1/2 bg-deep-maroon text-white w-8 h-8 rounded-full flex items-center justify-center cursor-pointer shadow hover:bg-primary transition-colors"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 bg-deep-maroon text-white w-6.5 h-6.5 rounded-full flex items-center justify-center cursor-pointer shadow hover:bg-primary transition-colors"
             >
-              <span className="material-symbols-outlined text-[16px] text-white">search</span>
+              <span className="material-symbols-outlined text-[12px] text-white">search</span>
             </button>
           </form>
         </div>
       </section>
 
-      {/* Main Filter Section */}
-      <section className="py-10 relative z-10 px-margin-mobile md:px-margin-desktop">
-        <div className="max-w-4xl mx-auto bg-white p-6 md:p-8 rounded-xl shadow-md border border-slate-100">
-          <form onSubmit={handleSearch} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Looking For */}
-              <div className="text-left">
-                <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">I'm looking for a</label>
-                <select 
+      <section className="py-6 md:py-10 relative z-10 px-margin-mobile md:px-margin-desktop">
+        <div className="max-w-4xl mx-auto bg-transparent md:bg-white p-0 md:p-8 rounded-none md:rounded-xl shadow-none md:shadow-md border-none md:border md:border-slate-100">
+          <form onSubmit={handleSearch} className="space-y-4 md:space-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6">
+
+              <div className="text-left col-span-1">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">I'm looking for a</label>
+                <select
                   value={lookingFor}
                   onChange={(e) => setLookingFor(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
                 >
                   <option value="Bride">Bride (Female)</option>
                   <option value="Groom">Groom (Male)</option>
                 </select>
               </div>
 
-              {/* Religion */}
-              <div className="text-left">
-                <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Religion</label>
-                <select 
+              <div className="text-left col-span-1">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">Religion</label>
+                <select
                   value={religion}
                   onChange={(e) => setReligion(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
                 >
                   <option value="">Select Religion</option>
                   <option value="Hindu">Hindu</option>
@@ -291,13 +284,12 @@ const [location, setLocation] = useState('');
                 </select>
               </div>
 
-              {/* Caste */}
-              <div className="text-left">
-                <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Caste</label>
-                <select 
+              <div className="text-left col-span-2 md:col-span-1">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">Caste</label>
+                <select
                   value={caste}
                   onChange={(e) => setCaste(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
                 >
                   <option value="Open to all">Selected (0)</option>
                   <option value="Brahmin">Brahmin</option>
@@ -308,83 +300,49 @@ const [location, setLocation] = useState('');
 
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Location */}
-<div className="text-left">
-  <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">
-    Location
-  </label>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6">
 
-  <select
-    value={location}
-    onChange={(e) => setLocation(e.target.value)}
-    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
-  >
-    <option value="">Any Location</option>
-    <option value="Bangalore">Bangalore</option>
-    <option value="Chennai">Chennai</option>
-    <option value="Kochi">Kochi</option>
-    <option value="Delhi">Delhi</option>
-    <option value="Hyderabad">Hyderabad</option>
-  </select>
-</div>
-
-              {/* Age Between */}
-              <div className="text-left">
-                <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Age Between (Years)</label>
-                <div className="flex items-center gap-2">
-                  <select 
-                    value={ageMin}
-                    onChange={(e) => setAgeMin(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-2.5 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
-                  >
-                    <option value="18">18</option>
-                    <option value="21">21</option>
-                    <option value="25">25</option>
-                    <option value="28">28</option>
-                  </select>
-                  <span className="text-slate-400 text-xs shrink-0 font-medium">To</span>
-                  <select 
-                    value={ageMax}
-                    onChange={(e) => setAgeMax(e.target.value)}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-2.5 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
-                  >
-                    <option value="30">30</option>
-                    <option value="40">40</option>
-                    <option value="50">50</option>
-                    <option value="60">60</option>
-                  </select>
-                </div>
+              <div className="text-left col-span-1">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">
+                  Location
+                </label>
+                <select
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                >
+                  <option value="">Any Location</option>
+                  <option value="Bangalore">Bangalore</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Kochi">Kochi</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                </select>
               </div>
 
-              {/* Marital Status */}
-<div className="text-left">
-  <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">
-    Marital Status
-  </label>
-
-  <select
-    value={maritalStatus}
-    onChange={(e) => setMaritalStatus(e.target.value)}
-    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
-  >
-    <option value="">Any Status</option>
-    <option value="Never Married">Never Married</option>
-    <option value="Divorced">Divorced</option>
-    <option value="Widowed">Widowed</option>
-  </select>
-</div>
+              <div className="text-left col-span-2 md:col-span-1">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">
+                  Marital Status
+                </label>
+                <select
+                  value={maritalStatus}
+                  onChange={(e) => setMaritalStatus(e.target.value)}
+                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                >
+                  <option value="">Any Status</option>
+                  <option value="Never Married">Never Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Widowed">Widowed</option>
+                </select>
+              </div>
 
             </div>
 
-            {/* Expandable More Filters */}
             {showMore && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100 fade-in">
-                {/* Location */}
-                <div className="text-left">
-                  <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Location</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6 pt-4 border-t border-slate-100 fade-in">
+                <div className="text-left col-span-1">
+                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Location</label>
+                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
                     <option value="">Any Location</option>
                     <option value="Bangalore">Bangalore</option>
                     <option value="Chennai">Chennai</option>
@@ -393,22 +351,20 @@ const [location, setLocation] = useState('');
                   </select>
                 </div>
 
-                {/* Education */}
-                <div className="text-left">
-                  <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Education</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
+                <div className="text-left col-span-1">
+                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Education</label>
+                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
                     <option value="">Any Education</option>
-                    <option value="B.Tech">B.Tech / B.E</option>
-                    <option value="M.Tech">M.Tech / M.E</option>
-                    <option value="MBA">MBA / PGDM</option>
-                    <option value="Doctor">Doctor / MD</option>
+                    <option value="B.Tech">B.Tech</option>
+                    <option value="M.Tech">M.Tech</option>
+                    <option value="MBA">MBA</option>
+                    <option value="Doctor">Doctor</option>
                   </select>
                 </div>
 
-                {/* Profession */}
-                <div className="text-left">
-                  <label className="block text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Profession</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
+                <div className="text-left col-span-2 md:col-span-1">
+                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Profession</label>
+                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
                     <option value="">Any Profession</option>
                     <option value="Software Engineer">Software Engineer</option>
                     <option value="Doctor">Doctor</option>
@@ -419,9 +375,9 @@ const [location, setLocation] = useState('');
               </div>
             )}
 
-            <div className="flex flex-col items-center gap-4 pt-4">
-              <button 
-                type="button" 
+            <div className="flex justify-between items-center pt-4 border-t border-slate-100 gap-3">
+              <button
+                type="button"
                 onClick={() => setShowMore(!showMore)}
                 className="text-deep-maroon hover:text-primary font-semibold text-xs flex items-center gap-1 cursor-pointer transition-colors"
               >
@@ -431,9 +387,15 @@ const [location, setLocation] = useState('');
                 </span>
               </button>
 
-              <button 
+              <button
                 type="submit"
-                className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2.5 px-14 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer text-xs uppercase tracking-wider"
+                className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2 px-6 sm:px-14 rounded-lg shadow hover:shadow-md transition-all active:scale-95 cursor-pointer text-xs uppercase tracking-wider"
+                onClick={() => {
+                  // After search, scroll to results
+                  setTimeout(() => {
+                    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }, 100);
+                }}
               >
                 Search
               </button>
@@ -444,88 +406,92 @@ const [location, setLocation] = useState('');
 
       {/* Results Section */}
       <section className="pb-20 px-margin-mobile md:px-margin-desktop">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto" ref={resultsRef}>
           {searched ? (
             <div>
-              <div className="mb-6 flex justify-between items-center">
-                <h3 className="font-display-lg text-xl text-charcoal-text">
+              <div className="mb-4 md:mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
+                <h3 className="font-display-lg text-base md:text-xl text-charcoal-text">
                   Search Results <span className="text-deep-maroon font-bold">({results.length})</span>
                 </h3>
-                <p className="text-xs text-soft-gray">
+                <p className="text-[10px] md:text-xs text-soft-gray">
                   Showing matches matching your filters
                 </p>
               </div>
 
               {results.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-left">
                   {results.map((profile) => (
-                    <div 
+                    <div
                       key={profile.id}
                       className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
                     >
-                      {/* Image Section */}
-                      <div className="relative h-[200px] w-full overflow-hidden bg-slate-50 shrink-0">
-                        <img 
-                          src={profile.image} 
-                          alt={profile.name} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                        />
-                        
-                        {profile.premium && (
-                          <span className="absolute top-3 right-3 bg-heritage-gold/90 backdrop-blur-xs text-white text-[9px] font-label-caps font-semibold py-0.5 px-2 rounded-full border border-heritage-gold/25 tracking-wider">
-                            PREMIUM
+                      <Link to={`/profile/${profile.id}`} className="block flex-1 flex flex-col cursor-pointer">
+                        {/* Image Section */}
+                        <div className="relative h-[140px] md:h-[200px] w-full overflow-hidden bg-slate-50 shrink-0">
+                          <img
+                            src={profile.image}
+                            alt={profile.name}
+                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                          />
+
+                          {profile.premium && (
+                            <span className="absolute top-2 right-2 md:top-3 md:right-3 bg-heritage-gold/90 backdrop-blur-xs text-white text-[8px] md:text-[9px] font-label-caps font-semibold py-0.5 px-1.5 md:px-2 rounded-full border border-heritage-gold/25 tracking-wider">
+                              PREMIUM
+                            </span>
+                          )}
+
+                          <span className="absolute bottom-2 left-2 md:bottom-3 md:left-3 bg-black/55 backdrop-blur-xs text-white text-[8px] md:text-[9px] font-semibold py-0.5 px-1.5 md:px-2 rounded">
+                            ID: {profile.id}
                           </span>
-                        )}
+                        </div>
 
-                        <span className="absolute bottom-3 left-3 bg-black/55 backdrop-blur-xs text-white text-[9px] font-semibold py-0.5 px-2 rounded">
-                          ID: {profile.id}
-                        </span>
-                      </div>
+                        {/* Details */}
+                        <div className="p-2 md:p-4 flex flex-col flex-1">
+                          <div className="flex items-center justify-between gap-1">
+                            <h4 className="font-semibold text-charcoal-text text-xs md:text-sm flex items-center gap-1 truncate">
+                              {profile.name}
+                              {profile.verified && (
+                                <span
+                                  className="material-symbols-outlined leading-none text-emerald-600 shrink-0"
+                                  style={{ fontSize: '12px', width: '12px', height: '12px' }}
+                                  title="Verified Profile"
+                                >
+                                  verified
+                                </span>
+                              )}
+                              <span className="font-normal text-charcoal-text/80 shrink-0">, {profile.age}</span>
+                            </h4>
+                            <span className="text-[9px] md:text-[10px] text-soft-gray font-medium shrink-0">
+                              {profile.height}
+                            </span>
+                          </div>
 
-                      {/* Details */}
-                      <div className="p-4 flex flex-col flex-1">
-                        <div className="flex justify-between items-center mb-1">
-                          <h4 className="font-semibold text-charcoal-text text-sm flex items-center gap-1">
-                            {profile.name}
-                            {profile.verified && (
-                              <span 
-                                className="material-symbols-outlined text-[14px] text-emerald-600 leading-none" 
-                                title="Verified Profile"
+                          <p className="text-[10px] md:text-xs text-deep-maroon font-semibold mt-0.5 mb-1.5 truncate">
+                            {profile.profession}
+                          </p>
+
+                          <div className="text-[9.5px] md:text-[11px] text-soft-gray flex-1">
+                            <p className="flex items-center gap-1 truncate">
+                              <span
+                                className="material-symbols-outlined leading-none text-soft-gray/60 shrink-0"
+                                style={{ fontSize: '11px', width: '11px', height: '11px' }}
                               >
-                                verified
+                                school
                               </span>
-                            )}
-                            <span className="font-normal text-charcoal-text/80">, {profile.age}</span>
-                          </h4>
-                          <span className="text-[10px] text-soft-gray font-medium">
-                            {profile.height}
-                          </span>
+                              <span className="truncate">{profile.education}</span>
+                            </p>
+                            <p className="flex items-center gap-1 truncate mt-0.5">
+                              <span
+                                className="material-symbols-outlined leading-none text-soft-gray/60 shrink-0"
+                                style={{ fontSize: '11px', width: '11px', height: '11px' }}
+                              >
+                                location_on
+                              </span>
+                              <span className="truncate">{profile.religion} &middot; {profile.location}</span>
+                            </p>
+                          </div>
                         </div>
-
-                        <p className="text-xs text-deep-maroon font-semibold mb-3">
-                          {profile.profession}
-                        </p>
-
-                        <div className="space-y-1 text-[11px] text-soft-gray flex-1 mb-4">
-                          <p className="flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">menu_book</span>
-                            {profile.religion} - {profile.caste}
-                          </p>
-                          <p className="flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">school</span>
-                            {profile.education}
-                          </p>
-                          <p className="flex items-center gap-1">
-                            <span className="material-symbols-outlined text-[13px] text-soft-gray/60 leading-none">location_on</span>
-                            {profile.location}
-                          </p>
-                        </div>
-
-                        <button className="w-full py-2 bg-deep-maroon hover:bg-primary text-white font-semibold rounded-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all text-xs cursor-pointer shadow-sm">
-                          <span className="material-symbols-outlined text-[14px] text-white">favorite</span>
-                          Connect Now
-                        </button>
-                      </div>
+                      </Link>
                     </div>
                   ))}
                 </div>

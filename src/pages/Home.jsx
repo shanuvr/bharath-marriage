@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import ProfileCard from '../../components/ProfileCard';
 
 
 const highlightedProfiles = [
@@ -14,7 +15,9 @@ const highlightedProfiles = [
     location: "Bangalore, KA",
     image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 2,
@@ -27,7 +30,9 @@ const highlightedProfiles = [
     location: "Chennai, TN",
     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: false
+    premium: false,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 3,
@@ -40,7 +45,9 @@ const highlightedProfiles = [
     location: "Kochi, KL",
     image: "https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 4,
@@ -53,7 +60,9 @@ const highlightedProfiles = [
     location: "Pune, MH",
     image: "https://images.unsplash.com/photo-1624561172888-ac93c696e10c?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 5,
@@ -66,7 +75,9 @@ const highlightedProfiles = [
     location: "Hyderabad, TS",
     image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 6,
@@ -79,7 +90,9 @@ const highlightedProfiles = [
     location: "Austin, USA",
     image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 7,
@@ -92,7 +105,9 @@ const highlightedProfiles = [
     location: "Ernakulam, KL",
     image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: false
+    premium: false,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   },
   {
     id: 8,
@@ -105,7 +120,9 @@ const highlightedProfiles = [
     location: "Delhi, NCR",
     image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=400&h=500",
     verified: true,
-    premium: true
+    premium: true,
+    memberSince: 'Jan 2024',
+  lastUpdated: '2d ago',
   }
 ];
 
@@ -130,8 +147,6 @@ export default function Home() {
   const [phone, setPhone] = useState('');
 
   const [location, setLocation] = useState('');
-  const [motherTongue, setMotherTongue] = useState('Hindi');
-  const [heightRange, setHeightRange] = useState('140-170');
 
   // Quick Search age states
   const [ageMin, setAgeMin] = useState('18');
@@ -591,7 +606,7 @@ export default function Home() {
       </section>
 
       {/* Highlighted Profiles Section */}
-      <section className="bg-white py-20 relative z-10 border-t border-slate-100">
+      <section className="bg-white py-12 relative z-10 border-t border-slate-100">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
           
           <div className="mb-12">
@@ -620,77 +635,11 @@ export default function Home() {
               ref={scrollContainerRef}
               className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
             >
-              {highlightedProfiles.map((profile) => (
-                <Link 
-                  key={profile.id}
-                  to={`/profile/${profile.id}`}
-                  className="w-[210px] sm:w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group cursor-pointer text-left decoration-none"
-                >
-                  {/* Image Section with Overlays */}
-                  <div className="relative h-[135px] sm:h-[175px] w-full overflow-hidden bg-slate-50 shrink-0">
-                    <img 
-                      src={profile.image} 
-                      alt={profile.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    
-                    {profile.premium && (
-                      <span className="absolute top-2.5 right-2.5 bg-heritage-gold/90 backdrop-blur-xs text-white text-[8px] sm:text-[9px] font-label-caps font-semibold py-0.5 px-2 rounded-full border border-heritage-gold/25 tracking-wider">
-                        PREMIUM
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Profile Details */}
-                  <div className="p-3 sm:p-3.5 flex flex-col flex-1">
-                    <div className="flex justify-between items-center mb-1">
-                      <h4 className="font-semibold text-charcoal-text text-xs sm:text-sm flex items-center gap-0.5 sm:gap-1 truncate max-w-[70%]">
-                        <span className="truncate">{profile.name}</span>
-                        {profile.verified && (
-                          <span 
-                            className="material-symbols-outlined text-[12px] sm:text-[14px] text-emerald-600 leading-none select-none shrink-0" 
-                            style={{ fontVariationSettings: "'FILL' 1" }}
-                            title="Verified Profile"
-                          >
-                            verified
-                          </span>
-                        )}
-                        <span className="font-normal text-charcoal-text/80 shrink-0">, {profile.age}</span>
-                      </h4>
-                      <span className="text-[9px] sm:text-[10px] text-soft-gray font-medium shrink-0">
-                        {profile.height}
-                      </span>
-                    </div>
-
-                    <p className="text-[10px] sm:text-xs text-deep-maroon font-semibold mb-2 truncate">
-                      {profile.profession}
-                    </p>
-
-                    <div className="space-y-1 text-[9px] sm:text-[11px] text-soft-gray flex-1">
-                      <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">menu_book</span>
-                        {profile.religion}
-                      </p>
-                      <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">school</span>
-                        <span className="truncate">{profile.education}</span>
-                      </p>
-                      <p className="flex items-center gap-1">
-                        <span className="material-symbols-outlined text-[10px] sm:text-[13px] text-soft-gray/60 leading-none">location_on</span>
-                        <span className="truncate">{profile.location}</span>
-                      </p>
-                    </div>
-
-                    {/* Connect CTA Button (div styled as button to avoid nested interaction) */}
-                    <div className="w-full mt-3 py-1.5 sm:py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-[10px] sm:text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 text-center">
-                      <span className="material-symbols-outlined text-[12px] sm:text-[14px] leading-none text-white">
-                        favorite
-                      </span>
-                      Connect Now
-                    </div>
-                  </div>
-                </Link>
-              ))}
+             {highlightedProfiles.map((profile) => (
+  <div className="w-[210px] sm:w-[270px] shrink-0 snap-start" key={profile.id}>
+    <ProfileCard profile={profile} />
+  </div>
+))}
             </div>
 
             {/* Right navigation arrow */}

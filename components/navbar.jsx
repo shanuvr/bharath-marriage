@@ -134,7 +134,7 @@ export default function Navbar() {
               className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${
                 isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
               }`} 
-              href="/#contact"
+              href="/contact-us"
             >
               Contact Us
             </a>
@@ -195,7 +195,7 @@ export default function Navbar() {
                           <p className="text-[10px] text-soft-gray">ID: BM1006</p>
                         </div>
                         <Link 
-                          to="/profile/5" 
+                          to="/dashboard?tab=profile" 
                           onClick={() => setIsDropdownOpen(false)} 
                           className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
                         >

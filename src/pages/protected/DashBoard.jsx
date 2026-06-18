@@ -1,63 +1,15 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-
-const recommendedProfiles = [
-  {
-    id: 1,
-    name: 'Aishwarya R.',
-    age: 26,
-    height: "5'4\"",
-    religion: 'Hindu - Nair',
-    education: 'M.Tech',
-    profession: 'Software Engineer',
-    location: 'Bangalore',
-    image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&q=80&w=400&h=500',
-    verified: true,
-    premium: true,
-  },
-  {
-    id: 3,
-    name: 'Meera Joseph',
-    age: 25,
-    height: "5'5\"",
-    religion: 'Christian - Catholic',
-    education: 'MD - Pediatrics',
-    profession: 'Doctor',
-    location: 'Kochi',
-    image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?auto=format&fit=crop&q=80&w=400&h=500',
-    verified: true,
-    premium: true,
-  },
-  {
-    id: 7,
-    name: 'Kavya Madhavan',
-    age: 25,
-    height: "5'3\"",
-    religion: 'Hindu - Nair',
-    education: 'BFA - Design',
-    profession: 'UI/UX Designer',
-    location: 'Ernakulam',
-    image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=400&h=500',
-    verified: true,
-    premium: false,
-  },
-  {
-    id: 5,
-    name: 'Neha Sharma',
-    age: 27,
-    height: "5'6\"",
-    religion: 'Hindu - Brahmin',
-    education: 'M.S. Data Science',
-    profession: 'Data Scientist',
-    location: 'Hyderabad',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400&h=500',
-    verified: true,
-    premium: true,
-  },
-];
+import { useState, useEffect } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
+import MyHomeView from '../../../components/dashboard/MyHomeView';
+import MyProfileView from '../../../components/dashboard/MyProfileView';
+import PartnerPreferencesView from '../../../components/dashboard/PartnerPreferencesView';
+import ManagePhotosView from '../../../components/dashboard/ManagePhotosView';
+import InboxView from '../../../components/dashboard/InboxView';
+import ShortlistsView from '../../../components/dashboard/ShortlistsView';
+import SettingsView from '../../../components/dashboard/SettingsView';
 
 const menuItems = [
-  { icon: 'dashboard', label: 'My Home', active: true },
+  { icon: 'dashboard', label: 'My Home' },
   { icon: 'account_circle', label: 'My Profile' },
   { icon: 'diversity_1', label: 'Partner Preferences' },
   { icon: 'photo_library', label: 'Manage Photos' },
@@ -66,79 +18,81 @@ const menuItems = [
   { icon: 'settings', label: 'Account Settings' },
 ];
 
-function ProfileCard({ profile, compact = false, fullWidth = false }) {
-  const imgHeightClass = fullWidth 
-    ? 'h-[115px] sm:h-[180px]' 
-    : (compact ? 'h-[120px] sm:h-[150px]' : 'h-[140px] sm:h-[180px]');
-
-  return (
-    <Link
-      to={`/profile/${profile.id}`}
-      className={`group shrink-0 block overflow-hidden rounded-xl border border-slate-100 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${
-        fullWidth ? 'w-full' : (compact ? 'w-[190px]' : 'w-[240px]')
-      }`}
-    >
-      {/* Profile Image */}
-      <div className={`relative w-full overflow-hidden bg-slate-50 ${imgHeightClass}`}>
-        <img 
-          src={profile.image} 
-          alt={profile.name} 
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" 
-        />
-        
-        {profile.premium && (
-          <span className="absolute right-2 top-2 rounded-full bg-heritage-gold/90 backdrop-blur-xs px-2 py-0.5 text-[8px] font-bold tracking-wider text-white border border-white/20">
-            PREMIUM
-          </span>
-        )}
-      </div>
-
-      {/* Profile details */}
-      <div className="p-2 sm:p-3">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-0.5 sm:gap-1.5 text-left">
-          <h3 className="truncate text-xs font-bold text-charcoal-text flex items-center gap-1">
-            <span className="truncate">{profile.name}</span>
-            {profile.verified && (
-              <span 
-                className="material-symbols-outlined text-[13px] text-emerald-600 leading-none shrink-0"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                verified
-              </span>
-            )}
-          </h3>
-          <span className="shrink-0 text-[9px] sm:text-[10px] font-medium text-soft-gray">{profile.age} yrs • {profile.height}</span>
-        </div>
-        
-        <p className="mt-0.5 truncate text-[10px] sm:text-[11px] font-semibold text-deep-maroon text-left">{profile.profession}</p>
-        
-        <div className="mt-2 pt-2 border-t border-slate-100 space-y-0.5 text-[9px] sm:text-[10px] text-soft-gray text-left">
-          <p className="flex items-center gap-0.5 sm:gap-1">
-            <span className="material-symbols-outlined text-[8px] sm:text-[11px] text-slate-400 leading-none">menu_book</span>
-            <span className="truncate">{profile.religion}</span>
-          </p>
-          <p className="flex items-center gap-0.5 sm:gap-1">
-            <span className="material-symbols-outlined text-[8px] sm:text-[11px] text-slate-400 leading-none">school</span>
-            <span className="truncate">{profile.education}</span>
-          </p>
-          <p className="flex items-center gap-0.5 sm:gap-1">
-            <span className="material-symbols-outlined text-[8px] sm:text-[11px] text-slate-400 leading-none">location_on</span>
-            <span className="truncate">{profile.location}</span>
-          </p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 export default function Dashboard() {
-  const [activeItem, setActiveItem] = useState('My Home');
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get('tab');
+
+  const getTabFromParam = (param) => {
+    switch (param) {
+      case 'profile':
+        return 'My Profile';
+      case 'preferences':
+        return 'Partner Preferences';
+      case 'photos':
+        return 'Manage Photos';
+      case 'inbox':
+        return 'Inbox Messages';
+      case 'shortlists':
+        return 'Shortlists';
+      case 'settings':
+        return 'Account Settings';
+      default:
+        return 'My Home';
+    }
+  };
+
+  const [activeItem, setActiveItem] = useState(() => getTabFromParam(tabParam));
+
+  useEffect(() => {
+    if (tabParam) {
+      setActiveItem(getTabFromParam(tabParam));
+    }
+  }, [tabParam]);
+
+  const renderActiveContent = () => {
+    switch (activeItem) {
+      case 'My Home':
+        return <MyHomeView />;
+      case 'My Profile':
+        return <MyProfileView />;
+      case 'Partner Preferences':
+        return <PartnerPreferencesView />;
+      case 'Manage Photos':
+        return <ManagePhotosView />;
+      case 'Inbox Messages':
+        return <InboxView />;
+      case 'Shortlists':
+        return <ShortlistsView />;
+      case 'Account Settings':
+        return <SettingsView />;
+      default:
+        return <MyHomeView />;
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fbfaf9] via-rose-50/20 to-amber-50/10 text-charcoal-text pt-24 md:pt-28 pb-16">
       
       <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop w-full">
         
+        {/* Mobile Horizontal Tabs Selector */}
+        <div className="md:hidden flex gap-2 overflow-x-auto pb-3 mb-4 scrollbar-hidden border-b border-slate-100 shrink-0">
+          {menuItems.map((item) => (
+            <button
+              key={item.label}
+              onClick={() => setActiveItem(item.label)}
+              className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-full whitespace-nowrap transition-all cursor-pointer ${
+                activeItem === item.label
+                  ? 'bg-deep-maroon text-white shadow-sm'
+                  : 'bg-white border border-slate-200 text-charcoal-text/85'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[14px] leading-none">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+        </div>
+
         {/* Dashboard Grid */}
         <div className="grid gap-6 md:grid-cols-[280px_1fr]">
           
@@ -151,7 +105,6 @@ export default function Dashboard() {
                 
                 {/* Visual Profile Circular Ring */}
                 <div className="relative mb-3 flex items-center justify-center">
-                  {/* Rotating background ring representing 85% */}
                   <svg className="w-24 h-24 transform -rotate-90">
                     <circle 
                       cx="48" 
@@ -196,10 +149,13 @@ export default function Dashboard() {
                 
                 <div className="mt-4 w-full border-t border-slate-100 pt-3 flex justify-between items-center text-xs">
                   <span className="text-soft-gray font-medium">Profile Strength</span>
-                  <Link to="/profile/5" className="font-bold text-deep-maroon hover:text-primary transition-colors flex items-center gap-0.5">
+                  <button 
+                    onClick={() => setActiveItem('My Profile')} 
+                    className="font-bold text-deep-maroon hover:text-primary transition-colors flex items-center gap-0.5 cursor-pointer bg-transparent border-none p-0 focus:outline-none"
+                  >
                     Edit Profile
                     <span className="material-symbols-outlined text-[14px]">edit</span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
@@ -245,90 +201,8 @@ export default function Dashboard() {
           </aside>
 
           {/* RIGHT COLUMN: Main Dashboard Content */}
-          <main className="min-w-0 flex flex-col gap-6 text-left">
-            
-            {/* Header Greeting Banner Card with Indian Heritage Look */}
-            <section className="relative rounded-xl overflow-hidden bg-gradient-to-r from-deep-maroon to-primary p-5 text-white shadow-sm">
-              {/* Overlay mandala background art with low opacity */}
-              <div className="absolute inset-0 opacity-10 hero-pattern pointer-events-none"></div>
-              
-              <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <span className="font-label-caps text-[9px] text-heritage-gold tracking-widest block mb-0.5 font-bold uppercase">
-                    Namaste, Welcome Back
-                  </span>
-                  <h1 className="font-headline-lg text-xl text-white font-bold">
-                    Arjun Reddy
-                  </h1>
-                </div>
-                <p className="font-body-lg text-xs text-white/80 max-w-sm sm:text-right">
-                  Let's continue your search for the perfect life partner.
-                </p>
-              </div>
-            </section>
-
-
-
-            {/* Daily Recommendations Section with Clock Timer */}
-            <section className="rounded-xl border border-slate-200/60 bg-white p-5 shadow-sm">
-              <div className="mb-5 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-4">
-                <div>
-                  <h2 className="text-base font-bold text-charcoal-text uppercase tracking-wide flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-deep-maroon"></span>
-                    Daily Recommendations
-                  </h2>
-
-                </div>
-
-              </div>
-
-              {/* Horizontal Scroll wrapper */}
-              <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hidden snap-x snap-mandatory">
-                {recommendedProfiles.map((profile) => (
-                  <div className="snap-start" key={profile.id}>
-                    <ProfileCard profile={profile} compact />
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Top Matches Section */}
-            <section className="rounded-xl border border-slate-200/60 bg-white p-5 shadow-sm">
-              <div className="mb-5 flex items-center justify-between border-b border-slate-100 pb-4">
-                <h2 className="text-base font-bold text-charcoal-text uppercase tracking-wide flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-heritage-gold"></span>
-                  Top Matches matching Caste &amp; Education
-                </h2>
-                <Link to="/search" className="text-xs font-bold text-deep-maroon hover:text-primary transition-colors flex items-center gap-0.5">
-                  View All Matches
-                  <span className="material-symbols-outlined text-[14px]">chevron_right</span>
-                </Link>
-              </div>
-
-              {/* Grid layout going down */}
-              <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 pt-2">
-                {recommendedProfiles.concat(recommendedProfiles.slice(0, 2)).map((profile, index) => (
-                  <ProfileCard key={`${profile.id}-${index}`} profile={profile} fullWidth />
-                ))}
-              </div>
-            </section>
-
-            {/* Trust and Verification Banner */}
-            <section className="bg-gradient-to-r from-slate-50 to-slate-100/50 rounded-xl border border-slate-200/60 p-5 flex flex-col md:flex-row md:items-center gap-5 justify-between">
-              <div className="flex gap-4 items-start text-left">
-                <span className="material-symbols-outlined text-[36px] text-emerald-600 shrink-0">verified_user</span>
-                <div>
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-charcoal-text">Shielded &amp; Secure Verification</h4>
-                  <p className="text-[11px] text-soft-gray leading-relaxed mt-0.5">
-                    Keep your matrimonial search completely safe. Profiles verified with government IDs get a <span className="font-semibold text-emerald-600">Verified Badge</span>, increasing connection rates by up to 2.5x.
-                  </p>
-                </div>
-              </div>
-              <button className="whitespace-nowrap border border-slate-300 hover:border-slate-400 bg-white hover:bg-slate-50 text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer">
-                Verify My Profile Now
-              </button>
-            </section>
-
+          <main className="min-w-0 flex flex-col text-left">
+            {renderActiveContent()}
           </main>
           
         </div>
