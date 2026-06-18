@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 
 const highlightedProfiles = [
@@ -621,9 +621,10 @@ export default function Home() {
               className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
             >
               {highlightedProfiles.map((profile) => (
-                <div 
+                <Link 
                   key={profile.id}
-                  className="w-[210px] sm:w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
+                  to={`/profile/${profile.id}`}
+                  className="w-[210px] sm:w-[270px] shrink-0 snap-start bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group cursor-pointer text-left decoration-none"
                 >
                   {/* Image Section with Overlays */}
                   <div className="relative h-[135px] sm:h-[175px] w-full overflow-hidden bg-slate-50 shrink-0">
@@ -680,15 +681,15 @@ export default function Home() {
                       </p>
                     </div>
 
-                    {/* Connect CTA Button */}
-                    <button className="w-full mt-3 py-1.5 sm:py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-[10px] sm:text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 cursor-pointer">
+                    {/* Connect CTA Button (div styled as button to avoid nested interaction) */}
+                    <div className="w-full mt-3 py-1.5 sm:py-2 bg-deep-maroon hover:bg-primary text-white transition-all text-[10px] sm:text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 text-center">
                       <span className="material-symbols-outlined text-[12px] sm:text-[14px] leading-none text-white">
                         favorite
                       </span>
                       Connect Now
-                    </button>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
 
