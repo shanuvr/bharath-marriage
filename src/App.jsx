@@ -9,6 +9,7 @@ import ProfileDetails from './pages/protected/ProfileDetail';
 import Porutham from './pages/Porutham';
 import Muhurtham from './pages/Muhurtham';
 import Contact from './pages/contact';
+import Packages from './pages/Packages';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -31,6 +32,7 @@ function App() {
         <Route path="/porutham" element={<Porutham />} />
         <Route path="/muhurtham" element={<Muhurtham />} />
         <Route path='/contact-us' element={<Contact/>}/>
+        <Route path='packages' element={<Packages/>}/>
       </Routes>
     </UserLayout>
   );

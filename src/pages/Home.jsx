@@ -243,26 +243,49 @@ export default function Home() {
   const handleQuickSearch = () => {
     navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
   };
+  const heroVideos = [
+  "/hero-video.mp4",
+  "/hero-video1.mp4",
+  "/hero-video2.mp4",
+  "/hero-video3.mp4",
+  "/hero-video4.mp4",
+];
+const [videoIndex] = useState(() => Math.floor(Math.random() * heroVideos.length));
+const [currentVideo, setCurrentVideo] = useState(heroVideos[videoIndex]);
+const [failedVideos, setFailedVideos] = useState([]);
+const handleVideoError = () => {
+  // Mark this one as broken, try the next available video
+  const remaining = heroVideos.filter(
+    (v) => v !== currentVideo && !failedVideos.includes(v)
+  );
+  if (remaining.length > 0) {
+    setFailedVideos((prev) => [...prev, currentVideo]);
+    setCurrentVideo(remaining[Math.floor(Math.random() * remaining.length)]);
+  }
+};
 
   return (
     <div className="w-full flex flex-col">
       {/* Hero Section */}
       <section className="relative pt-20 overflow-hidden min-h-[85vh] flex items-center">
         {/* Hero Background Video */}
-        <div className="absolute inset-0 z-0">
-          {/* Dark Overlay for Text/Nav Contrast */}
-          <div className="absolute inset-0 bg-black/45 z-10"></div>
-          <video 
-            className="w-full h-full object-cover object-top" 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-          >
-            <source src="/hero-video.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        </div>
+      <div className="absolute inset-0 z-0 bg-charcoal-text">
+  {/* Dark Overlay for Text/Nav Contrast */}
+  <div className="absolute inset-0 bg-black/45 z-10"></div>
+  <video
+    key={currentVideo}
+    className="w-full h-full object-cover object-top"
+    autoPlay
+    loop
+    muted
+    playsInline
+    preload="auto"
+    onError={handleVideoError}
+  >
+    <source src={currentVideo} type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+</div>
 
         {/* Hero Content */}
         <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center py-8 md:py-12">
