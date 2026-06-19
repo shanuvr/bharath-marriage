@@ -8,20 +8,18 @@ export default function ManagePhotosView() {
     { id: 4, url: '', isPrimary: false },
   ]);
 
-  const [uploadProgress, setUploadProgress] = useState(null);
+  const handleFileUpload = (id, file) => {
+    if (!file) return;
 
-  const simulateUpload = (id) => {
-    setUploadProgress(id);
-    setTimeout(() => {
-      setPhotos((prev) =>
-        prev.map((photo) =>
-          photo.id === id
-            ? { ...photo, url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400&h=500' }
-            : photo
-        )
-      );
-      setUploadProgress(null);
-    }, 2000);
+    const imageUrl = URL.createObjectURL(file);
+
+    setPhotos((prev) =>
+      prev.map((photo) =>
+        photo.id === id
+          ? { ...photo, url: imageUrl }
+          : photo
+      )
+    );
   };
 
   const deletePhoto = (id) => {
@@ -47,16 +45,16 @@ export default function ManagePhotosView() {
               {photo.url ? (
                 <>
                   <img src={photo.url} alt="Profile photo" className="w-full h-full object-cover" />
-                  
+
                   {photo.isPrimary && (
                     <span className="absolute top-2 left-2 bg-deep-maroon text-white text-[8px] font-bold px-2 py-0.5 rounded-full shadow border border-white/20 uppercase tracking-wider">
                       Primary
                     </span>
                   )}
-                  
+
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                     {!photo.isPrimary && (
-                      <button 
+                      <button
                         onClick={() => {
                           setPhotos((prev) =>
                             prev.map((p) => ({ ...p, isPrimary: p.id === photo.id }))
@@ -68,7 +66,7 @@ export default function ManagePhotosView() {
                         <span className="material-symbols-outlined text-base leading-none">star</span>
                       </button>
                     )}
-                    <button 
+                    <button
                       onClick={() => deletePhoto(photo.id)}
                       className="bg-red-600 hover:bg-red-700 text-white p-1.5 rounded-full shadow hover:scale-105 transition-all cursor-pointer"
                       title="Delete Photo"
@@ -79,22 +77,26 @@ export default function ManagePhotosView() {
                 </>
               ) : (
                 <div className="flex flex-col items-center p-3 text-center">
-                  {uploadProgress === photo.id ? (
-                    <div className="flex flex-col items-center gap-2">
-                      <div className="w-6 h-6 border-2 border-deep-maroon/20 border-t-deep-maroon rounded-full animate-spin"></div>
-                      <span className="text-[10px] text-soft-gray font-semibold">Uploading...</span>
-                    </div>
-                  ) : (
-                    <>
-                      <span className="material-symbols-outlined text-[32px] text-slate-300 mb-1">add_a_photo</span>
-                      <button 
-                        onClick={() => simulateUpload(photo.id)}
-                        className="text-[10px] font-bold text-deep-maroon hover:text-primary transition-colors cursor-pointer hover:underline"
-                      >
-                        Add Photo
-                      </button>
-                    </>
-                  )}
+                  <span className="material-symbols-outlined text-[32px] text-slate-300 mb-1">
+                    add_a_photo
+                  </span>
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    id={`photo-upload-${photo.id}`}
+                    className="hidden"
+                    onChange={(e) =>
+                      handleFileUpload(photo.id, e.target.files?.[0])
+                    }
+                  />
+
+                  <label
+                    htmlFor={`photo-upload-${photo.id}`}
+                    className="text-[10px] font-bold text-deep-maroon hover:text-primary transition-colors cursor-pointer hover:underline"
+                  >
+                    Add Photo
+                  </label>
                 </div>
               )}
             </div>

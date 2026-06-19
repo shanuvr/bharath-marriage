@@ -16,6 +16,7 @@ export default function PartnerPreferencesView() {
   });
 
   const [isSaved, setIsSaved] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,6 +26,7 @@ export default function PartnerPreferencesView() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSaved(true);
+    setIsEditing(false);
     setTimeout(() => setIsSaved(false), 3000);
   };
 
@@ -39,12 +41,24 @@ export default function PartnerPreferencesView() {
             </h2>
             <p className="text-[11px] text-soft-gray mt-1">Refine your partner criteria to get more relevant matches in your feed.</p>
           </div>
-          {isSaved && (
-            <div className="text-[11px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full flex items-center gap-1 animate-fade-in">
-              <span className="material-symbols-outlined text-[13px]">check_circle</span>
-              Preferences Saved!
-            </div>
-          )}
+          <div className="flex items-center gap-3">
+            {isSaved && (
+              <div className="text-[11px] font-bold text-emerald-600 bg-emerald-50 border border-emerald-200/60 px-3 py-1 rounded-full flex items-center gap-1 animate-fade-in">
+                <span className="material-symbols-outlined text-[13px]">check_circle</span>
+                Saved!
+              </div>
+            )}
+            {!isEditing && (
+              <button
+                type="button"
+                onClick={() => setIsEditing(true)}
+                className="bg-slate-100 hover:bg-slate-200 text-charcoal-text font-semibold py-1.5 px-3 md:py-2 md:px-4 rounded-lg shadow-sm transition-all cursor-pointer text-[10px] md:text-xs uppercase tracking-wider flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-[14px]">edit</span>
+                Edit Preferences
+              </button>
+            )}
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -59,8 +73,8 @@ export default function PartnerPreferencesView() {
                     type="number"
                     name="ageMin"
                     value={preferences.ageMin}
-                    onChange={handleChange}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                    onChange={handleChange} disabled={!isEditing}
+                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                     min="18"
                     max="60"
                   />
@@ -71,8 +85,8 @@ export default function PartnerPreferencesView() {
                     type="number"
                     name="ageMax"
                     value={preferences.ageMax}
-                    onChange={handleChange}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                    onChange={handleChange} disabled={!isEditing}
+                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                     min="18"
                     max="60"
                   />
@@ -86,8 +100,8 @@ export default function PartnerPreferencesView() {
                     type="text"
                     name="heightMin"
                     value={preferences.heightMin}
-                    onChange={handleChange}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                    onChange={handleChange} disabled={!isEditing}
+                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                   />
                 </div>
                 <div>
@@ -96,8 +110,8 @@ export default function PartnerPreferencesView() {
                     type="text"
                     name="heightMax"
                     value={preferences.heightMax}
-                    onChange={handleChange}
-                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                    onChange={handleChange} disabled={!isEditing}
+                    className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                   />
                 </div>
               </div>
@@ -107,8 +121,8 @@ export default function PartnerPreferencesView() {
                 <select
                   name="maritalStatus"
                   value={preferences.maritalStatus}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 >
                   <option value="Never Married">Never Married</option>
                   <option value="Divorced / Widowed">Divorced / Widowed</option>
@@ -122,8 +136,8 @@ export default function PartnerPreferencesView() {
                   type="text"
                   name="motherTongue"
                   value={preferences.motherTongue}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 />
               </div>
             </div>
@@ -141,8 +155,8 @@ export default function PartnerPreferencesView() {
                   type="text"
                   name="religion"
                   value={preferences.religion}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 />
               </div>
 
@@ -152,8 +166,8 @@ export default function PartnerPreferencesView() {
                   type="text"
                   name="caste"
                   value={preferences.caste}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 />
               </div>
             </div>
@@ -171,8 +185,8 @@ export default function PartnerPreferencesView() {
                   type="text"
                   name="education"
                   value={preferences.education}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 />
               </div>
 
@@ -182,8 +196,8 @@ export default function PartnerPreferencesView() {
                   type="text"
                   name="profession"
                   value={preferences.profession}
-                  onChange={handleChange}
-                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
+                  onChange={handleChange} disabled={!isEditing}
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 />
               </div>
             </div>
@@ -206,14 +220,23 @@ export default function PartnerPreferencesView() {
             </div>
           </div>
 
-          <div className="pt-4 text-right">
-            <button
-              type="submit"
-              className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2.5 px-6 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer text-xs uppercase tracking-wider"
-            >
-              Save Preferences
-            </button>
-          </div>
+          {isEditing && (
+            <div className="pt-4 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                className="bg-white border border-slate-200 hover:bg-slate-50 text-charcoal-text font-semibold py-2 px-4 md:py-2.5 md:px-6 rounded-lg shadow-sm transition-all cursor-pointer text-[10px] md:text-xs uppercase tracking-wider"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2 px-4 md:py-2.5 md:px-6 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer text-[10px] md:text-xs uppercase tracking-wider"
+              >
+                Save Preferences
+              </button>
+            </div>
+          )}
         </form>
       </section>
     </div>

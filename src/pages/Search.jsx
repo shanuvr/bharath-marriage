@@ -137,6 +137,9 @@ export default function Search() {
   const [religion, setReligion] = useState('');
   const [caste, setCaste] = useState('Open to all');
   const [location, setLocation] = useState('');
+  const [age, setAge] = useState('');
+  const [height, setHeight] = useState('');
+  const [nakshatra, setNakshatra] = useState('');
 
 
   const [maritalStatus, setMaritalStatus] = useState('');
@@ -261,27 +264,34 @@ export default function Search() {
 
       <section className="py-6 md:py-10 relative z-10 px-margin-mobile md:px-margin-desktop">
         <div className="max-w-4xl mx-auto bg-transparent md:bg-white p-0 md:p-8 rounded-none md:rounded-xl shadow-none md:shadow-md border-none md:border md:border-slate-100">
-          <form onSubmit={handleSearch} className="space-y-4 md:space-y-6">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6">
 
-              <div className="text-left col-span-1">
-                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">I'm looking for a</label>
+          <form onSubmit={handleSearch} className="space-y-4 md:space-y-6">
+
+            {/* Main Filters */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
+
+              <div className="text-left">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                  I'm Looking For
+                </label>
                 <select
                   value={lookingFor}
                   onChange={(e) => setLookingFor(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
                 >
                   <option value="Bride">Bride (Female)</option>
                   <option value="Groom">Groom (Male)</option>
                 </select>
               </div>
 
-              <div className="text-left col-span-1">
-                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">Religion</label>
+              <div className="text-left">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                  Religion
+                </label>
                 <select
                   value={religion}
                   onChange={(e) => setReligion(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
                 >
                   <option value="">Select Religion</option>
                   <option value="Hindu">Hindu</option>
@@ -291,32 +301,14 @@ export default function Search() {
                 </select>
               </div>
 
-              <div className="text-left col-span-2 md:col-span-1">
-                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">Caste</label>
-                <select
-                  value={caste}
-                  onChange={(e) => setCaste(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
-                >
-                  <option value="Open to all">Selected (0)</option>
-                  <option value="Brahmin">Brahmin</option>
-                  <option value="Reddy">Reddy</option>
-                  <option value="Open to all">Open to all</option>
-                </select>
-              </div>
-
-            </div>
-
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6">
-
-              <div className="text-left col-span-1">
-                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">
+              <div className="text-left">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
                   Location
                 </label>
                 <select
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
                 >
                   <option value="">Any Location</option>
                   <option value="Bangalore">Bangalore</option>
@@ -327,14 +319,14 @@ export default function Search() {
                 </select>
               </div>
 
-              <div className="text-left col-span-2 md:col-span-1">
-                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 md:mb-1.5 uppercase tracking-wide">
+              <div className="text-left">
+                <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
                   Marital Status
                 </label>
                 <select
                   value={maritalStatus}
                   onChange={(e) => setMaritalStatus(e.target.value)}
-                  className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium"
+                  className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
                 >
                   <option value="">Any Status</option>
                   <option value="Never Married">Never Married</option>
@@ -345,48 +337,121 @@ export default function Search() {
 
             </div>
 
+            {/* More Filters */}
             {showMore && (
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3.5 md:gap-6 pt-4 border-t border-slate-100 fade-in">
-                <div className="text-left col-span-1">
-                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Location</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
-                    <option value="">Any Location</option>
-                    <option value="Bangalore">Bangalore</option>
-                    <option value="Chennai">Chennai</option>
-                    <option value="Kochi">Kochi</option>
-                    <option value="Delhi">Delhi</option>
-                  </select>
-                </div>
+              <div className="border-t border-slate-100 pt-4">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
 
-                <div className="text-left col-span-1">
-                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Education</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
-                    <option value="">Any Education</option>
-                    <option value="B.Tech">B.Tech</option>
-                    <option value="M.Tech">M.Tech</option>
-                    <option value="MBA">MBA</option>
-                    <option value="Doctor">Doctor</option>
-                  </select>
-                </div>
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Education
+                    </label>
+                    <select className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white">
+                      <option value="">Any Education</option>
+                      <option value="B.Tech">B.Tech</option>
+                      <option value="M.Tech">M.Tech</option>
+                      <option value="MBA">MBA</option>
+                      <option value="Doctor">Doctor</option>
+                    </select>
+                  </div>
 
-                <div className="text-left col-span-2 md:col-span-1">
-                  <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1.5 uppercase tracking-wide">Profession</label>
-                  <select className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 md:py-2 md:px-3 text-[11px] md:text-xs bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon cursor-pointer font-medium">
-                    <option value="">Any Profession</option>
-                    <option value="Software Engineer">Software Engineer</option>
-                    <option value="Doctor">Doctor</option>
-                    <option value="Product Manager">Product Manager</option>
-                    <option value="Manager">Manager</option>
-                  </select>
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Profession
+                    </label>
+                    <select className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white">
+                      <option value="">Any Profession</option>
+                      <option value="Software Engineer">Software Engineer</option>
+                      <option value="Doctor">Doctor</option>
+                      <option value="Product Manager">Product Manager</option>
+                      <option value="Manager">Manager</option>
+                    </select>
+                  </div>
+
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Age
+                    </label>
+                    <select
+                      value={age}
+                      onChange={(e) => setAge(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
+                    >
+                      <option value="">Any Age</option>
+                      <option value="18-25">18 - 25</option>
+                      <option value="26-30">26 - 30</option>
+                      <option value="31-35">31 - 35</option>
+                      <option value="36-40">36 - 40</option>
+                    </select>
+                  </div>
+
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Height
+                    </label>
+                    <select
+                      value={height}
+                      onChange={(e) => setHeight(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
+                    >
+                      <option value="">Any Height</option>
+                      <option value="150">5'0" & Above</option>
+                      <option value="155">5'1" & Above</option>
+                      <option value="160">5'3" & Above</option>
+                      <option value="165">5'5" & Above</option>
+                      <option value="170">5'7" & Above</option>
+                      <option value="175">5'9" & Above</option>
+                      <option value="180">5'11" & Above</option>
+                    </select>
+                  </div>
+
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Caste
+                    </label>
+                    <select
+                      value={caste}
+                      onChange={(e) => setCaste(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
+                    >
+                      <option value="">Any Caste</option>
+                      <option value="Brahmin">Brahmin</option>
+                      <option value="Reddy">Reddy</option>
+                    </select>
+                  </div>
+
+                  <div className="text-left">
+                    <label className="block text-[9px] md:text-[11px] text-slate-400 font-semibold mb-1 uppercase tracking-wide">
+                      Nakshatra
+                    </label>
+                    <select
+                      value={nakshatra}
+                      onChange={(e) => setNakshatra(e.target.value)}
+                      className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
+                    >
+                      <option value="">Any Nakshatra</option>
+                      <option value="Ashwini">Ashwini</option>
+                      <option value="Bharani">Bharani</option>
+                      <option value="Karthika">Karthika</option>
+                      <option value="Rohini">Rohini</option>
+                      <option value="Makayiram">Makayiram</option>
+                      <option value="Thiruvathira">Thiruvathira</option>
+                      <option value="Punartham">Punartham</option>
+                      <option value="Pooyam">Pooyam</option>
+                      <option value="Ayilyam">Ayilyam</option>
+                    </select>
+                  </div>
+
                 </div>
               </div>
             )}
 
-            <div className="flex justify-between items-center pt-4 border-t border-slate-100 gap-3">
+            {/* Actions */}
+            <div className="flex justify-between items-center pt-4 border-t border-slate-100">
               <button
                 type="button"
                 onClick={() => setShowMore(!showMore)}
-                className="text-deep-maroon hover:text-primary font-semibold text-xs flex items-center gap-1 cursor-pointer transition-colors"
+                className="text-deep-maroon font-semibold text-xs flex items-center gap-1"
               >
                 {showMore ? 'Less Filters' : 'More Filters'}
                 <span className="material-symbols-outlined text-[16px]">
@@ -396,17 +461,12 @@ export default function Search() {
 
               <button
                 type="submit"
-                className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2 px-6 sm:px-14 rounded-lg shadow hover:shadow-md transition-all active:scale-95 cursor-pointer text-xs uppercase tracking-wider"
-                onClick={() => {
-                  // After search, scroll to results
-                  setTimeout(() => {
-                    resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }, 100);
-                }}
+                className="bg-deep-maroon hover:bg-primary text-white font-semibold py-2 px-8 md:px-14 rounded-lg shadow text-xs uppercase tracking-wider"
               >
                 Search
               </button>
             </div>
+
           </form>
         </div>
       </section>

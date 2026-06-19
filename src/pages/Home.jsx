@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ProfileCard from '../../components/ProfileCard';
+import FAQSection from '../../components/Faq';
 
 
 const highlightedProfiles = [
@@ -918,6 +919,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <FAQSection/>
     </div>
   );
 }

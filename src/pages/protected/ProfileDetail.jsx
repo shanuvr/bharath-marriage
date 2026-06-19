@@ -172,22 +172,38 @@ export default function ProfileDetails() {
     ['Name', profile.name],
     ['Gender', profile.gender],
     ['Age', String(profile.age)],
-    ['Marital Status', 'Never Married'],
+    ['Marital Status', profile.maritalStatus || 'Unmarried'],
     ['Height', profile.height],
+    ['Profile Created For', profile.profileCreatedFor || 'Myself'],
   ];
 
   const professionalDetails = [
     ['Education', profile.education],
     ['Occupation', profile.profession],
-    ['Company Type', 'Private Sector'],
-    ['Annual Income', profile.income],
+  ];
+
+  const locationDetails = [
+    ['Country', profile.country || 'India'],
+    ['State', profile.state],
+    ['District', profile.district || 'Thrissur'],
+    ['City', profile.location],
+  ];
+
+  const horoscopeDetails = [
+    ['Birth Time', profile.birthTime || '10:00 AM'],
+    ['Janma Sista Dasa', profile.janmaSistaDasa || 'Rahu'],
+    ['End Dasa', profile.endDasa || '2030-01-01'],
+    ['Dob (Malayalam)', profile.dobMalayalam || '1190 Chingam 1'],
+    ['Dob (English)', profile.dobEnglish || '1996-08-17'],
+    ['Star / Rasi', profile.starRasi || 'Chathayam'],
   ];
 
   const familyDetails = [
-    ['Father', 'Business Owner'],
-    ['Mother', 'Homemaker'],
-    ['Siblings', profile.gender === 'Female' ? 'One younger brother' : 'One elder sister'],
-    ['Native Place', profile.state],
+    ['Father\'s Name', profile.fathersName || 'Murali'],
+    ['Father\'s Job', profile.fathersJob || 'Accountant'],
+    ['Mother\'s Name', profile.mothersName || 'Rekha'],
+    ['Mother\'s Job', profile.mothersJob || 'Housewife'],
+    ['Sibling Details', profile.siblingDetails || 'One brother working as accountant'],
   ];
 
   // Gallery Photos logic based on gender
@@ -414,9 +430,11 @@ export default function ProfileDetails() {
               </p>
             </div>
 
-            {/* Basic, Professional & Family Details */}
+            {/* Profile Details Sections */}
             <DetailSection title="Basic Details" rows={basicDetails} />
             <DetailSection title="Professional Info" rows={professionalDetails} />
+            <DetailSection title="Location Details" rows={locationDetails} />
+            <DetailSection title="Horoscope Details" rows={horoscopeDetails} />
             <DetailSection title="Family Details" rows={familyDetails} />
           </div>
 

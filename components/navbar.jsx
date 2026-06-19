@@ -318,7 +318,7 @@ export default function Navbar() {
                   Matches
                 </button>
                 <a 
-                  href="/#contact"
+                  href="/contact-us"
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center gap-2 font-semibold text-charcoal-text hover:text-deep-maroon hover:bg-slate-50 text-xs py-2 px-2.5 rounded-lg transition-colors"
                 >
