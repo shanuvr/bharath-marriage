@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ProfileCard from '../../components/ProfileCard';
 import FAQSection from '../../components/Faq';
+import { Helmet } from 'react-helmet-async'
 
 
 const highlightedProfiles = [
@@ -128,6 +129,7 @@ const highlightedProfiles = [
 ];
 
 export default function Home() {
+ 
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const [storiesVisible, setStoriesVisible] = useState(false);
@@ -265,7 +267,15 @@ const handleVideoError = () => {
 };
 
   return (
+    
     <div className="w-full flex flex-col">
+       <Helmet>
+        <title>Kerala Matrimony & Malayali Matrimonial Service | Bharath Marriage</title>
+        <meta
+          name="description"
+          content="Find verified bride and groom profiles on Bharath Marriage, a trusted Kerala matrimony platform for genuine Malayali families."
+        />
+    </Helmet>
       {/* Hero Section */}
       <section className="relative pt-20 overflow-hidden min-h-[85vh] flex items-center">
         {/* Hero Background Video */}
