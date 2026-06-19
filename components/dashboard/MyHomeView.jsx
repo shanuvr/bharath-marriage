@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileCard from '../ProfileCard';
 
@@ -58,6 +58,17 @@ const recommendedProfiles = [
 ];
 
 export default function MyHomeView() {
+  const scrollContainerRef = useRef(null);
+
+  const scroll = (direction) => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({
+        left: direction === 'left' ? -320 : 320,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col gap-4 sm:gap-6 w-full">
       {/* Header Greeting Banner Card with Indian Heritage Look */}
@@ -80,20 +91,43 @@ export default function MyHomeView() {
 
       {/* Daily Recommendations Section with Clock Timer */}
       <section className="rounded-none md:rounded-xl border-none md:border md:border-slate-200/60 bg-transparent md:bg-white p-0 md:p-5 shadow-none md:shadow-sm">
-        <div className="mb-4 md:mb-5 flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 pb-3 md:pb-4">
+        <div className="mb-4 md:mb-5 flex items-center justify-between border-b border-slate-100 pb-3 md:pb-4">
           <h2 className="text-xs sm:text-sm md:text-base font-bold text-charcoal-text uppercase tracking-wide flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-deep-maroon"></span>
             Daily Recommendations
           </h2>
         </div>
 
-        {/* Horizontal Scroll wrapper */}
-        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hidden snap-x snap-mandatory">
-          {recommendedProfiles.map((profile) => (
-            <div className="snap-start" key={profile.id}>
-              <ProfileCard profile={profile} compact />
-            </div>
-          ))}
+        {/* Horizontal Scroll wrapper with overlay buttons */}
+        <div className="relative group/scroll">
+          {/* Left Arrow Button */}
+          <button
+            onClick={() => scroll('left')}
+            className="absolute -left-2 md:-left-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/95 hover:bg-white text-slate-700 shadow-md border border-slate-150 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer duration-200"
+            title="Scroll Left"
+          >
+            <span className="material-symbols-outlined font-bold text-lg md:text-xl">chevron_left</span>
+          </button>
+
+          {/* Right Arrow Button */}
+          <button
+            onClick={() => scroll('right')}
+            className="absolute -right-2 md:-right-4 top-1/2 -translate-y-1/2 z-10 w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/95 hover:bg-white text-slate-700 shadow-md border border-slate-150 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer duration-200"
+            title="Scroll Right"
+          >
+            <span className="material-symbols-outlined font-bold text-lg md:text-xl">chevron_right</span>
+          </button>
+
+          <div
+            ref={scrollContainerRef}
+            className="flex gap-4 overflow-x-auto pb-2 scrollbar-hidden snap-x snap-mandatory scroll-smooth"
+          >
+            {recommendedProfiles.map((profile) => (
+              <div className="snap-start" key={profile.id}>
+                <ProfileCard profile={profile} compact />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

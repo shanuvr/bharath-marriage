@@ -47,11 +47,11 @@ export default function Navbar() {
         <div className="flex justify-between items-center px-3 sm:px-margin-mobile md:px-margin-desktop h-full max-w-container-max mx-auto w-full gap-2 sm:gap-4">
           {/* Left: Logo & State Dropdown */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative w-24 sm:w-28 md:w-36 h-10">
+            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative w-32 sm:w-40 md:w-52 h-14">
               <img
                 src="/logo.png"
                 alt="Bharath Marriage"
-                className={`w-auto object-contain transition-all duration-300 absolute left-0 top-1/2 -translate-y-1/2 h-8 md:h-10 ${!isSolid ? 'brightness-0 invert' : ''
+                className={`w-auto object-contain transition-all duration-300 absolute left-0 top-1/2 -translate-y-1/2 h-12 md:h-14 ${!isSolid ? 'brightness-0 invert' : ''
                   }`}
               />
             </Link>
@@ -259,7 +259,7 @@ export default function Navbar() {
           <div className="fixed top-0 right-0 h-full w-[260px] bg-white z-55 shadow-2xl flex flex-col md:hidden animate-slide-in-right text-left">
             {/* Header with Branded Logo */}
             <div className="flex justify-between items-center p-4 border-b border-slate-100 shrink-0">
-              <div className="h-8 relative w-28">
+              <div className="h-12 relative w-40">
                 <img
                   src="/logo.png"
                   alt="Bharath Marriage Logo"
