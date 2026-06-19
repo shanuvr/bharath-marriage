@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ProfileCard from '../../components/ProfileCard';
 
@@ -129,6 +129,74 @@ const highlightedProfiles = [
 export default function Home() {
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
+  const [storiesVisible, setStoriesVisible] = useState(false);
+  const storiesRef = useRef(null);
+  const [approachVisible, setApproachVisible] = useState(false);
+  const approachRef = useRef(null);
+  const [howItWorksVisible, setHowItWorksVisible] = useState(false);
+  const howItWorksRef = useRef(null);
+  const [profilesVisible, setProfilesVisible] = useState(false);
+  const profilesRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStoriesVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (storiesRef.current) {
+      observer.observe(storiesRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setApproachVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (approachRef.current) {
+      observer.observe(approachRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHowItWorksVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (howItWorksRef.current) {
+      observer.observe(howItWorksRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setProfilesVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (profilesRef.current) {
+      observer.observe(profilesRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -145,6 +213,7 @@ export default function Home() {
   const [lookingFor, setLookingFor] = useState('Bride'); // 'Bride' corresponds to Female, 'Groom' to Male
   const [community, setCommunity] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
 
   const [location, setLocation] = useState('');
 
@@ -166,8 +235,8 @@ export default function Home() {
       return;
     }
     const dobString = `${dobDay} ${dobMonth} ${dobYear}`;
-    console.log({ fullName, lookingFor, community, dob: dobString, phone });
-    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, DOB: ${dobString}, Community: ${community || 'None'}`);
+    console.log({ fullName, email, lookingFor, community, dob: dobString, phone });
+    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, Email: ${email}, DOB: ${dobString}, Community: ${community || 'None'}`);
   };
 
   const handleQuickSearch = () => {
@@ -197,7 +266,7 @@ export default function Home() {
         {/* Hero Content */}
         <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center py-8 md:py-12">
           {/* Left Column: Simplified Heading */}
-          <div className="fade-in">
+          <div className="animate-elegant-fade-up text-left">
             <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl text-white mb-4 md:mb-6 leading-tight text-center md:text-left">
               Two Souls, <br />
               <span className="text-heritage-gold">One Beautiful Journey</span>
@@ -241,6 +310,17 @@ export default function Home() {
                     required 
                   />
                 </div>
+              </div>
+
+              <div>
+                <input 
+                  type="email" 
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2.5 text-[11px] font-body-sm bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon placeholder-soft-gray/60" 
+                  placeholder="Email Address" 
+                  required 
+                />
               </div>
 
               <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
@@ -535,9 +615,11 @@ export default function Home() {
             </div>
 
             {/* Right Column: Dynamic Visual Cards Grid */}
-            <div className="grid grid-cols-2 gap-4 sm:gap-6 items-stretch w-full">
-                   {/* Tall Vertical Card (Featured Story) */}
-              <div className="col-span-2 sm:col-span-1 sm:row-span-2 bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[350px] sm:h-[420px] hover:shadow-lg transition-shadow duration-300">
+            <div ref={storiesRef} className="grid grid-cols-2 gap-4 sm:gap-6 items-stretch w-full">
+                   {/* Tall Vertical Card (Featured Story) - Left Card */}
+              <div className={`col-span-2 sm:col-span-1 sm:row-span-2 bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[350px] sm:h-[420px] hover:shadow-lg transition-all duration-300 ${
+                storiesVisible ? 'animate-slide-from-left' : 'opacity-0'
+              }`}>
                 <div className="relative flex-1 overflow-hidden">
                   <img src="/image1.jpg" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Anjali & Arun" />
                   <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-deep-maroon text-white text-[9px] sm:text-[10px] font-label-caps font-semibold py-1 px-2.5 rounded-full tracking-wider shadow-md">
@@ -550,8 +632,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Card 2: Dhanya & Midhun */}
-              <div className="col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-shadow duration-300">
+              {/* Card 2: Dhanya & Midhun - Top Right Card */}
+              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${
+                storiesVisible ? 'animate-slide-from-top' : 'opacity-0'
+              }`}>
                 <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3 shrink-0">
                   {/* Custom Floral Branch Line Art */}
                   <svg 
@@ -583,8 +667,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Card 3: Devika & Sreejith */}
-              <div className="col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-shadow duration-300">
+              {/* Card 3: Devika & Sreejith - Bottom Right Card */}
+              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${
+                storiesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
+              }`}>
                 <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3.5 shrink-0">
                   {/* Taller Rounded Frame */}
                   <div className="relative w-[92%] h-full rounded-2xl overflow-hidden shadow-sm bg-slate-50 shrink-0">
@@ -606,10 +692,12 @@ export default function Home() {
       </section>
 
       {/* Highlighted Profiles Section */}
-      <section className="bg-white py-12 relative z-10 border-t border-slate-100">
+      <section ref={profilesRef} className="bg-white py-12 relative z-10 border-t border-slate-100">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
           
-          <div className="mb-12">
+          <div className={`mb-12 transition-all duration-300 ${
+            profilesVisible ? 'animate-elegant-fade-up' : 'opacity-0'
+          }`}>
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
               PREMIUM MATCHES
             </span>
@@ -633,10 +721,16 @@ export default function Home() {
 
             <div 
               ref={scrollContainerRef}
-              className="flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden"
+              className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden transition-all duration-300 ${
+                profilesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
+              }`}
             >
-             {highlightedProfiles.map((profile) => (
-  <div className="w-[210px] sm:w-[270px] shrink-0 snap-start" key={profile.id}>
+             {highlightedProfiles.map((profile, index) => (
+  <div
+    className="w-[210px] sm:w-[270px] shrink-0 snap-start"
+    key={profile.id}
+    style={profilesVisible ? { animationDelay: `${index * 80}ms` } : {}}
+  >
     <ProfileCard profile={profile} />
   </div>
 ))}
@@ -672,10 +766,12 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center text-left">
+          <div ref={approachRef} className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center text-left">
             
             {/* Left: Storytelling Text */}
-            <div className="space-y-6">
+            <div className={`space-y-6 transition-all duration-300 ${
+              approachVisible ? 'animate-approach-text' : 'opacity-0'
+            }`}>
               <h3 className="font-display-lg text-2xl text-charcoal-text leading-tight">
                 Emotive Matching &amp; <br />
                 <span className="text-deep-maroon">Curated Compatibility</span>
@@ -695,7 +791,9 @@ export default function Home() {
             </div>
 
             {/* Right: Premium Wedding Photo */}
-            <div className="rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300">
+            <div className={`rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 ${
+              approachVisible ? 'animate-approach-photo' : 'opacity-0'
+            }`}>
               <img 
                 src="https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&q=80&w=800&h=533" 
                 alt="Traditional Wedding Couple" 
@@ -720,12 +818,16 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative max-w-5xl mx-auto">
+          <div ref={howItWorksRef} className="grid grid-cols-1 md:grid-cols-4 gap-8 relative max-w-5xl mx-auto">
             {/* Curved Connector Path (Desktop) */}
-            <div className="hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[1px] border-t border-dashed border-deep-maroon/30 z-0"></div>
+            <div className={`hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[1px] border-t border-dashed border-deep-maroon/30 z-0 transition-all duration-1000 ${
+              howItWorksVisible ? 'opacity-30' : 'opacity-0'
+            }`}></div>
 
             {/* Step 1: Register */}
-            <div className="flex flex-col items-center text-center relative z-10 group">
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
+              howItWorksVisible ? 'animate-step-1' : 'opacity-0'
+            }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -746,7 +848,9 @@ export default function Home() {
             </div>
 
             {/* Step 2: Search */}
-            <div className="flex flex-col items-center text-center relative z-10 group">
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
+              howItWorksVisible ? 'animate-step-2' : 'opacity-0'
+            }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -767,7 +871,9 @@ export default function Home() {
             </div>
 
             {/* Step 3: Connect */}
-            <div className="flex flex-col items-center text-center relative z-10 group">
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
+              howItWorksVisible ? 'animate-step-3' : 'opacity-0'
+            }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -788,7 +894,9 @@ export default function Home() {
             </div>
 
             {/* Step 4: Marriage */}
-            <div className="flex flex-col items-center text-center relative z-10 group">
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
+              howItWorksVisible ? 'animate-step-4' : 'opacity-0'
+            }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}

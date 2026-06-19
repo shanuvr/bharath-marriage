@@ -375,10 +375,10 @@ export default function ProfileDetails() {
                 <span className="material-symbols-outlined text-[16px] sm:text-[20px] fill-current">favorite</span>
                 <span>Send Interest</span>
               </button>
-              <button className="flex items-center justify-center gap-1.5 py-2 px-2.5 sm:py-2.5 sm:px-4 rounded-lg sm:rounded-xl border border-emerald-100 bg-emerald-50/30 text-emerald-700 hover:bg-emerald-50 hover:shadow-sm transition-all duration-200 cursor-pointer active:scale-95 text-[10px] sm:text-xs font-bold">
+              <Link to="/dashboard?tab=inbox" className="flex items-center justify-center gap-1.5 py-2 px-2.5 sm:py-2.5 sm:px-4 rounded-lg sm:rounded-xl border border-emerald-100 bg-emerald-50/30 text-emerald-700 hover:bg-emerald-50 hover:shadow-sm transition-all duration-200 cursor-pointer active:scale-95 text-[10px] sm:text-xs font-bold">
                 <span className="material-symbols-outlined text-[16px] sm:text-[20px]">chat</span>
                 <span>Chat Now</span>
-              </button>
+              </Link>
             </div>
             
             <div className="flex items-center gap-2 self-end sm:self-auto">

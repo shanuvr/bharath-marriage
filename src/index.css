@@ -119,3 +119,119 @@
   animation: slideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Scroll and Entry Animations */
+@keyframes slideFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes elegantFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-elegant-fade-up {
+  opacity: 0;
+  animation: elegantFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-slide-from-left {
+  opacity: 0;
+  animation: slideFromLeft 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 100ms;
+}
+
+.animate-slide-from-top {
+  opacity: 0;
+  animation: slideFromTop 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 450ms;
+}
+
+.animate-slide-from-bottom {
+  opacity: 0;
+  animation: slideFromBottom 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 800ms;
+}
+
+.animate-approach-text {
+  opacity: 0;
+  animation: slideFromLeft 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 200ms;
+}
+
+.animate-approach-photo {
+  opacity: 0;
+  animation: slideFromRight 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 600ms;
+}
+
+.animate-step-1 {
+  opacity: 0;
+  animation: slideFromBottom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 100ms;
+}
+
+.animate-step-2 {
+  opacity: 0;
+  animation: slideFromBottom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 350ms;
+}
+
+.animate-step-3 {
+  opacity: 0;
+  animation: slideFromBottom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 600ms;
+}
+
+.animate-step-4 {
+  opacity: 0;
+  animation: slideFromBottom 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: 850ms;
+}
+
+
