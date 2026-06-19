@@ -26,7 +26,7 @@ export default function Footer() {
             <li><a className="text-slate-400 hover:text-heritage-gold text-[11px] transition-colors" href="#">Success Stories</a></li>
             <li><a className="text-slate-400 hover:text-heritage-gold text-[11px] transition-colors" href="#">Safety Tips</a></li>
             <li><a className="text-slate-400 hover:text-heritage-gold text-[11px] transition-colors" href="#">Matrimony Blog</a></li>
-            <li><a className="text-slate-400 hover:text-heritage-gold text-[11px] transition-colors" href="#">Affiliates</a></li>
+            
           </ul>
         </div>
         
@@ -57,7 +57,7 @@ export default function Footer() {
       
       <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop mt-12 pt-6 border-t border-white/5 text-center">
         <p className="text-slate-500 text-[10px] tracking-wide">
-          © 2024 Bharath Marriage. Premium Matrimony Services. All Rights Reserved.
+          © 2026 Bharath Marriage. Premium Matrimony Services. All Rights Reserved.
         </p>
       </div>
     </footer>
