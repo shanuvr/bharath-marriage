@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const porutamRows = [
   { name: "ദിനം", match: false },
@@ -99,6 +100,13 @@ export default function Porutham() {
 
   return (
     <div className="min-h-screen bg-slate-50 pt-20 md:pt-24 pb-16 px-margin-mobile md:px-margin-desktop">
+      <Helmet>
+        <title>Porutham Matching for Marriage | Bharath Marriage</title>
+        <meta
+          name="description"
+          content="Check Porutham and horoscope compatibility for better matrimonial matches."
+        />
+      </Helmet>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 md:mb-8">

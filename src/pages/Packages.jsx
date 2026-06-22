@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from 'react-helmet-async';
 
 function Packages() {
   const plans = [
@@ -54,6 +55,13 @@ function Packages() {
 
   return (
     <div className="bg-white min-h-screen">
+      <Helmet>
+        <title>Matrimony Packages & Membership Plans | Bharath Marriage</title>
+        <meta
+          name="description"
+          content="Explore affordable matrimony packages and membership plans to connect with verified bride and groom profiles across Kerala."
+        />
+      </Helmet>
       {/* Header */}
       <section className="pt-14 pb-10 md:pt-20 md:pb-14 px-margin-mobile md:px-margin-desktop border-b border-slate-100">
         <div className="max-w-container-max mx-auto text-center">
@@ -76,11 +84,10 @@ function Packages() {
             {plans.map((plan) => (
               <div
                 key={plan.name}
-                className={`relative rounded-2xl flex flex-col h-full transition-all duration-300 ${
-                  plan.featured
+                className={`relative rounded-2xl flex flex-col h-full transition-all duration-300 ${plan.featured
                     ? "border border-deep-maroon/30 shadow-lg md:-translate-y-2 bg-white"
                     : "border border-slate-200 shadow-sm bg-white hover:border-slate-300 hover:shadow-md"
-                }`}
+                  }`}
               >
                 {plan.featured && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -126,11 +133,10 @@ function Packages() {
                   </ul>
 
                   <button
-                    className={`w-full py-2.5 rounded-lg font-semibold text-[12.5px] transition-all cursor-pointer active:scale-[0.98] ${
-                      plan.featured
+                    className={`w-full py-2.5 rounded-lg font-semibold text-[12.5px] transition-all cursor-pointer active:scale-[0.98] ${plan.featured
                         ? "bg-deep-maroon hover:bg-primary text-white shadow-sm"
                         : "bg-white border border-slate-200 hover:border-deep-maroon hover:text-deep-maroon text-charcoal-text"
-                    }`}
+                      }`}
                   >
                     {plan.buttonText}
                   </button>

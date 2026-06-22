@@ -403,49 +403,7 @@ export default function Navbar() {
                   <span>Search Profiles</span>
                 </Link>
 
-                {/* State Selection Dropdown for Mobile */}
-                <div className="relative w-full">
-                  <button
-                    onClick={() => setIsMobileStateDropdownOpen(!isMobileStateDropdownOpen)}
-                    className="flex items-center justify-between gap-2 w-full py-2 px-3 bg-slate-50 border border-slate-200 text-charcoal-text font-semibold rounded-lg text-xs cursor-pointer active:scale-[0.98]"
-                  >
-                    <div className="flex items-center gap-1.5">
-                      <span className="material-symbols-outlined text-[14px] text-deep-maroon leading-none">location_on</span>
-                      <span>State: <strong className="text-deep-maroon">{activeState}</strong></span>
-                    </div>
-                    <span className={`material-symbols-outlined text-[14px] transition-transform duration-200 ${isMobileStateDropdownOpen ? 'rotate-180' : ''}`}>
-                      keyboard_arrow_down
-                    </span>
-                  </button>
-
-                  {isMobileStateDropdownOpen && (
-                    <div className="mt-1 w-full bg-white rounded-lg border border-slate-100 py-1 shadow-md z-10">
-                      <button
-                        onClick={() => {
-                          setActiveState('Kerala');
-                          setIsMobileStateDropdownOpen(false);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className="w-full text-left px-3 py-1.5 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon cursor-pointer flex justify-between items-center"
-                      >
-                        <span>Kerala</span>
-                        {activeState === 'Kerala' && <span className="material-symbols-outlined text-[14px] text-deep-maroon font-bold">check</span>}
-                      </button>
-                      <button
-                        className="w-full text-left px-3 py-1.5 text-xs font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center"
-                        disabled
-                      >
-                        <span>Tamil Nadu (Soon)</span>
-                      </button>
-                      <button
-                        className="w-full text-left px-3 py-1.5 text-xs font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center"
-                        disabled
-                      >
-                        <span>Karnataka (Soon)</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
+              
               </div>
             </div>
 

@@ -7,6 +7,7 @@ import ManagePhotosView from '../../../components/dashboard/ManagePhotosView';
 import InboxView from '../../../components/dashboard/InboxView';
 import ShortlistsView from '../../../components/dashboard/ShortlistsView';
 import SettingsView from '../../../components/dashboard/SettingsView';
+import { Helmet } from 'react-helmet-async';
 
 const menuItems = [
   { icon: 'dashboard', label: 'My Home' },
@@ -72,7 +73,13 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#fbfaf9] via-rose-50/20 to-amber-50/10 text-charcoal-text pt-24 md:pt-28 pb-16">
-      
+      <Helmet>
+                    <title>Verified Bride & Groom Matches in Kerala | Bharath Marriage</title>
+                    <meta
+                      name="description"
+                      content="Browse verified bride and groom profiles and discover compatible matrimonial matches across Kerala."
+                    />
+                  </Helmet>
       <div className="mx-auto max-w-container-max px-margin-mobile md:px-margin-desktop w-full">
         
         {/* Mobile Horizontal Tabs Selector */}

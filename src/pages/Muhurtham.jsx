@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const nakshatrams = [
   "അശ്വതി", "ഭരണി", "കാർത്തിക", "രോഹിണി", "മകയിരം", "തിരുവാതിര",
@@ -91,6 +92,13 @@ export default function Muhurtham() {
 
   return (
     <div className="min-h-screen bg-slate-50 pt-20 md:pt-24 pb-16 px-margin-mobile md:px-margin-desktop">
+         <Helmet>
+              <title>Marriage Muhurtham Dates & Timings | Bharath Marriage</title>
+              <meta
+                name="description"
+                content="Find auspicious Muhurtham dates and marriage timings based on traditional Kerala matrimonial practices."
+              />
+            </Helmet>
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-6 md:mb-8">

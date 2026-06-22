@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
@@ -14,6 +15,13 @@ export default function Contact() {
 
   return (
     <div className="w-full flex flex-col bg-[#fbfaf9]">
+      <Helmet>
+        <title>Contact Bharath Marriage | Kerala Matrimony Service</title>
+        <meta
+          name="description"
+          content="Contact Bharath Marriage for profile registration, membership plans, and trusted matrimonial assistance in Kerala."
+        />
+      </Helmet>
 
       <section className="relative bg-gradient-to-br from-primary via-deep-maroon to-[#6b0030] pt-28 pb-14 md:pt-36 md:pb-16 overflow-hidden">
         {/* Decorative background dots */}
