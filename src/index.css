@@ -252,4 +252,43 @@
   animation-delay: 850ms;
 }
 
+/* Premium CTA Button with sweeping shimmer and golden-maroon glow */
+.btn-premium-cta {
+  @apply relative flex items-center justify-center gap-2.5 font-body-lg font-semibold tracking-widest uppercase transition-all duration-300 ease-out cursor-pointer overflow-hidden border border-heritage-gold/30 rounded-xl shadow-[0_4px_18px_rgba(152,20,77,0.35)];
+  background: linear-gradient(135deg, var(--color-deep-maroon) 0%, var(--color-primary) 100%);
+  color: var(--color-paper-white);
+}
 
+.btn-premium-cta:hover {
+  @apply border-heritage-gold/90 shadow-[0_8px_25px_rgba(197,160,89,0.45)];
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-deep-maroon) 100%);
+  transform: translateY(-2px);
+}
+
+.btn-premium-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Shine overlay effect */
+.btn-premium-cta::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: skewX(-20deg);
+  animation: shine 4.5s infinite ease-in-out;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  20% { left: 150%; }
+  100% { left: 150%; }
+}

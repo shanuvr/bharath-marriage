@@ -20,7 +20,7 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const highlightedProfiles = [
     verified: true,
     premium: false,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 3,
@@ -50,7 +50,7 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 4,
@@ -65,7 +65,7 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 5,
@@ -80,7 +80,7 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 6,
@@ -95,7 +95,7 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 7,
@@ -110,7 +110,7 @@ const highlightedProfiles = [
     verified: true,
     premium: false,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   },
   {
     id: 8,
@@ -125,12 +125,12 @@ const highlightedProfiles = [
     verified: true,
     premium: true,
     memberSince: 'Jan 2024',
-  lastUpdated: '2d ago',
+    lastUpdated: '2d ago',
   }
 ];
 
 export default function Home() {
- 
+
   const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const [storiesVisible, setStoriesVisible] = useState(false);
@@ -228,84 +228,93 @@ export default function Home() {
     navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
   };
   const heroVideos = [
-  "/hero-video.mp4",
-  "/hero-video1.mp4",
-  "/hero-video2.mp4",
-  "/hero-video3.mp4",
-  "/hero-video4.mp4",
-];
-const [videoIndex] = useState(() => Math.floor(Math.random() * heroVideos.length));
-const [currentVideo, setCurrentVideo] = useState(heroVideos[videoIndex]);
-const [failedVideos, setFailedVideos] = useState([]);
-const handleVideoError = () => {
-  // Mark this one as broken, try the next available video
-  const remaining = heroVideos.filter(
-    (v) => v !== currentVideo && !failedVideos.includes(v)
-  );
-  if (remaining.length > 0) {
-    setFailedVideos((prev) => [...prev, currentVideo]);
-    setCurrentVideo(remaining[Math.floor(Math.random() * remaining.length)]);
-  }
-};
+    "/hero-video.mp4",
+    "/hero-video1.mp4",
+    "/hero-video2.mp4",
+    "/hero-video3.mp4",
+    "/hero-video4.mp4",
+  ];
+  const [videoIndex] = useState(() => Math.floor(Math.random() * heroVideos.length));
+  const [currentVideo, setCurrentVideo] = useState(heroVideos[videoIndex]);
+  const [failedVideos, setFailedVideos] = useState([]);
+  const handleVideoError = () => {
+    // Mark this one as broken, try the next available video
+    const remaining = heroVideos.filter(
+      (v) => v !== currentVideo && !failedVideos.includes(v)
+    );
+    if (remaining.length > 0) {
+      setFailedVideos((prev) => [...prev, currentVideo]);
+      setCurrentVideo(remaining[Math.floor(Math.random() * remaining.length)]);
+    }
+  };
 
   return (
-    
+
     <div className="w-full flex flex-col">
-       <Helmet>
+      <Helmet>
         <title>Kerala Matrimony & Malayali Matrimonial Service | Bharath Marriage</title>
         <meta
           name="description"
           content="Find verified bride and groom profiles on Bharath Marriage, a trusted Kerala matrimony platform for genuine Malayali families."
         />
-    </Helmet>
+      </Helmet>
       {/* Hero Section */}
       <section className="relative pt-20 overflow-hidden min-h-[85vh] flex items-center">
         {/* Hero Background Video */}
-      <div className="absolute inset-0 z-0 bg-charcoal-text">
-  {/* Dark Overlay for Text/Nav Contrast */}
-  <div className="absolute inset-0 bg-black/45 z-10"></div>
-  <video
-    key={currentVideo}
-    className="w-full h-full object-cover object-top"
-    autoPlay
-    loop
-    muted
-    playsInline
-    preload="auto"
-    onError={handleVideoError}
-  >
-    <source src={currentVideo} type="video/mp4" />
-    Your browser does not support the video tag.
-  </video>
-</div>
+        <div className="absolute inset-0 z-0 bg-charcoal-text">
+          {/* Dark Overlay for Text/Nav Contrast */}
+          <div className="absolute inset-0 bg-black/45 z-10"></div>
+          <video
+            key={currentVideo}
+            className="w-full h-full object-cover object-top"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            onError={handleVideoError}
+          >
+            <source src={currentVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
 
         {/* Hero Content */}
         <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center py-8 md:py-12">
-          {/* Left Column: Simplified Heading */}
+          {/* Left Column: Heading + CTA Button */}
           <div className="animate-elegant-fade-up text-left">
             <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl text-white mb-4 md:mb-6 leading-tight text-center md:text-left">
               Two Souls, <br />
               <span className="text-heritage-gold">One Beautiful Journey</span>
             </h1>
 
-            {/* Mobile-only CTA button — hidden on md+ */}
-            <div className="flex justify-center md:hidden mt-2">
+            {/* CTA Button — mobile: centered/wide, desktop: left-aligned/auto */}
+            <div className="flex justify-center md:justify-start mt-4 md:mt-6">
               <button
                 onClick={() => setIsFormModalOpen(true)}
-                className="flex items-center gap-2 bg-deep-maroon hover:bg-primary text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all active:scale-95 cursor-pointer text-sm tracking-wide"
+                className="group btn-premium-cta w-full max-w-[280px] sm:max-w-[320px] md:w-auto md:max-w-none py-3.5 px-8 md:py-4 md:px-10 text-xs md:text-sm"
               >
-                <span className="material-symbols-outlined text-[18px] leading-none">favorite</span>
-                Partner with Us
+                <svg 
+                  className="w-4 h-4 md:w-4.5 md:h-4.5 transition-transform duration-300 group-hover:scale-120 group-hover:rotate-6" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor" 
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                Register Now
               </button>
             </div>
           </div>
 
-          {/* Right Column: Quick Registration Form — desktop only */}
-          <div className="hidden md:block">
+          {/* Right Column: Registration Form — desktop only, space always reserved */}
+          <div className={`hidden md:block transition-all duration-500 ${isFormModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
             <HeroRegistrationForm />
           </div>
+
         </div>
       </section>
+
 
       {/* Mobile Registration Form Modal */}
       {isFormModalOpen && (
@@ -338,11 +347,11 @@ const handleVideoError = () => {
 
       <div className="relative z-30 -mt-6 sm:-mt-8 md:-mt-10 mx-auto w-full max-w-[290px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[980px] bg-white py-2.5 px-3 sm:py-4 sm:px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3.5 items-center w-full">
-          
+
           {/* Looking For Dropdown */}
           <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
             <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">I'm looking for a</label>
-            <select 
+            <select
               value={lookingFor}
               onChange={(e) => setLookingFor(e.target.value)}
               className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
@@ -358,7 +367,7 @@ const handleVideoError = () => {
           {/* Age Range Dropdown */}
           <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
             <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Age Range</label>
-            <select 
+            <select
               value={ageRange}
               onChange={(e) => {
                 const val = e.target.value;
@@ -383,7 +392,7 @@ const handleVideoError = () => {
           {/* Location Dropdown */}
           <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
             <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Location</label>
-            <select 
+            <select
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
@@ -405,7 +414,7 @@ const handleVideoError = () => {
           {/* Religion Dropdown */}
           <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
             <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Religion</label>
-            <select 
+            <select
               value={community}
               onChange={(e) => setCommunity(e.target.value)}
               className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
@@ -422,7 +431,7 @@ const handleVideoError = () => {
           </div>
 
           {/* Search Button */}
-          <button 
+          <button
             onClick={handleQuickSearch}
             className="col-span-2 lg:col-span-1 flex items-center justify-center gap-1.5 bg-deep-maroon text-white font-semibold rounded-lg hover:bg-primary transition-all active:scale-95 cursor-pointer text-[11px] sm:text-sm shrink-0 w-full h-[36px] sm:h-[46px] shadow-md hover:shadow-lg"
           >
@@ -437,7 +446,7 @@ const handleVideoError = () => {
       <section className="bg-gradient-to-br from-white via-rose-50/25 to-amber-50/15 py-20 relative z-10 border-t border-slate-100/60">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
-            
+
             {/* Left Column: Storytelling Copy */}
             <div className="fade-in text-left">
               <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
@@ -458,10 +467,9 @@ const handleVideoError = () => {
 
             {/* Right Column: Dynamic Visual Cards Grid */}
             <div ref={storiesRef} className="grid grid-cols-2 gap-4 sm:gap-6 items-stretch w-full">
-                   {/* Tall Vertical Card (Featured Story) - Left Card */}
-              <div className={`col-span-2 sm:col-span-1 sm:row-span-2 bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[350px] sm:h-[420px] hover:shadow-lg transition-all duration-300 ${
-                storiesVisible ? 'animate-slide-from-left' : 'opacity-0'
-              }`}>
+              {/* Tall Vertical Card (Featured Story) - Left Card */}
+              <div className={`col-span-2 sm:col-span-1 sm:row-span-2 bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col h-[350px] sm:h-[420px] hover:shadow-lg transition-all duration-300 ${storiesVisible ? 'animate-slide-from-left' : 'opacity-0'
+                }`}>
                 <div className="relative flex-1 overflow-hidden">
                   <img src="/image1.jpg" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" alt="Anjali & Arun" />
                   <div className="absolute top-3 left-3 sm:top-4 sm:left-4 bg-deep-maroon text-white text-[9px] sm:text-[10px] font-label-caps font-semibold py-1 px-2.5 rounded-full tracking-wider shadow-md">
@@ -475,16 +483,15 @@ const handleVideoError = () => {
               </div>
 
               {/* Card 2: Dhanya & Midhun - Top Right Card */}
-              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${
-                storiesVisible ? 'animate-slide-from-top' : 'opacity-0'
-              }`}>
+              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${storiesVisible ? 'animate-slide-from-top' : 'opacity-0'
+                }`}>
                 <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3 shrink-0">
                   {/* Custom Floral Branch Line Art */}
-                  <svg 
-                    className="absolute left-2.5 top-2.5 w-18 h-18 opacity-25 text-soft-gray pointer-events-none" 
-                    viewBox="0 0 100 100" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="absolute left-2.5 top-2.5 w-18 h-18 opacity-25 text-soft-gray pointer-events-none"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    stroke="currentColor"
                     strokeWidth="0.8"
                   >
                     <path d="M15 85 C 35 65, 55 55, 65 35 C 70 25, 65 15, 55 25 C 45 35, 35 55, 15 85" />
@@ -493,13 +500,13 @@ const handleVideoError = () => {
                     <circle cx="55" cy="25" r="2.5" fill="currentColor" />
                     <circle cx="95" cy="15" r="2.5" fill="currentColor" />
                   </svg>
-                  
+
                   {/* Portrait Frame */}
                   <div className="relative w-[72%] h-full rounded-lg overflow-hidden border border-slate-100 shadow-sm bg-slate-50 shrink-0">
-                    <img 
-                      src="/image2.jpg" 
-                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
-                      alt="Dhanya & Midhun" 
+                    <img
+                      src="/image2.jpg"
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                      alt="Dhanya & Midhun"
                     />
                   </div>
                 </div>
@@ -510,16 +517,15 @@ const handleVideoError = () => {
               </div>
 
               {/* Card 3: Devika & Sreejith - Bottom Right Card */}
-              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${
-                storiesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
-              }`}>
+              <div className={`col-span-1 bg-white rounded-xl shadow-md border border-slate-100/80 overflow-hidden flex flex-col h-[220px] sm:h-[198px] hover:shadow-lg transition-all duration-300 ${storiesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
+                }`}>
                 <div className="relative h-[145px] sm:h-[130px] w-full flex items-center justify-center bg-white p-3.5 shrink-0">
                   {/* Taller Rounded Frame */}
                   <div className="relative w-[92%] h-full rounded-2xl overflow-hidden shadow-sm bg-slate-50 shrink-0">
-                    <img 
-                      src="/image3.jpg" 
-                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" 
-                      alt="Devika & Sreejith" 
+                    <img
+                      src="/image3.jpg"
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                      alt="Devika & Sreejith"
                     />
                   </div>
                 </div>
@@ -536,10 +542,9 @@ const handleVideoError = () => {
       {/* Highlighted Profiles Section */}
       <section ref={profilesRef} className="bg-white py-12 relative z-10 border-t border-slate-100">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-          
-          <div className={`mb-12 transition-all duration-300 ${
-            profilesVisible ? 'animate-elegant-fade-up' : 'opacity-0'
-          }`}>
+
+          <div className={`mb-12 transition-all duration-300 ${profilesVisible ? 'animate-elegant-fade-up' : 'opacity-0'
+            }`}>
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
               PREMIUM MATCHES
             </span>
@@ -553,7 +558,7 @@ const handleVideoError = () => {
 
           <div className="relative group/scroll w-full">
             {/* Left navigation arrow */}
-            <button 
+            <button
               onClick={() => scroll('left')}
               className="absolute -left-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
               aria-label="Scroll Left"
@@ -561,25 +566,24 @@ const handleVideoError = () => {
               <span className="material-symbols-outlined text-[20px] font-semibold">chevron_left</span>
             </button>
 
-            <div 
+            <div
               ref={scrollContainerRef}
-              className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden transition-all duration-300 ${
-                profilesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
-              }`}
+              className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden transition-all duration-300 ${profilesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
+                }`}
             >
-             {highlightedProfiles.map((profile, index) => (
-  <div
-    className="w-[210px] sm:w-[270px] shrink-0 snap-start"
-    key={profile.id}
-    style={profilesVisible ? { animationDelay: `${index * 80}ms` } : {}}
-  >
-    <ProfileCard profile={profile} />
-  </div>
-))}
+              {highlightedProfiles.map((profile, index) => (
+                <div
+                  className="w-[210px] sm:w-[270px] shrink-0 snap-start"
+                  key={profile.id}
+                  style={profilesVisible ? { animationDelay: `${index * 80}ms` } : {}}
+                >
+                  <ProfileCard profile={profile} />
+                </div>
+              ))}
             </div>
 
             {/* Right navigation arrow */}
-            <button 
+            <button
               onClick={() => scroll('right')}
               className="absolute -right-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
               aria-label="Scroll Right"
@@ -594,7 +598,7 @@ const handleVideoError = () => {
       {/* Our Signature Style / Approach Section */}
       <section className="bg-white py-20 relative z-10 border-t border-slate-100">
         <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-          
+
           <div className="mb-12">
             <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
               OUR SIGNATURE APPROACH
@@ -609,11 +613,10 @@ const handleVideoError = () => {
           </div>
 
           <div ref={approachRef} className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-12 items-center text-left">
-            
+
             {/* Left: Storytelling Text */}
-            <div className={`space-y-6 transition-all duration-300 ${
-              approachVisible ? 'animate-approach-text' : 'opacity-0'
-            }`}>
+            <div className={`space-y-6 transition-all duration-300 ${approachVisible ? 'animate-approach-text' : 'opacity-0'
+              }`}>
               <h3 className="font-display-lg text-2xl text-charcoal-text leading-tight">
                 Emotive Matching &amp; <br />
                 <span className="text-deep-maroon">Curated Compatibility</span>
@@ -633,12 +636,11 @@ const handleVideoError = () => {
             </div>
 
             {/* Right: Premium Wedding Photo */}
-            <div className={`rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 ${
-              approachVisible ? 'animate-approach-photo' : 'opacity-0'
-            }`}>
-              <img 
-                src="https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&q=80&w=800&h=533" 
-                alt="Traditional Wedding Couple" 
+            <div className={`rounded-2xl overflow-hidden shadow-lg border border-slate-100 hover:shadow-xl transition-all duration-300 ${approachVisible ? 'animate-approach-photo' : 'opacity-0'
+              }`}>
+              <img
+                src="https://images.unsplash.com/photo-1607190074257-dd4b7af0309f?auto=format&fit=crop&q=80&w=800&h=533"
+                alt="Traditional Wedding Couple"
                 className="w-full h-auto object-cover hover:scale-[1.02] transition-transform duration-700"
               />
             </div>
@@ -662,14 +664,12 @@ const handleVideoError = () => {
 
           <div ref={howItWorksRef} className="grid grid-cols-1 md:grid-cols-4 gap-8 relative max-w-5xl mx-auto">
             {/* Curved Connector Path (Desktop) */}
-            <div className={`hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[1px] border-t border-dashed border-deep-maroon/30 z-0 transition-all duration-1000 ${
-              howItWorksVisible ? 'opacity-30' : 'opacity-0'
-            }`}></div>
+            <div className={`hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[1px] border-t border-dashed border-deep-maroon/30 z-0 transition-all duration-1000 ${howItWorksVisible ? 'opacity-30' : 'opacity-0'
+              }`}></div>
 
             {/* Step 1: Register */}
-            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
-              howItWorksVisible ? 'animate-step-1' : 'opacity-0'
-            }`}>
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${howItWorksVisible ? 'animate-step-1' : 'opacity-0'
+              }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -690,9 +690,8 @@ const handleVideoError = () => {
             </div>
 
             {/* Step 2: Search */}
-            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
-              howItWorksVisible ? 'animate-step-2' : 'opacity-0'
-            }`}>
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${howItWorksVisible ? 'animate-step-2' : 'opacity-0'
+              }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -713,9 +712,8 @@ const handleVideoError = () => {
             </div>
 
             {/* Step 3: Connect */}
-            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
-              howItWorksVisible ? 'animate-step-3' : 'opacity-0'
-            }`}>
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${howItWorksVisible ? 'animate-step-3' : 'opacity-0'
+              }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -736,9 +734,8 @@ const handleVideoError = () => {
             </div>
 
             {/* Step 4: Marriage */}
-            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${
-              howItWorksVisible ? 'animate-step-4' : 'opacity-0'
-            }`}>
+            <div className={`flex flex-col items-center text-center relative z-10 group transition-all duration-300 ${howItWorksVisible ? 'animate-step-4' : 'opacity-0'
+              }`}>
               {/* Concentric Circles */}
               <div className="relative w-24 h-24 flex items-center justify-center mb-6">
                 {/* Outer Ring */}
@@ -760,7 +757,7 @@ const handleVideoError = () => {
           </div>
         </div>
       </section>
-      <FAQSection/>
+      <FAQSection />
     </div>
   );
 }
