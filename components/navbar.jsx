@@ -44,14 +44,14 @@ export default function Navbar() {
           ? 'bg-white shadow-md h-16 py-2'
           : 'bg-transparent shadow-none h-20'
         }`}>
-        <div className="flex justify-between items-center px-3 sm:px-margin-mobile md:px-margin-desktop h-full max-w-container-max mx-auto w-full gap-2 sm:gap-4">
+        <div className="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-full max-w-container-max mx-auto w-full gap-1.5 sm:gap-4">
           {/* Left: Logo & State Dropdown */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative w-32 sm:w-40 md:w-52 h-14">
+          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative w-20 sm:w-32 md:w-52 h-10 sm:h-12 md:h-14">
               <img
                 src="/logo.png"
                 alt="Bharath Marriage"
-                className={`w-auto object-contain transition-all duration-300 absolute left-0 top-1/2 -translate-y-1/2 h-12 md:h-14 ${!isSolid ? 'brightness-0 invert' : ''
+                className={`w-auto object-contain transition-all duration-300 absolute left-0 top-1/2 -translate-y-1/2 h-8 sm:h-11 md:h-14 ${!isSolid ? 'brightness-0 invert' : ''
                   }`}
               />
             </Link>
@@ -59,38 +59,98 @@ export default function Navbar() {
             {/* Divider Line */}
             <div className={`hidden md:block h-6 w-[1px] ${isSolid ? 'bg-slate-200' : 'bg-white/20'}`}></div>
 
-            {/* State Selection Dropdown Badge */}
-            <div className="hidden md:block relative group/state">
+            {/* State Selection Dropdown Badge — Mobile Only */}
+            <div className="md:hidden relative">
               <button
-                className={`flex items-center gap-0.5 px-1.5 sm:px-2 py-0.5 rounded-full text-[9px] font-bold tracking-wider uppercase border cursor-pointer transition-all ${isSolid
+                onClick={() => setIsMobileStateDropdownOpen(!isMobileStateDropdownOpen)}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold border cursor-pointer transition-all select-none ${isSolid
                     ? 'bg-deep-maroon/5 border-deep-maroon/20 text-deep-maroon hover:bg-deep-maroon/10'
-                    : 'bg-white/10 border-white/25 text-white hover:bg-white/20'
+                    : 'bg-white/10 border-white/30 text-white hover:bg-white/20'
                   }`}
               >
-                <span>{activeState}</span>
-                <span className="material-symbols-outlined text-[10px] leading-none">keyboard_arrow_down</span>
+                {/* Pin icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5 shrink-0">
+                  <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.327a8.25 8.25 0 00-16.5 0c0 3.63 1.556 6.326 3.5 8.327a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.144.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                </svg>
+                <span className="leading-none">{activeState}</span>
+                {/* Chevron */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className={`w-2.5 h-2.5 shrink-0 transition-transform duration-200 ${isMobileStateDropdownOpen ? 'rotate-180' : ''}`}>
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                </svg>
+              </button>
+
+              {isMobileStateDropdownOpen && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setIsMobileStateDropdownOpen(false)}></div>
+                  <div className="absolute left-0 mt-1.5 w-32 bg-white rounded-xl shadow-xl border border-slate-100 py-1 z-[55] text-left">
+                    <button
+                      onClick={() => { setActiveState('Kerala'); setIsMobileStateDropdownOpen(false); }}
+                      className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon cursor-pointer flex justify-between items-center"
+                    >
+                      <span>Kerala</span>
+                      {activeState === 'Kerala' && (
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-deep-maroon">
+                          <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </button>
+                    <button className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center" disabled>
+                      <span>Tamil Nadu</span>
+                      <span className="text-[8px] font-medium opacity-70">Soon</span>
+                    </button>
+                    <button className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center" disabled>
+                      <span>Karnataka</span>
+                      <span className="text-[8px] font-medium opacity-70">Soon</span>
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+
+
+            {/* State Selection Dropdown Badge — Desktop Only */}
+            <div className="hidden md:block relative group/state">
+              <button
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-semibold border cursor-pointer transition-all select-none ${isSolid
+                    ? 'bg-deep-maroon/5 border-deep-maroon/20 text-deep-maroon hover:bg-deep-maroon/10'
+                    : 'bg-white/10 border-white/30 text-white hover:bg-white/20'
+                  }`}
+              >
+                {/* Pin icon */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5 shrink-0">
+                  <path fillRule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-2.003 3.5-4.697 3.5-8.327a8.25 8.25 0 00-16.5 0c0 3.63 1.556 6.326 3.5 8.327a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.144.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                </svg>
+                <span className="leading-none">{activeState}</span>
+                {/* Chevron */}
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-2.5 h-2.5 shrink-0 transition-transform duration-200 group-hover/state:rotate-180">
+                  <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                </svg>
               </button>
 
               {/* Dropdown Items (visible on hover) */}
-              <div className="absolute left-0 mt-1.5 w-28 bg-white rounded-lg shadow-lg border border-slate-100 py-1 z-55 opacity-0 invisible group-hover/state:opacity-100 group-hover/state:visible transition-all duration-200 text-left">
+              <div className="absolute left-0 mt-1.5 w-32 bg-white rounded-xl shadow-xl border border-slate-100 py-1 z-[55] opacity-0 invisible group-hover/state:opacity-100 group-hover/state:visible transition-all duration-200 text-left">
                 <button
                   onClick={() => setActiveState('Kerala')}
-                  className="w-full text-left px-2.5 py-1 text-[9px] font-bold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon cursor-pointer"
+                  className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon cursor-pointer flex justify-between items-center"
                 >
-                  Kerala
+                  <span>Kerala</span>
+                  {activeState === 'Kerala' && (
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3 h-3 text-deep-maroon">
+                      <path fillRule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clipRule="evenodd" />
+                    </svg>
+                  )}
                 </button>
-                <button
-                  className="w-full text-left px-2.5 py-1 text-[9px] font-bold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon opacity-40 cursor-not-allowed"
-                >
-                  Tamil Nadu
+                <button className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center" disabled>
+                  <span>Tamil Nadu</span>
+                  <span className="text-[8px] font-medium opacity-70">Soon</span>
                 </button>
-                <button
-                  className="w-full text-left px-2.5 py-1 text-[9px] font-bold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon opacity-40 cursor-not-allowed"
-                >
-                  Karnataka
+                <button className="w-full text-left px-3 py-1.5 text-[10px] font-semibold text-charcoal-text opacity-40 cursor-not-allowed flex justify-between items-center" disabled>
+                  <span>Karnataka</span>
+                  <span className="text-[8px] font-medium opacity-70">Soon</span>
                 </button>
               </div>
             </div>
+
           </div>
 
           {/* Middle: Navigation Links (Desktop only) */}
@@ -140,7 +200,7 @@ export default function Navbar() {
           </div>
 
           {/* Right: Search, Login & Hamburger */}
-          <div className="flex gap-1.5 sm:gap-2.5 md:gap-4 items-center">
+          <div className="flex gap-1 sm:gap-2.5 md:gap-4 items-center">
             {/* Search Input Bar Link */}
             <Link
               to="/search"
@@ -154,10 +214,10 @@ export default function Navbar() {
             {/* Mobile-only Search Icon */}
             <Link
               to="/search"
-              className={`sm:hidden flex items-center justify-center p-1.5 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
+              className={`sm:hidden flex items-center justify-center p-1 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
                 }`}
             >
-              <span className="material-symbols-outlined text-[20px] leading-none">search</span>
+              <span className="material-symbols-outlined text-[18px] leading-none">search</span>
             </Link>
 
             {isLoggedIn ? (
@@ -174,7 +234,7 @@ export default function Navbar() {
                     <img
                       src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80&h=80"
                       alt="Logged in user"
-                      className="h-8 w-8 md:h-9 md:w-9 rounded-full object-cover border border-slate-200"
+                      className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full object-cover border border-slate-200"
                     />
                     <span className={`material-symbols-outlined hidden text-[20px] md:inline-block ${isSolid ? 'text-charcoal-text' : 'text-white'
                       }`}>
@@ -235,10 +295,10 @@ export default function Navbar() {
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden flex items-center justify-center p-1.5 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
+              className={`md:hidden flex items-center justify-center p-1 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
                 }`}
             >
-              <span className="material-symbols-outlined text-[22px] leading-none">
+              <span className="material-symbols-outlined text-[20px] leading-none">
                 menu
               </span>
             </button>

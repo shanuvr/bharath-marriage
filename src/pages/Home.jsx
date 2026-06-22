@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ProfileCard from '../../components/ProfileCard';
 import FAQSection from '../../components/Faq';
-import { Helmet } from 'react-helmet-async'
+import { Helmet } from 'react-helmet-async';
+import HeroRegistrationForm from '../../components/HeroRegistrationForm';
 
 
 const highlightedProfiles = [
@@ -212,35 +213,16 @@ export default function Home() {
     }
   };
 
-  const [fullName, setFullName] = useState('');
-  const [lookingFor, setLookingFor] = useState('Bride'); // 'Bride' corresponds to Female, 'Groom' to Male
+  const [lookingFor, setLookingFor] = useState('Bride');
   const [community, setCommunity] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-
   const [location, setLocation] = useState('');
+  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
+
 
   // Quick Search age states
   const [ageMin, setAgeMin] = useState('18');
   const [ageMax, setAgeMax] = useState('40');
   const [ageRange, setAgeRange] = useState('18-40');
-
-  // Registration Date of Birth states
-  const [dobDay, setDobDay] = useState('');
-  const [dobMonth, setDobMonth] = useState('');
-  const [dobYear, setDobYear] = useState('');
-  const [showDobPicker, setShowDobPicker] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!dobDay || !dobMonth || !dobYear) {
-      alert("Please select your Date of Birth");
-      return;
-    }
-    const dobString = `${dobDay} ${dobMonth} ${dobYear}`;
-    console.log({ fullName, email, lookingFor, community, dob: dobString, phone });
-    alert(`Starting registration for ${fullName || 'New User'}: Looking for ${lookingFor}, Email: ${email}, DOB: ${dobString}, Community: ${community || 'None'}`);
-  };
 
   const handleQuickSearch = () => {
     navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
@@ -305,228 +287,54 @@ const handleVideoError = () => {
               Two Souls, <br />
               <span className="text-heritage-gold">One Beautiful Journey</span>
             </h1>
+
+            {/* Mobile-only CTA button — hidden on md+ */}
+            <div className="flex justify-center md:hidden mt-2">
+              <button
+                onClick={() => setIsFormModalOpen(true)}
+                className="flex items-center gap-2 bg-deep-maroon hover:bg-primary text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition-all active:scale-95 cursor-pointer text-sm tracking-wide"
+              >
+                <span className="material-symbols-outlined text-[18px] leading-none">favorite</span>
+                Partner with Us
+              </button>
+            </div>
           </div>
 
-          {/* Right Column: Quick Registration Form */}
-          <div className="bg-paper-white p-3 sm:p-4 md:p-5 rounded-xl shadow-lg border border-surface-variant/40 border-t-4 border-t-deep-maroon fade-in w-full max-w-[290px] sm:max-w-[340px] md:max-w-[370px] md:justify-self-end md:translate-x-6 md:-translate-y-8 mx-auto" style={{ animationDelay: '0.2s' }}>
-            <div className="mb-2 sm:mb-3">
-              <h3 className="font-semibold text-xs sm:text-sm text-charcoal-text leading-snug">
-                Find Your Partner From <span className="text-deep-maroon font-bold">5 Lakh+</span> Profiles
-              </h3>
-              <p className="text-[9px] sm:text-[10px] text-soft-gray mt-0.5">
-                100% Free matrimonial services
-              </p>
-            </div>
-            <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-2.5 text-left">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
-                <input 
-                  type="text" 
-                  value={fullName}
-                  onChange={(e) => setFullName(e.target.value)}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2.5 text-[11px] font-body-sm bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon placeholder-soft-gray/60" 
-                  placeholder="Full Name" 
-                  required 
-                />
-                <div className="flex items-center border border-surface-variant rounded-lg bg-white overflow-hidden focus-within:ring-1 focus-within:ring-deep-maroon focus-within:border-deep-maroon">
-                  <div className="flex items-center gap-0.5 px-2 py-1 bg-white select-none border-r border-surface-variant/60 cursor-pointer">
-                    <span className="text-xs">🇮🇳</span>
-                    <span className="text-[10px] text-charcoal-text font-medium ml-0.5">+91</span>
-                    <span className="material-symbols-outlined text-[10px] text-soft-gray leading-none">
-                      keyboard_arrow_down
-                    </span>
-                  </div>
-                  <input 
-                    type="tel" 
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    className="w-full border-none py-1.5 px-2 text-[11px] font-body-sm bg-white text-charcoal-text placeholder-soft-gray/60 focus:ring-0 focus:outline-none" 
-                    placeholder="Mobile Number" 
-                    required 
-                  />
-                </div>
-              </div>
-
-              <div>
-                <input 
-                  type="email" 
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2.5 text-[11px] font-body-sm bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon placeholder-soft-gray/60" 
-                  placeholder="Email Address" 
-                  required 
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-                <select 
-                  value={community}
-                  onChange={(e) => setCommunity(e.target.value)}
-                  className="w-full border border-surface-variant rounded-lg py-1.5 px-2 text-[11px] bg-white text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
-                >
-                  <option value="">Religion</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Christian">Christian</option>
-                  <option value="Muslim">Muslim</option>
-                  <option value="Sikh">Sikh</option>
-                </select>
-
-                <div className="relative">
-                  <button
-                    type="button"
-                    onClick={() => setShowDobPicker(!showDobPicker)}
-                    className={`w-full flex items-center justify-between gap-1 border rounded-lg py-1.5 px-2 text-[10px] bg-white text-charcoal-text hover:bg-slate-50 cursor-pointer h-full min-h-[32px] ${
-                      dobDay && dobMonth && dobYear ? 'border-deep-maroon font-semibold text-deep-maroon' : 'border-surface-variant text-soft-gray'
-                    }`}
-                  >
-                    <span className="flex items-center gap-1 overflow-hidden truncate">
-                      <span className="material-symbols-outlined text-[13px] text-soft-gray">calendar_month</span>
-                      <span className="truncate">
-                        {dobDay && dobMonth && dobYear ? `${dobDay} ${dobMonth} ${dobYear}` : 'DOB'}
-                      </span>
-                    </span>
-                    <span className="material-symbols-outlined text-[12px] text-soft-gray">keyboard_arrow_down</span>
-                  </button>
-                  {showDobPicker && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setShowDobPicker(false)}></div>
-                      <div className="absolute right-0 top-full mt-1.5 z-50 bg-white border border-slate-200/80 shadow-xl rounded-xl p-3.5 w-[250px] animate-fade-in text-left">
-                        <div className="text-[11px] font-semibold text-charcoal-text mb-2 flex justify-between items-center">
-                          <span>Select Date of Birth</span>
-                          <button 
-                            type="button" 
-                            onClick={() => setShowDobPicker(false)}
-                            className="text-soft-gray hover:text-charcoal-text text-[10px] font-bold p-1"
-                          >
-                            ✕
-                          </button>
-                        </div>
-                        
-                        <div className="grid grid-cols-3 gap-1.5 mb-3">
-                          {/* Day */}
-                          <select 
-                            value={dobDay} 
-                            onChange={(e) => setDobDay(e.target.value)}
-                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
-                          >
-                            <option value="">Day</option>
-                            {Array.from({ length: 31 }, (_, i) => i + 1).map(d => (
-                              <option key={d} value={d < 10 ? `0${d}` : `${d}`}>{d}</option>
-                            ))}
-                          </select>
-
-                          {/* Month */}
-                          <select 
-                            value={dobMonth} 
-                            onChange={(e) => setDobMonth(e.target.value)}
-                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
-                          >
-                            <option value="">Month</option>
-                            {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => (
-                              <option key={m} value={m}>{m}</option>
-                            ))}
-                          </select>
-
-                          {/* Year */}
-                          <select 
-                            value={dobYear} 
-                            onChange={(e) => setDobYear(e.target.value)}
-                            className="w-full border border-slate-200 rounded-md py-1 px-1.5 text-[10px] bg-slate-50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon"
-                          >
-                            <option value="">Year</option>
-                            {Array.from({ length: 58 }, (_, i) => 2008 - i).map(y => (
-                              <option key={y} value={y}>{y}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            if (dobDay && dobMonth && dobYear) {
-                              setShowDobPicker(false);
-                            }
-                          }}
-                          disabled={!dobDay || !dobMonth || !dobYear}
-                          className="w-full bg-deep-maroon text-white font-semibold py-1.5 rounded-lg text-[10px] uppercase tracking-wider hover:bg-primary transition-all disabled:opacity-50 disabled:cursor-not-allowed text-center cursor-pointer"
-                        >
-                          Confirm
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2 sm:gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setLookingFor('Groom')}
-                  className={`flex items-center justify-center gap-1 border rounded-lg py-1.5 px-1 text-[10px] cursor-pointer transition-all ${
-                    lookingFor === 'Groom'
-                      ? 'border-deep-maroon text-deep-maroon bg-deep-maroon/5 font-semibold'
-                      : 'border-surface-variant text-soft-gray bg-white hover:bg-slate-50'
-                  }`}
-                >
-                  <span 
-                    className="material-symbols-outlined text-[14px] leading-none"
-                    style={{ fontVariationSettings: lookingFor === 'Groom' ? "'FILL' 1" : "'FILL' 0" }}
-                  >
-                    account_circle
-                  </span>
-                  Male
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setLookingFor('Bride')}
-                  className={`flex items-center justify-center gap-1 border rounded-lg py-1.5 px-1 text-[10px] cursor-pointer transition-all ${
-                    lookingFor === 'Bride'
-                      ? 'border-deep-maroon text-deep-maroon bg-deep-maroon/5 font-semibold'
-                      : 'border-surface-variant text-soft-gray bg-white hover:bg-slate-50'
-                  }`}
-                >
-                  <span 
-                    className="material-symbols-outlined text-[14px] leading-none"
-                    style={{ fontVariationSettings: lookingFor === 'Bride' ? "'FILL' 1" : "'FILL' 0" }}
-                  >
-                    account_circle
-                  </span>
-                  Female
-                </button>
-              </div>
-
-              <div className="flex items-start gap-1.5 pt-0.5">
-                <input 
-                  type="checkbox" 
-                  id="agreeTerms" 
-                  required 
-                  className="mt-0.5 h-3 w-3 rounded border-surface-variant text-deep-maroon focus:ring-deep-maroon cursor-pointer" 
-                />
-                <label htmlFor="agreeTerms" className="font-body-sm text-[9px] text-soft-gray leading-tight select-none cursor-pointer">
-                  I have read and agree to the <span className="font-semibold text-charcoal-text hover:underline">Terms of Use &amp; Privacy Policy</span>
-                </label>
-              </div>
-
-              <button 
-                type="submit" 
-                className="w-full bg-deep-maroon hover:bg-primary text-white font-semibold py-2 rounded-lg mt-0.5 shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer text-center text-[10px] tracking-wider uppercase"
-              >
-                Register Free
-              </button>
-              
-              <div className="flex justify-center gap-6 mt-2.5 pt-2 border-t border-surface-variant/40">
-                <a href="#support" className="flex items-center gap-1 text-soft-gray hover:text-deep-maroon transition-colors text-[10px] font-body-sm">
-                  <span className="material-symbols-outlined text-[13px] leading-none">support_agent</span>
-                  Support
-                </a>
-                <a href="#chat" className="flex items-center gap-1 text-soft-gray hover:text-deep-maroon transition-colors text-[10px] font-body-sm">
-                  <span className="material-symbols-outlined text-[13px] leading-none">chat</span>
-                  Chat for assistance
-                </a>
-              </div>
-            </form>
+          {/* Right Column: Quick Registration Form — desktop only */}
+          <div className="hidden md:block">
+            <HeroRegistrationForm />
           </div>
         </div>
       </section>
+
+      {/* Mobile Registration Form Modal */}
+      {isFormModalOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/60 z-[60] md:hidden animate-fade-in"
+            onClick={() => setIsFormModalOpen(false)}
+          />
+          {/* Bottom Sheet */}
+          <div className="fixed bottom-0 left-0 right-0 z-[70] md:hidden animate-slide-in-up max-h-[92vh] overflow-y-auto rounded-t-2xl shadow-2xl">
+            <div className="relative">
+              {/* Drag handle */}
+              <div className="flex justify-center pt-3 pb-1 bg-paper-white rounded-t-2xl">
+                <div className="w-10 h-1 rounded-full bg-slate-300" />
+              </div>
+              {/* Close button */}
+              <button
+                onClick={() => setIsFormModalOpen(false)}
+                className="absolute top-2 right-3 z-10 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-charcoal-text transition-colors cursor-pointer"
+              >
+                <span className="material-symbols-outlined text-[18px] leading-none">close</span>
+              </button>
+              <HeroRegistrationForm onClose={() => setIsFormModalOpen(false)} />
+            </div>
+          </div>
+        </>
+      )}
+
 
       <div className="relative z-30 -mt-6 sm:-mt-8 md:-mt-10 mx-auto w-full max-w-[290px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[980px] bg-white py-2.5 px-3 sm:py-4 sm:px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3.5 items-center w-full">

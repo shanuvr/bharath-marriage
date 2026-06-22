@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import ProfileCard from '../../components/ProfileCard';
 
 const searchProfiles = [
   {
@@ -486,80 +487,9 @@ export default function Search() {
               </div>
 
               {results.length > 0 ? (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6 text-left">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                   {results.map((profile) => (
-                    <div
-                      key={profile.id}
-                      className="bg-white rounded-xl shadow-md border border-slate-100 overflow-hidden flex flex-col hover:shadow-xl transition-all duration-300 group"
-                    >
-                      <Link to={`/profile/${profile.id}`} className="block flex-1 flex flex-col cursor-pointer">
-                        {/* Image Section */}
-                        <div className="relative h-[140px] md:h-[200px] w-full overflow-hidden bg-slate-50 shrink-0">
-                          <img
-                            src={profile.image}
-                            alt={profile.name}
-                            className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                          />
-
-                          {profile.premium && (
-                            <span className="absolute top-2 right-2 md:top-3 md:right-3 bg-heritage-gold/90 backdrop-blur-xs text-white text-[8px] md:text-[9px] font-label-caps font-semibold py-0.5 px-1.5 md:px-2 rounded-full border border-heritage-gold/25 tracking-wider">
-                              PREMIUM
-                            </span>
-                          )}
-
-                          <span className="absolute bottom-2 left-2 md:bottom-3 md:left-3 bg-black/55 backdrop-blur-xs text-white text-[8px] md:text-[9px] font-semibold py-0.5 px-1.5 md:px-2 rounded">
-                            ID: {profile.id}
-                          </span>
-                        </div>
-
-                        {/* Details */}
-                        <div className="p-2 md:p-4 flex flex-col flex-1">
-                          <div className="flex items-center justify-between gap-1">
-                            <h4 className="font-semibold text-charcoal-text text-xs md:text-sm flex items-center gap-1 truncate">
-                              {profile.name}
-                              {profile.verified && (
-                                <span
-                                  className="material-symbols-outlined leading-none text-emerald-600 shrink-0"
-                                  style={{ fontSize: '12px', width: '12px', height: '12px' }}
-                                  title="Verified Profile"
-                                >
-                                  verified
-                                </span>
-                              )}
-                              <span className="font-normal text-charcoal-text/80 shrink-0">, {profile.age}</span>
-                            </h4>
-                            <span className="text-[9px] md:text-[10px] text-soft-gray font-medium shrink-0">
-                              {profile.height}
-                            </span>
-                          </div>
-
-                          <p className="text-[10px] md:text-xs text-deep-maroon font-semibold mt-0.5 mb-1.5 truncate">
-                            {profile.profession}
-                          </p>
-
-                          <div className="text-[9.5px] md:text-[11px] text-soft-gray flex-1">
-                            <p className="flex items-center gap-1 truncate">
-                              <span
-                                className="material-symbols-outlined leading-none text-soft-gray/60 shrink-0"
-                                style={{ fontSize: '11px', width: '11px', height: '11px' }}
-                              >
-                                school
-                              </span>
-                              <span className="truncate">{profile.education}</span>
-                            </p>
-                            <p className="flex items-center gap-1 truncate mt-0.5">
-                              <span
-                                className="material-symbols-outlined leading-none text-soft-gray/60 shrink-0"
-                                style={{ fontSize: '11px', width: '11px', height: '11px' }}
-                              >
-                                location_on
-                              </span>
-                              <span className="truncate">{profile.religion} &middot; {profile.location}</span>
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    </div>
+                    <ProfileCard key={profile.id} profile={profile} fullWidth />
                   ))}
                 </div>
               ) : (

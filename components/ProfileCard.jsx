@@ -11,13 +11,55 @@ export default function ProfileCard({ profile, compact = false, fullWidth = fals
     >
       {/* Profile Image */}
       <div className="relative w-full aspect-[5/4] overflow-hidden bg-slate-50">
-        <img 
-          src={profile.image} 
-          alt={profile.name} 
-          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105" 
+        <img
+          src={profile.image}
+          alt={profile.name}
+          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />
-        
+
+        {/* Tiled watermark */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none select-none absolute overflow-hidden"
+          style={{
+            inset: '-100%',
+            transform: 'rotate(-30deg)',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: '6px',
+            padding: '8px',
+          }}
+        >
+          {Array(20).fill(null).map((_, i) => (
+            <span
+              key={i}
+              style={{
+                fontSize: '9px',
+                fontWeight: 700,
+                color: 'rgba(255,255,255,0.15)',
+                letterSpacing: '0.08em',
+                whiteSpace: 'nowrap',
+                padding: '12px 0',
+                textShadow: '0 1px 2px rgba(0,0,0,0.15)',
+              }}
+            >
+              Bharath Marriage
+            </span>
+          ))}
+        </div>
+
+      
+{/* Corner logo */}
+<div className="absolute bottom-2 left-2 pointer-events-none select-none">
+  <img
+    src="/logo.png"
+    alt="Bharath Marriage"
+    className="h-7 w-auto opacity-70"
+    style={{ filter: 'brightness(0) invert(1)' }}
+  />
+</div>
+
         {profile.premium && (
           <span className="absolute right-2 top-2 rounded-full bg-heritage-gold/90 backdrop-blur-xs px-2 py-0.5 text-[8px] font-bold tracking-wider text-white border border-white/20">
             PREMIUM
@@ -31,7 +73,7 @@ export default function ProfileCard({ profile, compact = false, fullWidth = fals
           <h3 className="truncate text-xs font-bold text-charcoal-text flex items-center gap-1">
             <span className="truncate">{profile.name}</span>
             {profile.verified && (
-              <span 
+              <span
                 className="material-symbols-outlined leading-none text-emerald-600 shrink-0"
                 style={{ fontVariationSettings: "'FILL' 1", fontSize: '12px', width: '12px', height: '12px' }}
               >
@@ -43,14 +85,14 @@ export default function ProfileCard({ profile, compact = false, fullWidth = fals
             {profile.age} &middot; {profile.height}
           </span>
         </div>
-        
+
         <p className="mt-0.5 truncate text-[10px] sm:text-[11px] font-semibold text-deep-maroon text-left">
           {profile.profession}
         </p>
-        
+
         <div className="mt-1.5 text-[9px] sm:text-[10px] text-soft-gray text-left">
           <p className="flex items-center gap-1 truncate">
-            <span 
+            <span
               className="material-symbols-outlined leading-none text-slate-400 shrink-0"
               style={{ fontSize: '10px', width: '10px', height: '10px' }}
             >
@@ -59,7 +101,7 @@ export default function ProfileCard({ profile, compact = false, fullWidth = fals
             <span className="truncate">{profile.education}</span>
           </p>
           <p className="flex items-center gap-1 truncate mt-0.5">
-            <span 
+            <span
               className="material-symbols-outlined leading-none text-slate-400 shrink-0"
               style={{ fontSize: '10px', width: '10px', height: '10px' }}
             >
