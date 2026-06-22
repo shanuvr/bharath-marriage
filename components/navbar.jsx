@@ -198,14 +198,14 @@ export default function Navbar() {
                           <span className="material-symbols-outlined text-base">account_circle</span>
                           My Profile
                         </Link>
-                        <a
-                          href="#settings"
+                        <Link
+                          to="/dashboard?tab=settings"
                           onClick={() => setIsDropdownOpen(false)}
                           className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
                         >
                           <span className="material-symbols-outlined text-base">settings</span>
                           Settings
-                        </a>
+                        </Link>
                         <div className="border-t border-slate-100 my-1"></div>
                         <button
                           onClick={handleLogout}

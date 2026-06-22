@@ -14,7 +14,7 @@ const menuItems = [
   { icon: 'diversity_1', label: 'Partner Preferences' },
   { icon: 'photo_library', label: 'Manage Photos' },
   { icon: 'chat', label: 'Inbox Messages' },
-  { icon: 'stars', label: 'Shortlists' },
+  { icon: 'stars', label: 'Favourite' },
   { icon: 'settings', label: 'Account Settings' },
 ];
 

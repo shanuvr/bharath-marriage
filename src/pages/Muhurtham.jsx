@@ -100,9 +100,9 @@ export default function Muhurtham() {
           <h1 className="font-display-lg text-lg md:text-2xl text-charcoal-text leading-tight">
             Muhurtham Calendar
           </h1>
-          <p className="text-soft-gray text-[11px] md:text-sm mt-2 max-w-sm mx-auto leading-relaxed">
+          {/* <p className="text-soft-gray text-[11px] md:text-sm mt-2 max-w-sm mx-auto leading-relaxed">
             Enter birth star and rasi details to find auspicious wedding Muhurtham dates.
-          </p>
+          </p> */}
         </div>
 
         {/* Form Card */}
