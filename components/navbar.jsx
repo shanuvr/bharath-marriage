@@ -402,8 +402,6 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-[14px] text-soft-gray leading-none">search</span>
                   <span>Search Profiles</span>
                 </Link>
-
-              
               </div>
             </div>
 

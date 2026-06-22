@@ -347,8 +347,8 @@ const handleVideoError = () => {
               onChange={(e) => setLookingFor(e.target.value)}
               className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
-              <option value="Bride">Bride</option>
-              <option value="Groom">Groom</option>
+              <option value="Bride">Female</option>
+              <option value="Groom">Male</option>
             </select>
             <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
               keyboard_arrow_down
