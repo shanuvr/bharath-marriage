@@ -276,7 +276,7 @@ export default function Home() {
         />
       </Helmet>
       {/* Hero Section */}
-      <section className="relative pt-20 pb-16 overflow-hidden min-h-[90vh] flex items-center justify-center">
+      <section className="relative pt-16 sm:pt-20 pb-10 sm:pb-16 overflow-hidden min-h-[90vh] flex items-center justify-center">
         {/* Hero Background Video */}
         <div className="absolute inset-0 z-0 bg-charcoal-text">
           {/* Dark Overlay for Text/Nav Contrast */}
@@ -297,38 +297,38 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col items-center justify-center text-center py-12 md:py-16">
+        <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col items-center justify-center text-center py-4 sm:py-12 md:py-16">
           <div className="animate-elegant-fade-up w-full max-w-5xl mx-auto flex flex-col items-center">
-            <h1 className="font-display-lg text-4xl sm:text-5xl md:text-6xl text-white mb-3 leading-tight tracking-wide text-center drop-shadow-md">
+            <h1 className="font-display-lg text-xl sm:text-5xl md:text-6xl text-white mb-1.5 sm:mb-3 leading-tight tracking-wide text-center text-shadow-premium">
               Two Souls, <br className="sm:hidden" />
               <span className="text-heritage-gold">One Beautiful Journey</span>
             </h1>
-            <p className="text-white/90 font-body-lg text-sm sm:text-base md:text-lg mb-8 text-center max-w-xl mx-auto font-medium drop-shadow-sm">
+            <p className="text-white/90 font-body-lg text-[10px] sm:text-base md:text-lg mb-3 sm:mb-8 text-center max-w-xl mx-auto font-medium text-shadow-premium">
               Discover verified profiles and genuine Malayali families
             </p>
 
             {/* Premium Glassmorphism Search Bar */}
-            <div className="w-full max-w-4xl mx-auto glass-search-card rounded-xl sm:rounded-2xl p-3 sm:p-5 md:p-6 shadow-2xl border border-white/25 animate-slide-up-fade">
-              <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-4 items-center w-full">
+            <div className="w-full max-w-[280px] sm:max-w-4xl mx-auto glass-search-card rounded-xl sm:rounded-2xl p-2 sm:p-5 md:p-6 shadow-2xl border border-white/25 animate-slide-up-fade">
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-1.5 sm:gap-4 items-center w-full">
                  {/* Looking For Dropdown */}
-                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1.5 px-2.5 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
-                  <label className="block text-[7px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">I'm looking for a</label>
+                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1 px-2 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
+                  <label className="block text-[6.5px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">I'm looking for a</label>
                   <select
                     value={lookingFor}
                     onChange={(e) => setLookingFor(e.target.value)}
-                    className="w-full border-none bg-transparent font-bold text-white text-[11px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
+                    className="w-full border-none bg-transparent font-bold text-white text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
                   >
                     <option value="Bride">Female</option>
                     <option value="Groom">Male</option>
                   </select>
-                  <span className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[14px] sm:text-[16px] text-white/80 pointer-events-none">
+                  <span className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[11px] sm:text-[16px] text-white/80 pointer-events-none">
                     keyboard_arrow_down
                   </span>
                 </div>
 
                 {/* Age Range Dropdown */}
-                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1.5 px-2.5 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
-                  <label className="block text-[7px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Age Range</label>
+                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1 px-2 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
+                  <label className="block text-[6.5px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Age Range</label>
                   <select
                     value={ageRange}
                     onChange={(e) => {
@@ -338,7 +338,7 @@ export default function Home() {
                       setAgeMin(min);
                       setAgeMax(max);
                     }}
-                    className="w-full border-none bg-transparent font-bold text-white text-[11px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
+                    className="w-full border-none bg-transparent font-bold text-white text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
                   >
                     <option value="18-40">18 - 40</option>
                     <option value="18-25">18 - 25</option>
@@ -346,18 +346,18 @@ export default function Home() {
                     <option value="31-35">31 - 35</option>
                     <option value="36-40">36 - 40</option>
                   </select>
-                  <span className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[14px] sm:text-[16px] text-white/80 pointer-events-none">
+                  <span className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[11px] sm:text-[16px] text-white/80 pointer-events-none">
                     keyboard_arrow_down
                   </span>
                 </div>
 
                 {/* Location Dropdown */}
-                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1.5 px-2.5 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
-                  <label className="block text-[7px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Location</label>
+                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1 px-2 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
+                  <label className="block text-[6.5px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Location</label>
                   <select
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
-                    className="w-full border-none bg-transparent font-bold text-white text-[11px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
+                    className="w-full border-none bg-transparent font-bold text-white text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
                   >
                     <option value="">Any Location</option>
                     <option value="Bangalore">Bangalore</option>
@@ -368,18 +368,18 @@ export default function Home() {
                     <option value="Hyderabad">Hyderabad</option>
                     <option value="USA">USA</option>
                   </select>
-                  <span className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[14px] sm:text-[16px] text-white/80 pointer-events-none">
+                  <span className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[11px] sm:text-[16px] text-white/80 pointer-events-none">
                     keyboard_arrow_down
                   </span>
                 </div>
 
                 {/* Religion Dropdown */}
-                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1.5 px-2.5 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
-                  <label className="block text-[7px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Religion</label>
+                <div className="relative border border-white/20 rounded-lg sm:rounded-xl py-1 px-2 sm:py-2 sm:px-3 bg-white/10 text-left w-full shadow-sm hover:bg-white/15 transition-all">
+                  <label className="block text-[6.5px] sm:text-[10px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Religion</label>
                   <select
                     value={community}
                     onChange={(e) => setCommunity(e.target.value)}
-                    className="w-full border-none bg-transparent font-bold text-white text-[11px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
+                    className="w-full border-none bg-transparent font-bold text-white text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-6 [&>option]:text-slate-800 [&>option]:bg-white"
                   >
                     <option value="">Select...</option>
                     <option value="Hindu">Hindu</option>
@@ -387,7 +387,7 @@ export default function Home() {
                     <option value="Muslim">Muslim</option>
                     <option value="Sikh">Sikh</option>
                   </select>
-                  <span className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[14px] sm:text-[16px] text-white/80 pointer-events-none">
+                  <span className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-[11px] sm:text-[16px] text-white/80 pointer-events-none">
                     keyboard_arrow_down
                   </span>
                 </div>
@@ -395,16 +395,16 @@ export default function Home() {
                 {/* Search Button */}
                 <button
                   onClick={handleQuickSearch}
-                  className="col-span-2 lg:col-span-1 flex items-center justify-center gap-1.5 bg-deep-maroon hover:bg-primary text-white font-bold rounded-lg sm:rounded-xl transition-all active:scale-95 cursor-pointer text-[11px] sm:text-xs md:text-sm shrink-0 w-full h-[36px] sm:h-[48px] shadow-lg hover:shadow-xl hover:-translate-y-0.5 duration-200"
+                  className="col-span-2 lg:col-span-1 flex items-center justify-center gap-1 bg-deep-maroon hover:bg-primary text-white font-bold rounded-lg sm:rounded-xl transition-all active:scale-95 cursor-pointer text-[10px] sm:text-xs md:text-sm shrink-0 w-full h-[28px] sm:h-[48px] shadow-lg hover:shadow-xl hover:-translate-y-0.5 duration-200"
                 >
-                  <span className="material-symbols-outlined text-[16px] sm:text-[20px]">search</span>
+                  <span className="material-symbols-outlined text-[14px] sm:text-[20px]">search</span>
                   Search
                 </button>
               </div>
             </div>
 
             {/* Trust Badges */}
-            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-10 animate-slide-up-fade" style={{ animationDelay: '0.15s' }}>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-6 sm:mt-10 animate-slide-up-fade" style={{ animationDelay: '0.15s' }}>
               <span className="flex items-center gap-1.5 text-white/90 text-xs sm:text-sm font-semibold select-none drop-shadow-sm">
                 <span className="material-symbols-outlined text-heritage-gold text-[16px] sm:text-[18px]">verified_user</span>
                 5 Lakh+ Profiles
