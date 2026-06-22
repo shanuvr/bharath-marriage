@@ -292,3 +292,32 @@
   20% { left: 150%; }
   100% { left: 150%; }
 }
+
+/* Glassmorphism search card styling */
+.glass-search-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+}
+
+.dark-glass-scrim {
+  background: radial-gradient(circle at center, rgba(152, 20, 77, 0.15) 0%, rgba(26, 28, 28, 0.6) 100%);
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up-fade {
+  animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
