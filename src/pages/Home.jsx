@@ -222,7 +222,7 @@ export default function Home() {
   // Quick Search age states
   const [ageMin, setAgeMin] = useState('18');
   const [ageMax, setAgeMax] = useState('40');
-  const [ageRange, setAgeRange] = useState('18-40');
+  const [ageRange, setAgeRange] = useState('Any');
 
   const handleQuickSearch = () => {
     navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
@@ -378,6 +378,7 @@ export default function Home() {
               }}
               className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
             >
+              <option value="18-70">Any</option>
               <option value="18-40">18 - 40</option>
               <option value="18-25">18 - 25</option>
               <option value="26-30">26 - 30</option>
