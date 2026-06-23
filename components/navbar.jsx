@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [activeState, setActiveState] = useState('Kerala');
   const [isMobileStateDropdownOpen, setIsMobileStateDropdownOpen] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -317,6 +318,25 @@ export default function Navbar() {
                   </span>
                   Login
                 </Link>
+
+                {/* Demo Button — small pill, next to Login */}
+                <button
+                  onClick={() => setIsDemoOpen(true)}
+                  title="Watch Demo"
+                  className={`flex items-center gap-1 pl-2 pr-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide transition-all duration-200 active:scale-95 cursor-pointer shrink-0 border ${
+                    isSolid
+                      ? 'bg-heritage-gold/10 border-heritage-gold/40 text-heritage-gold hover:bg-heritage-gold/20'
+                      : 'bg-white/10 border-white/30 text-white hover:bg-white/20'
+                  }`}
+                >
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ fontSize: '13px', fontVariationSettings: "'FILL' 1" }}
+                  >
+                    play_circle
+                  </span>
+                  Demo
+                </button>
               </div>
             )}
 
@@ -420,6 +440,15 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-[14px] text-soft-gray leading-none">search</span>
                   <span>Search Profiles</span>
                 </Link>
+
+                {/* Demo Button — Mobile */}
+                <button
+                  onClick={() => { setIsMobileMenuOpen(false); setIsDemoOpen(true); }}
+                  className="flex items-center justify-center gap-2 rounded-lg border border-heritage-gold/50 py-2 bg-amber-50/50 text-heritage-gold text-xs font-semibold hover:bg-amber-50 transition-colors cursor-pointer"
+                >
+                  <span className="material-symbols-outlined text-[14px] leading-none">play_circle</span>
+                  <span>Watch Demo</span>
+                </button>
               </div>
             </div>
 
@@ -456,6 +485,55 @@ export default function Navbar() {
                   </Link>
                 </div>
               )}
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ── Demo Video Modal ── */}
+      {isDemoOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-[200] bg-black/75 backdrop-blur-sm animate-fade-in"
+            onClick={() => setIsDemoOpen(false)}
+          />
+
+          {/* Modal */}
+          <div className="fixed inset-0 z-[201] flex items-center justify-center px-4 pointer-events-none">
+            <div className="pointer-events-auto w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl border border-white/10 animate-fade-in">
+
+              {/* Modal header */}
+              <div className="flex items-center justify-between bg-charcoal-text px-5 py-3">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="material-symbols-outlined text-heritage-gold"
+                    style={{ fontSize: '18px', fontVariationSettings: "'FILL' 1" }}
+                  >
+                    play_circle
+                  </span>
+                  <span className="text-white text-xs font-bold uppercase tracking-wider">Bharath Marriage — Platform Demo</span>
+                </div>
+                <button
+                  onClick={() => setIsDemoOpen(false)}
+                  className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+                  aria-label="Close demo video"
+                >
+                  <span className="material-symbols-outlined text-white" style={{ fontSize: '16px' }}>close</span>
+                </button>
+              </div>
+
+              {/* 16:9 YouTube iframe */}
+              <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com"
+                  title="Bharath Marriage Demo"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+
             </div>
           </div>
         </>
