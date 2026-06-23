@@ -517,8 +517,7 @@ export default function ProfileDetails() {
                     </h2>
                     <button
                       onClick={() => downloadHoroscope(profile)}
-                      disabled={downloading}
-                      className="flex items-center gap-1.5 bg-deep-maroon hover:bg-deep-maroon/90 disabled:opacity-60 disabled:cursor-not-allowed text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
+                      className="flex items-center gap-1.5 bg-deep-maroon hover:bg-deep-maroon/90 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
                     >
                       <span className="material-symbols-outlined text-[14px]">download</span>
                       Download

@@ -19,6 +19,7 @@ const plans = [
       "View Contact Numbers": false,
       "Premium Profile Badge": false,
       "Video Calling": false,
+      "Download Horoscope": false,
     },
   },
   {
@@ -38,6 +39,7 @@ const plans = [
       "View Contact Numbers": false,
       "Premium Profile Badge": false,
       "Video Calling": false,
+      "Download Horoscope": false,
     },
   },
   {
@@ -57,6 +59,7 @@ const plans = [
       "View Contact Numbers": false,
       "Premium Profile Badge": false,
       "Video Calling": false,
+      "Download Horoscope": false,
     },
   },
   {
@@ -76,6 +79,7 @@ const plans = [
       "View Contact Numbers": true,
       "Premium Profile Badge": false,
       "Video Calling": false,
+      "Download Horoscope": true,
     },
   },
   {
@@ -95,6 +99,7 @@ const plans = [
       "View Contact Numbers": true,
       "Premium Profile Badge": true,
       "Video Calling": true,
+      "Download Horoscope": true,
     },
   },
 ];
@@ -106,6 +111,7 @@ const featureList = [
   { key: "Detailed Profile Info", icon: "badge" },
   { key: "Direct Chat & Messaging", icon: "chat" },
   { key: "View Contact Numbers", icon: "contact_phone" },
+  { key: "Download Horoscope", icon: "download" },
   { key: "Premium Profile Badge", icon: "workspace_premium" },
   { key: "Video Calling", icon: "videocam" },
 ];

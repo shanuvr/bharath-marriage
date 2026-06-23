@@ -85,7 +85,7 @@ const HoroscopeCharts = forwardRef(function HoroscopeCharts({
 }, ref) {
   return (
     <div ref={ref} className="mt-6 flex flex-col gap-6">
-      <div className="flex flex-col sm:flex-row gap-8 justify-center items-start">
+      <div className="flex flex-col sm:flex-row gap-8 justify-center items-center sm:items-start">
 
         <div className="flex flex-col items-center gap-1">
           <span className="text-[11px] font-semibold text-charcoal-text/60 uppercase tracking-wider mb-1">

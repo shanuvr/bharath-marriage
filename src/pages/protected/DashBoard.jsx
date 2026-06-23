@@ -36,7 +36,8 @@ export default function Dashboard() {
       case 'inbox':
         return 'Inbox Messages';
       case 'shortlists':
-        return 'Shortlists';
+      case 'favourite':
+        return 'Favourite';
       case 'plan':
         return 'My Plan';
       case 'settings':
@@ -66,7 +67,7 @@ export default function Dashboard() {
         return <ManagePhotosView />;
       case 'Inbox Messages':
         return <InboxView />;
-      case 'Shortlists':
+      case 'Favourite':
         return <ShortlistsView />;
       case 'My Plan':
         return <MyPlanView />;
