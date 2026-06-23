@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 
-const porutamRows = [
-  { name: "ദിനം", match: false },
-  { name: "ഗണം", match: true },
-  { name: "രാശി", match: true },
-  { name: "രാജ്ജു", match: true },
-  { name: "നാടി", match: true },
-  { name: "വശ്യ", match: true },
-  { name: "യോണി", match: false },
-  { name: "മഹേന്ദ്ര", match: true },
-  { name: "സ്ത്രീദീർഘ", match: true },
-  { name: "വിശ്യ", match: true },
+const malayalamPlanets = ["ച", "മ", "സ", "ല", "കുശ്രി", "ബു", "ഗു", "ശു", "മ", "ര", "കെ", "രാ"];
+const nakshatras = [
+  'അശ്വതി','ഭരണി','കാർത്തിക','റോഹിണി','മകയിരം','തിരുവാതിര','പുനർതം','പൂയം','ആയില്യം',
+  'മകം','പൂരം','ഉത്രം','അത്തം','ചിത്തിര','സ്വാതി','വിശാഖം','അനിഴം','ത്രിക്കേറ്റ','മൂലം',
+  'പൂരാടം','ഉത്രാടം','തിരുവോണം','അവിട്ടം','ചതയം','പൂരുരുട്ടാതി','ഉത്രട്ടാതി','രേവതി'
 ];
+const rasis = ['മേടം','ഇടവം','മിഥുനം','കർക്കിടകം','ചിംഹം','കന്നി','തുലാം','വൃശ്ചികം','ധനു','മകരം','കുംഭം','മീനം'];
 
 function RasiChart({ title, cells, rasiName, dob }) {
   const Cell = ({ num, children, col, row, className = "" }) => (
@@ -25,13 +20,13 @@ function RasiChart({ title, cells, rasiName, dob }) {
           {num}
         </span>
       )}
-      <span className="text-[11px] md:text-sm text-charcoal-text">{children}</span>
+      <span className="text-[11px] md:text-sm text-charcoal-text font-bold">{children}</span>
     </div>
   );
 
   return (
     <div className="flex flex-col items-center">
-      <div className="grid grid-cols-4 grid-rows-4 w-full max-w-[260px] aspect-square">
+      <div className="grid grid-cols-4 grid-rows-4 w-full max-w-[260px] aspect-square border border-slate-200">
         <Cell num={1} col="1" row="1">{cells[1]}</Cell>
         <Cell num={2} col="2" row="1">{cells[2]}</Cell>
         <Cell num={3} col="3" row="1">{cells[3]}</Cell>
@@ -76,23 +71,49 @@ export default function Porutham() {
 
   const handleCheck = (e) => {
     e.preventDefault();
-    // Static placeholder data until horoscope matching logic is wired up
-    setResult([
-      {
-        person: `${groom.name || "Groom"} (Groom)`,
-        city: groom.city || "—",
+
+    const groomNak = nakshatras[Math.floor(Math.random() * nakshatras.length)];
+    const groomRasi = rasis[Math.floor(Math.random() * rasis.length)];
+    const brideNak = nakshatras[Math.floor(Math.random() * nakshatras.length)];
+    const brideRasi = rasis[Math.floor(Math.random() * rasis.length)];
+
+    const groomCells = {};
+    const brideCells = {};
+    [1, 2, 3, 4, 5, 8, 9, 12].forEach(house => {
+      groomCells[house] = malayalamPlanets[Math.floor(Math.random() * malayalamPlanets.length)];
+      brideCells[house] = malayalamPlanets[Math.floor(Math.random() * malayalamPlanets.length)];
+    });
+
+    const poruthamList = ['ദിനം', 'ഗണം', 'രാശി', 'രാജ്ജു', 'നാടി', 'വശ്യ', 'യോണി', 'മഹേന്ദ്ര', 'സ്ത്രീദീർഘ', 'വിശ്യ'];
+    let matchCount = 0;
+    const matches = poruthamList.map((name) => {
+      const match = Math.random() > 0.4;
+      if (match) matchCount++;
+      return { name, match };
+    });
+
+    setResult({
+      groom: {
+        name: groom.name,
+        city: groom.city,
         dob: groom.dob ? groom.dob.replace("T", " ") : "—",
-        nakshatram: "പൂയം",
-        rasi: "മിഥുനം",
+        nak: groomNak,
+        rasi: groomRasi,
+        cells: groomCells,
       },
-      {
-        person: `${bride.name || "Bride"} (Bride)`,
-        city: bride.city || "—",
+      bride: {
+        name: bride.name,
+        city: bride.city,
         dob: bride.dob ? bride.dob.replace("T", " ") : "—",
-        nakshatram: "തിരുവാതിര",
-        rasi: "ഇടവം",
+        nak: brideNak,
+        rasi: brideRasi,
+        cells: brideCells,
       },
-    ]);
+      matches,
+      matchCount,
+      score: `${matchCount}/${poruthamList.length}`,
+      percentage: Math.round((matchCount / poruthamList.length) * 100),
+    });
   };
 
   const isFormValid =
@@ -143,6 +164,7 @@ export default function Porutham() {
                     value={groom.name}
                     onChange={(e) => handleChange('groom', 'name', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[11px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
 
@@ -155,6 +177,7 @@ export default function Porutham() {
                     value={groom.city}
                     onChange={(e) => handleChange('groom', 'city', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[11px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
 
@@ -167,6 +190,7 @@ export default function Porutham() {
                     value={groom.dob}
                     onChange={(e) => handleChange('groom', 'dob', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[10px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
               </div>
@@ -188,6 +212,7 @@ export default function Porutham() {
                     value={bride.name}
                     onChange={(e) => handleChange('bride', 'name', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[11px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
 
@@ -200,6 +225,7 @@ export default function Porutham() {
                     value={bride.city}
                     onChange={(e) => handleChange('bride', 'city', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[11px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
 
@@ -212,6 +238,7 @@ export default function Porutham() {
                     value={bride.dob}
                     onChange={(e) => handleChange('bride', 'dob', e.target.value)}
                     className="w-full border border-slate-200 rounded-md md:rounded-lg py-1.5 md:py-2 px-2 md:px-3 text-[10px] md:text-xs text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon focus:border-deep-maroon"
+                    required
                   />
                 </div>
               </div>
@@ -260,28 +287,40 @@ export default function Porutham() {
                     </tr>
                   </thead>
                   <tbody>
-                    {result.map((row, i) => (
-                      <tr
-                        key={row.person}
-                        className={i !== result.length - 1 ? "border-b border-slate-100" : ""}
-                      >
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
-                          {row.person}
-                        </td>
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
-                          {row.city}
-                        </td>
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
-                          {row.dob}
-                        </td>
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
-                          {row.nakshatram}
-                        </td>
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
-                          {row.rasi}
-                        </td>
-                      </tr>
-                    ))}
+                    <tr className="border-b border-slate-100">
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.groom.name} (Groom)
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.groom.city}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.groom.dob}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap font-bold text-deep-maroon">
+                        {result.groom.nak}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.groom.rasi}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.bride.name} (Bride)
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.bride.city}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.bride.dob}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap font-bold text-deep-maroon">
+                        {result.bride.nak}
+                      </td>
+                      <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 whitespace-nowrap">
+                        {result.bride.rasi}
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -295,24 +334,16 @@ export default function Porutham() {
 
               <div className="grid sm:grid-cols-2 gap-8 sm:gap-6 max-w-2xl mx-auto">
                 <RasiChart
-                  title={`${groom.name || "Groom"} - Groom`}
-                  cells={{
-                    1: "ര", 2: "മ", 3: "ഗു", 4: "മ",
-                    5: "ര", 8: "ബു",
-                    9: "മ", 12: "കുശ്രി",
-                  }}
-                  rasiName="മിഥുനം"
-                  dob={groom.dob ? groom.dob.replace("T", " ") : "2000-08-30 12:00"}
+                  title={`${result.groom.name} - Groom`}
+                  cells={result.groom.cells}
+                  rasiName={result.groom.rasi}
+                  dob={result.groom.dob}
                 />
                 <RasiChart
-                  title={`${bride.name || "Bride"} - Bride`}
-                  cells={{
-                    1: "ര", 2: "ലി", 3: "ലി", 4: "ച",
-                    5: "ലി", 8: "മ",
-                    9: "മ", 12: "മ",
-                  }}
-                  rasiName="ഇടവം"
-                  dob={bride.dob ? bride.dob.replace("T", " ") : "2026-07-02 12:00"}
+                  title={`${result.bride.name} - Bride`}
+                  cells={result.bride.cells}
+                  rasiName={result.bride.rasi}
+                  dob={result.bride.dob}
                 />
               </div>
             </div>
@@ -339,21 +370,20 @@ export default function Porutham() {
                     </tr>
                   </thead>
                   <tbody>
-                    {porutamRows.map((row, i) => (
+                    {result.matches.map((row, i) => (
                       <tr
                         key={row.name}
-                        className={i !== porutamRows.length - 1 ? "border-b border-slate-100" : ""}
+                        className={`${i !== result.matches.length - 1 ? "border-b border-slate-100" : ""} ${row.match ? "bg-emerald-50/20" : "bg-rose-50/20"}`}
                       >
                         <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4">
                           {i + 1}
                         </td>
-                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4">
+                        <td className="text-charcoal-text text-[11px] md:text-sm py-2.5 md:py-3 px-3 md:px-4 font-semibold">
                           {row.name}
                         </td>
-                        <td className="py-2.5 md:py-3 px-3 md:px-4">
+                        <td className="py-2.5 md:py-3 px-3 md:px-4 text-center">
                           <span
-                            className="material-symbols-outlined text-[16px] md:text-[18px]"
-                            style={{ color: row.match ? "#7c6cd6" : "#7c6cd6" }}
+                            className={`material-symbols-outlined text-[16px] md:text-[18px] font-bold ${row.match ? "text-emerald-600" : "text-rose-600"}`}
                           >
                             {row.match ? "check" : "close"}
                           </span>
@@ -366,8 +396,7 @@ export default function Porutham() {
 
               <div className="bg-slate-100 rounded-lg mt-4 md:mt-6 py-3 md:py-4 text-center">
                 <span className="text-charcoal-text font-bold text-xs md:text-sm">
-                  Compatibility Score: {porutamRows.filter((r) => r.match).length}/{porutamRows.length} (
-                  {Math.round((porutamRows.filter((r) => r.match).length / porutamRows.length) * 100)}%)
+                  Compatibility Score: {result.score} ({result.percentage}%)
                 </span>
               </div>
             </div>

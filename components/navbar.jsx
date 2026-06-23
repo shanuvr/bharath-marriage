@@ -32,10 +32,31 @@ export default function Navbar() {
 
   const handleLogout = () => {
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('guestStar');
+    sessionStorage.removeItem('guestStar');
+    localStorage.removeItem('guestDob');
+    sessionStorage.removeItem('guestDob');
+    localStorage.removeItem('guestTob');
+    sessionStorage.removeItem('guestTob');
+    localStorage.removeItem('guestPob');
+    sessionStorage.removeItem('guestPob');
     setIsLoggedIn(false);
     setIsDropdownOpen(false);
     setIsMobileMenuOpen(false);
     navigate('/');
+  };
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+    if (isHomePage) {
+      const element = document.getElementById('register');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate('/#register');
+    }
   };
 
   return (
@@ -44,14 +65,14 @@ export default function Navbar() {
           ? 'bg-white shadow-md h-16 py-2'
           : 'bg-transparent shadow-none h-20'
         }`}>
-        <div className="flex justify-between items-center px-2 sm:px-margin-mobile md:px-margin-desktop h-full max-w-container-max mx-auto w-full gap-1.5 sm:gap-4">
+        <div className="flex justify-between items-center px-4 lg:px-6 xl:px-10 h-full max-w-container-max mx-auto w-full gap-1.5 sm:gap-4">
           {/* Left: Logo & State Dropdown */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative w-20 sm:w-32 md:w-52 h-10 sm:h-12 md:h-14">
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
+            <Link to={isLoggedIn ? "/dashboard" : "/"} className="flex items-center cursor-pointer relative h-10 sm:h-12">
               <img
                 src="/logo.png"
                 alt="Bharath Marriage"
-                className={`w-auto object-contain transition-all duration-300 absolute left-0 top-1/2 -translate-y-1/2 h-8 sm:h-11 md:h-14 ${!isSolid ? 'brightness-0 invert' : ''
+                className={`h-8 sm:h-9 md:h-10 w-auto object-contain transition-all duration-300 ${!isSolid ? 'brightness-0 invert' : ''
                   }`}
               />
             </Link>
@@ -154,44 +175,37 @@ export default function Navbar() {
           </div>
 
           {/* Middle: Navigation Links (Desktop only) */}
-          <div className="hidden lg:flex gap-6 items-center">
+          <div className="hidden lg:flex lg:gap-3 xl:gap-5 items-center">
             <Link
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
+              className={`font-semibold text-xs xl:text-sm transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
                 }`}
               to="/"
             >
               Home
             </Link>
             <Link
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
+              className={`font-semibold text-xs xl:text-sm transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
                 }`}
               to="/packages"
             >
               Packages
             </Link>
             <Link
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
+              className={`font-semibold text-xs xl:text-sm transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
                 }`}
               to="/porutham"
             >
               Porutham
             </Link>
             <Link
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
+              className={`font-semibold text-xs xl:text-sm transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
                 }`}
               to="/muhurtham"
             >
               Muhurtham
             </Link>
-            <button
-              onClick={() => navigate(isLoggedIn ? '/dashboard' : '/login')}
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 cursor-pointer ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
-                }`}
-            >
-              Matches
-            </button>
             <a
-              className={`font-semibold text-xs transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
+              className={`font-semibold text-xs xl:text-sm transition-all duration-300 active:scale-95 ${isSolid ? 'text-charcoal-text hover:text-deep-maroon' : 'text-white/90 hover:text-white'
                 }`}
               href="/contact-us"
             >
@@ -199,103 +213,117 @@ export default function Navbar() {
             </a>
           </div>
 
-          {/* Right: Search, Login & Hamburger */}
-          <div className="flex gap-1 sm:gap-2.5 md:gap-4 items-center">
-            {/* Search Input Bar Link */}
+          {/* Right: Search, Login, Register & Hamburger */}
+          <div className="flex gap-1.5 sm:gap-2.5 items-center">
+            {/* Search Icon Link (Visible on all sizes) */}
             <Link
               to="/search"
-              className={`hidden sm:flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 transition-all duration-300 w-32 md:w-40 cursor-pointer ${isSolid ? 'bg-slate-100 border border-slate-200' : 'bg-white border border-transparent'
-                }`}
+              className={`flex items-center justify-center p-1.5 rounded-lg transition-all duration-300 cursor-pointer ${
+                isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
+              }`}
+              title="Search Profiles"
             >
-              <span className="material-symbols-outlined text-[15px] text-soft-gray leading-none">search</span>
-              <span className="text-[11px] w-full text-soft-gray select-none">Search...</span>
-            </Link>
-
-            {/* Mobile-only Search Icon */}
-            <Link
-              to="/search"
-              className={`sm:hidden flex items-center justify-center p-1 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
-                }`}
-            >
-              <span className="material-symbols-outlined text-[18px] leading-none">search</span>
+              <span className="material-symbols-outlined text-[20px] leading-none">search</span>
             </Link>
 
             {isLoggedIn ? (
-              <>
+              /* Profile Dropdown */
+              <div className="relative">
+                <button
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  title="Arjun Reddy (ID: BM1006)"
+                  className="flex items-center gap-1 rounded-full hover:bg-slate-100 md:px-1.5 md:py-0.5 cursor-pointer"
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80&h=80"
+                    alt="Logged in user"
+                    className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full object-cover border border-slate-200"
+                  />
+                  <span className={`material-symbols-outlined hidden text-[20px] md:inline-block ${isSolid ? 'text-charcoal-text' : 'text-white'
+                    }`}>
+                    keyboard_arrow_down
+                  </span>
+                </button>
 
-
-                {/* Profile Dropdown */}
-                <div className="relative">
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    title="Arjun Reddy (ID: BM1006)"
-                    className="flex items-center gap-1 rounded-full hover:bg-slate-100 md:px-1.5 md:py-0.5 cursor-pointer"
-                  >
-                    <img
-                      src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=80&h=80"
-                      alt="Logged in user"
-                      className="h-7 w-7 sm:h-8 sm:w-8 md:h-9 md:w-9 rounded-full object-cover border border-slate-200"
-                    />
-                    <span className={`material-symbols-outlined hidden text-[20px] md:inline-block ${isSolid ? 'text-charcoal-text' : 'text-white'
-                      }`}>
-                      keyboard_arrow_down
-                    </span>
-                  </button>
-
-                  {isDropdownOpen && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)}></div>
-                      <div className="absolute right-0 mt-2.5 w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-1.5 z-50 animate-fade-in text-left">
-                        <div className="px-4 py-2 border-b border-slate-100 mb-1">
-                          <p className="text-xs font-bold text-charcoal-text">Arjun Reddy</p>
-                          <p className="text-[10px] text-soft-gray">ID: BM1006</p>
-                        </div>
-                        <Link
-                          to="/dashboard?tab=profile"
-                          onClick={() => setIsDropdownOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
-                        >
-                          <span className="material-symbols-outlined text-base">account_circle</span>
-                          My Profile
-                        </Link>
-                        <Link
-                          to="/dashboard?tab=settings"
-                          onClick={() => setIsDropdownOpen(false)}
-                          className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
-                        >
-                          <span className="material-symbols-outlined text-base">settings</span>
-                          Settings
-                        </Link>
-                        <div className="border-t border-slate-100 my-1"></div>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:text-red-700 text-left cursor-pointer"
-                        >
-                          <span className="material-symbols-outlined text-base">logout</span>
-                          Logout
-                        </button>
+                {isDropdownOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)}></div>
+                    <div className="absolute right-0 mt-2.5 w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-1.5 z-50 animate-fade-in text-left">
+                      <div className="px-4 py-2 border-b border-slate-100 mb-1">
+                        <p className="text-xs font-bold text-charcoal-text">Arjun Reddy</p>
+                        <p className="text-[10px] text-soft-gray">ID: BM1006</p>
                       </div>
-                    </>
-                  )}
-                </div>
-              </>
+                      <Link
+                        to="/dashboard"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
+                      >
+                        <span className="material-symbols-outlined text-base">group</span>
+                        Matches
+                      </Link>
+                      <Link
+                        to="/dashboard?tab=profile"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
+                      >
+                        <span className="material-symbols-outlined text-base">account_circle</span>
+                        My Profile
+                      </Link>
+                      <Link
+                        to="/dashboard?tab=settings"
+                        onClick={() => setIsDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-xs font-semibold text-charcoal-text hover:bg-slate-50 hover:text-deep-maroon"
+                      >
+                        <span className="material-symbols-outlined text-base">settings</span>
+                        Settings
+                      </Link>
+                      <div className="border-t border-slate-100 my-1"></div>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-xs font-semibold text-red-600 hover:bg-red-50 hover:text-red-700 text-left cursor-pointer"
+                      >
+                        <span className="material-symbols-outlined text-base">logout</span>
+                        Logout
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
             ) : (
-              /* Login Button */
-              <Link
-                to="/login"
-                className="hidden md:flex items-center gap-1.5 px-4 py-1.5 bg-deep-maroon hover:bg-primary text-white text-xs font-semibold rounded-lg shadow-md transition-all duration-200 active:scale-95 cursor-pointer shrink-0"
-              >
-                <span className="material-symbols-outlined text-[16px] leading-none text-white">
-                  account_circle
-                </span>
-                Login
-              </Link>
+              <div className="hidden lg:flex items-center gap-2">
+                {/* Register Free Button */}
+                <a
+                  href="#register"
+                  onClick={handleRegisterClick}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-deep-maroon hover:bg-primary text-white text-xs font-semibold rounded-lg shadow-md transition-all duration-200 active:scale-95 cursor-pointer shrink-0"
+                >
+                  <span className="material-symbols-outlined text-[16px] leading-none text-white">
+                    person_add
+                  </span>
+                  Register
+                </a>
+
+                {/* Login Button */}
+                <Link
+                  to="/login"
+                  className={`flex items-center gap-1 px-3 py-1.5 font-semibold text-xs rounded-lg transition-all duration-200 active:scale-95 cursor-pointer shrink-0 border ${
+                    isSolid
+                      ? 'border-deep-maroon text-deep-maroon hover:bg-deep-maroon/5'
+                      : 'border-white text-white hover:bg-white/10'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[16px] leading-none">
+                    account_circle
+                  </span>
+                  Login
+                </Link>
+              </div>
             )}
 
             {/* Mobile Hamburger Menu Toggle */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`md:hidden flex items-center justify-center p-1 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
+              className={`lg:hidden flex items-center justify-center p-1 rounded-lg transition-all duration-300 cursor-pointer ${isSolid ? 'text-charcoal-text hover:bg-slate-100' : 'text-white hover:bg-white/10'
                 }`}
             >
               <span className="material-symbols-outlined text-[20px] leading-none">
@@ -311,12 +339,12 @@ export default function Navbar() {
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-black/60 z-50 md:hidden transition-opacity duration-300 animate-fade-in"
+            className="fixed inset-0 bg-black/60 z-50 lg:hidden transition-opacity duration-300 animate-fade-in"
             onClick={() => setIsMobileMenuOpen(false)}
           ></div>
 
           {/* Drawer Menu */}
-          <div className="fixed top-0 right-0 h-full w-[260px] bg-white z-55 shadow-2xl flex flex-col md:hidden animate-slide-in-right text-left">
+          <div className="fixed top-0 right-0 h-full w-[260px] bg-white z-55 shadow-2xl flex flex-col lg:hidden animate-slide-in-right text-left">
             {/* Header with Branded Logo */}
             <div className="flex justify-between items-center p-4 border-b border-slate-100 shrink-0">
               <div className="h-12 relative w-40">
@@ -372,16 +400,6 @@ export default function Navbar() {
                   <span className="material-symbols-outlined text-[14px] text-slate-500">calendar_today</span>
                   Muhurtham
                 </Link>
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    navigate(isLoggedIn ? '/dashboard' : '/login');
-                  }}
-                  className="flex items-center gap-2 font-semibold text-charcoal-text hover:text-deep-maroon hover:bg-slate-50 text-xs py-2 px-2.5 rounded-lg transition-colors w-full text-left"
-                >
-                  <span className="material-symbols-outlined text-[14px] text-slate-500">group</span>
-                  Matches
-                </button>
                 <a
                   href="/contact-us"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -416,14 +434,27 @@ export default function Navbar() {
                   Logout
                 </button>
               ) : (
-                <Link
-                  to="/login"
-                  className="flex items-center justify-center gap-2 w-full py-2 bg-deep-maroon hover:bg-primary text-white font-semibold rounded-lg shadow-sm transition-colors text-xs cursor-pointer active:scale-[0.98] text-center"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="material-symbols-outlined text-[14px] leading-none text-white">account_circle</span>
-                  Login
-                </Link>
+                <div className="flex flex-col gap-2">
+                  {/* Register Free Button */}
+                  <a
+                    href="#register"
+                    onClick={handleRegisterClick}
+                    className="flex items-center justify-center gap-2 w-full py-2 bg-deep-maroon hover:bg-primary text-white font-semibold rounded-lg shadow-sm transition-colors text-xs cursor-pointer active:scale-[0.98] text-center"
+                  >
+                    <span className="material-symbols-outlined text-[14px] leading-none text-white">person_add</span>
+                    Register
+                  </a>
+
+                  {/* Login Button */}
+                  <Link
+                    to="/login"
+                    className="flex items-center justify-center gap-2 w-full py-2 border border-slate-200 text-charcoal-text font-semibold rounded-lg hover:bg-slate-50 transition-colors text-xs cursor-pointer active:scale-[0.98] text-center"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <span className="material-symbols-outlined text-[14px] leading-none">account_circle</span>
+                    Login
+                  </Link>
+                </div>
               )}
             </div>
           </div>

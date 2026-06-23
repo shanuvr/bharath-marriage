@@ -1,7 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-export default function ProfileCard({ profile, compact = false, fullWidth = false }) {
+const getPoruthamScore = (star1, star2) => {
+  if (!star1 || !star2) return 5;
+  const combinedStr = star1 + star2;
+  let sum = 0;
+  for (let i = 0; i < combinedStr.length; i++) {
+    sum += combinedStr.charCodeAt(i);
+  }
+  return 5 + (sum % 6);
+};
+
+export default function ProfileCard({ profile, compact = false, fullWidth = false, guestStar = null }) {
+  const displayId = profile.id;
+  const district = (profile.district || profile.location || 'Unknown').split(',')[0].trim();
+  const isWorking = profile.employmentStatus 
+    ? profile.employmentStatus === 'Working' 
+    : (profile.profession && !['none', 'unemployed', 'not working', 'homemaker', 'home maker'].includes(profile.profession.toLowerCase()));
+  const employmentStatusText = isWorking ? 'Working' : 'Not Working';
+  
+  const isOnline = profile.isOnline !== undefined 
+    ? profile.isOnline 
+    : (typeof profile.id === 'number' ? profile.id % 2 === 0 : profile.id.charCodeAt(profile.id.length - 1) % 2 === 0);
+
   return (
     <Link
       to={`/profile/${profile.id}`}
@@ -18,109 +39,88 @@ export default function ProfileCard({ profile, compact = false, fullWidth = fals
           loading="lazy"
         />
 
-        {/* Tiled watermark */}
+        {/* Repeating tiled watermark covering full photo */}
         <div
           aria-hidden="true"
-          className="pointer-events-none select-none absolute overflow-hidden"
+          className="pointer-events-none select-none absolute inset-0 opacity-60"
           style={{
-            inset: '-100%',
-            transform: 'rotate(-30deg)',
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '6px',
-            padding: '8px',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='75'%3E%3Cdefs%3E%3Cfilter id='shadow'%3E%3CfeDropShadow dx='0.5' dy='0.5' stdDeviation='0.5' flood-opacity='0.45'/%3E%3C/filter%3E%3C/defs%3E%3Ctext x='10' y='45' fill='%23ffffff' filter='url(%23shadow)' font-size='9.5' font-weight='bold' font-family='system-ui, -apple-system, sans-serif' transform='rotate(-20 60 37.5)' letter-spacing='0.08em'%3EBharath Marriage%3C/text%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
           }}
-        >
-          {Array(20).fill(null).map((_, i) => (
-            <span
-              key={i}
-              style={{
-                fontSize: '9px',
-                fontWeight: 700,
-                color: 'rgba(255,255,255,0.15)',
-                letterSpacing: '0.08em',
-                whiteSpace: 'nowrap',
-                padding: '12px 0',
-                textShadow: '0 1px 2px rgba(0,0,0,0.15)',
-              }}
-            >
-              Bharath Marriage
-            </span>
-          ))}
-        </div>
+        ></div>
 
-      
-{/* Corner logo */}
-<div className="absolute bottom-2 left-2 pointer-events-none select-none">
-  <img
-    src="/logo.png"
-    alt="Bharath Marriage"
-    className="h-7 w-auto opacity-70"
-    style={{ filter: 'brightness(0) invert(1)' }}
-  />
-</div>
+
+
+        {guestStar && profile.religion === 'Hindu' && profile.star && (
+          <span className="absolute left-1.5 sm:left-2.5 top-1.5 sm:top-2.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 backdrop-blur-xs px-1.5 sm:px-2.5 py-0.5 text-[7px] sm:text-[9px] font-bold tracking-wider text-white border border-white/20 shadow-md flex items-center gap-0.5 z-10">
+            <span>🌟</span> <span>{getPoruthamScore(guestStar, profile.star)}/10</span> <span className="hidden min-[380px]:inline">Porutham</span>
+          </span>
+        )}
 
         {profile.premium && (
-          <span className="absolute right-2 top-2 rounded-full bg-heritage-gold/90 backdrop-blur-xs px-2 py-0.5 text-[8px] font-bold tracking-wider text-white border border-white/20">
+          <span className="absolute right-1.5 sm:right-2.5 top-1.5 sm:top-2.5 rounded-full bg-heritage-gold/90 backdrop-blur-xs px-1.5 sm:px-2.5 py-0.5 text-[7px] sm:text-[9px] font-bold tracking-wider text-white border border-white/20">
             PREMIUM
           </span>
         )}
       </div>
 
       {/* Profile Details */}
-      <div className="p-2 sm:p-3">
-        <div className="flex items-center justify-between gap-1 text-left">
-          <h3 className="truncate text-xs font-bold text-charcoal-text flex items-center gap-1">
-            <span className="truncate">{profile.name}</span>
-            {profile.verified && (
-              <span
-                className="material-symbols-outlined leading-none text-emerald-600 shrink-0"
-                style={{ fontVariationSettings: "'FILL' 1", fontSize: '12px', width: '12px', height: '12px' }}
-              >
-                verified
-              </span>
-            )}
-          </h3>
-          <span className="shrink-0 text-[9px] sm:text-[10px] font-medium text-soft-gray">
-            {profile.age} &middot; {profile.height}
+      <div className={`${compact ? 'p-2' : 'p-3'} flex flex-col gap-1.5`}>
+        {/* ID & Status */}
+        <div className="flex items-center justify-between gap-1">
+          <span className="text-[9px] sm:text-[10px] font-bold text-deep-maroon bg-deep-maroon/5 border border-deep-maroon/10 px-1.5 sm:px-2 py-0.5 rounded-md tracking-wider">
+            {displayId}
+          </span>
+          <span className={`flex items-center gap-1 text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
+            isOnline 
+              ? 'text-emerald-700 bg-emerald-50 border border-emerald-100' 
+              : 'text-slate-400 bg-slate-50 border border-slate-100'
+          }`}>
+            <span className={`w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full ${isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-slate-350'}`}></span>
+            {isOnline ? 'Online' : 'Offline'}
           </span>
         </div>
 
-        <p className="mt-0.5 truncate text-[10px] sm:text-[11px] font-semibold text-deep-maroon text-left">
-          {profile.profession}
-        </p>
-
-        <div className="mt-1.5 text-[9px] sm:text-[10px] text-soft-gray text-left">
-          <p className="flex items-center gap-1 truncate">
+        <h3 className={`font-bold text-slate-800 truncate text-left flex items-center gap-1 ${compact ? 'text-xs' : 'text-sm'}`}>
+          <span className="truncate">{profile.name}</span>
+          {profile.verified && (
             <span
-              className="material-symbols-outlined leading-none text-slate-400 shrink-0"
-              style={{ fontSize: '10px', width: '10px', height: '10px' }}
+              className="material-symbols-outlined leading-none text-emerald-600 shrink-0"
+              style={{ fontVariationSettings: "'FILL' 1", fontSize: compact ? '11px' : '13px' }}
             >
-              school
+              verified
             </span>
-            <span className="truncate">{profile.education}</span>
-          </p>
-          <p className="flex items-center gap-1 truncate mt-0.5">
-            <span
-              className="material-symbols-outlined leading-none text-slate-400 shrink-0"
-              style={{ fontSize: '10px', width: '10px', height: '10px' }}
-            >
-              location_on
-            </span>
-            <span className="truncate">{profile.religion} &middot; {profile.location}</span>
-          </p>
-        </div>
+          )}
+        </h3>
 
-        {(profile.memberSince || profile.lastUpdated) && (
-          <div className="mt-2 pt-1.5 border-t border-slate-100 flex items-center justify-between gap-1 text-[8px] sm:text-[9px] text-slate-400">
-            {profile.memberSince && (
-              <span className="truncate">Member since {profile.memberSince}</span>
-            )}
-            {profile.lastUpdated && (
-              <span className="truncate shrink-0">Updated {profile.lastUpdated}</span>
-            )}
+        {/* Info Grid */}
+        <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 pt-1.5 border-t border-slate-100 text-[9px] sm:text-[10px] text-slate-500 text-left">
+          {/* District */}
+          <div className="flex items-center gap-1 truncate">
+            <span className="material-symbols-outlined text-slate-400 text-xs shrink-0" style={{ fontSize: compact ? '11px' : '13px' }}>location_on</span>
+            <span className="truncate">{district}</span>
           </div>
-        )}
+
+          {/* Age */}
+          <div className="flex items-center gap-1 truncate">
+            <span className="material-symbols-outlined text-slate-400 text-xs shrink-0" style={{ fontSize: compact ? '11px' : '13px' }}>cake</span>
+            <span className="truncate">{profile.age} Yrs</span>
+          </div>
+
+          {/* Education */}
+          <div className="flex items-center gap-1 truncate col-span-2">
+            <span className="material-symbols-outlined text-slate-400 text-xs shrink-0" style={{ fontSize: compact ? '11px' : '13px' }}>school</span>
+            <span className="truncate">{profile.education}</span>
+          </div>
+
+          {/* Employment Status */}
+          <div className="flex items-center gap-1 truncate col-span-2">
+            <span className="material-symbols-outlined text-slate-400 text-xs shrink-0" style={{ fontSize: compact ? '11px' : '13px' }}>work</span>
+            <span className={`font-semibold ${isWorking ? 'text-emerald-700 font-bold' : 'text-slate-500'} truncate`}>
+              {employmentStatusText}
+            </span>
+          </div>
+        </div>
       </div>
     </Link>
   );

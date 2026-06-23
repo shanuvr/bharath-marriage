@@ -7,6 +7,7 @@ import ManagePhotosView from '../../../components/dashboard/ManagePhotosView';
 import InboxView from '../../../components/dashboard/InboxView';
 import ShortlistsView from '../../../components/dashboard/ShortlistsView';
 import SettingsView from '../../../components/dashboard/SettingsView';
+import MyPlanView from '../../../components/dashboard/MyPlanView';
 import { Helmet } from 'react-helmet-async';
 
 const menuItems = [
@@ -16,6 +17,7 @@ const menuItems = [
   { icon: 'photo_library', label: 'Manage Photos' },
   { icon: 'chat', label: 'Inbox Messages' },
   { icon: 'stars', label: 'Favourite' },
+  { icon: 'card_membership', label: 'My Plan' },
   { icon: 'settings', label: 'Account Settings' },
 ];
 
@@ -35,6 +37,8 @@ export default function Dashboard() {
         return 'Inbox Messages';
       case 'shortlists':
         return 'Shortlists';
+      case 'plan':
+        return 'My Plan';
       case 'settings':
         return 'Account Settings';
       default:
@@ -64,6 +68,8 @@ export default function Dashboard() {
         return <InboxView />;
       case 'Shortlists':
         return <ShortlistsView />;
+      case 'My Plan':
+        return <MyPlanView />;
       case 'Account Settings':
         return <SettingsView />;
       default:
@@ -152,7 +158,12 @@ export default function Dashboard() {
                 </div>
 
                 <h2 className="text-base font-bold text-charcoal-text mt-2">Arjun Reddy</h2>
-                <p className="text-[10px] font-semibold text-soft-gray uppercase tracking-wider">ID: BM1006</p>
+                <p className="text-[10px] font-semibold text-soft-gray uppercase tracking-wider">ID: BKLH000000006</p>
+                
+                <div className="mt-2 text-[10px] text-slate-500 space-y-0.5">
+                  <p><span className="font-semibold text-slate-400">Registered:</span> 12 June 2026</p>
+                  <p><span className="font-semibold text-slate-400">Member Since:</span> Jan 2024</p>
+                </div>
                 
                 <div className="mt-4 w-full border-t border-slate-100 pt-3 flex justify-between items-center text-xs">
                   <span className="text-soft-gray font-medium">Profile Strength</span>

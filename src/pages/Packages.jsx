@@ -1,60 +1,17 @@
 import React from "react";
 import { Helmet } from 'react-helmet-async';
+import { useNavigate } from 'react-router-dom';
 
 function Packages() {
-  const plans = [
-    {
-      name: "Free",
-      price: "₹0",
-      period: null,
-      subtitle: "Get started",
-      featured: false,
-      features: [
-        "Create your profile",
-        "Browse member profiles",
-        "Basic search filters",
-        "Express interest",
-        "View limited matches",
-      ],
-      buttonText: "Create free profile",
-    },
-    {
-      name: "Premium",
-      price: "₹2,999",
-      period: "/ membership",
-      subtitle: "Most chosen by families",
-      featured: true,
-      features: [
-        "Everything in Free",
-        "View contact details",
-        "Unlimited interests",
-        "Advanced search filters",
-        "Priority profile visibility",
-        "Horoscope matching",
-        "Chat with matches",
-      ],
-      buttonText: "Choose Premium",
-    },
-    {
-      name: "Elite",
-      price: "₹5,999",
-      period: "/ membership",
-      subtitle: "Personalized assistance",
-      featured: false,
-      features: [
-        "Everything in Premium",
-        "Dedicated relationship manager",
-        "Verified profile badge",
-        "Personalized match suggestions",
-        "Priority customer support",
-        "Family-assisted matchmaking",
-      ],
-      buttonText: "Choose Elite",
-    },
-  ];
+  const navigate = useNavigate();
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault();
+    navigate('/#register');
+  };
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-gradient-to-br from-[#fbfaf9] via-rose-50/20 to-amber-50/10 min-h-screen pt-20 md:pt-24 pb-16 px-margin-mobile md:px-margin-desktop">
       <Helmet>
         <title>Matrimony Packages & Membership Plans | Bharath Marriage</title>
         <meta
@@ -62,109 +19,236 @@ function Packages() {
           content="Explore affordable matrimony packages and membership plans to connect with verified bride and groom profiles across Kerala."
         />
       </Helmet>
-      {/* Header */}
-      <section className="pt-14 pb-10 md:pt-20 md:pb-14 px-margin-mobile md:px-margin-desktop border-b border-slate-100">
-        <div className="max-w-container-max mx-auto text-center">
-          <p className="text-[10px] md:text-[11px] font-label-caps font-semibold text-deep-maroon tracking-[0.18em] uppercase mb-2.5">
+
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-8 md:mb-12">
+          <p className="text-[9px] md:text-[11px] font-label-caps font-semibold text-deep-maroon tracking-[0.18em] uppercase mb-1.5 md:mb-2">
             Membership
           </p>
-          <h2 className="font-display-lg text-2xl md:text-[32px] text-charcoal-text leading-tight">
-            Choose the plan that fits your search
-          </h2>
-          <p className="text-soft-gray mt-3 max-w-md mx-auto text-xs md:text-sm leading-relaxed">
-            Transparent pricing, no hidden charges. Upgrade anytime as your search becomes more serious.
+          <h1 className="font-display-lg text-2xl md:text-[34px] text-charcoal-text font-bold tracking-tight leading-tight">
+            Choose Your Plan
+          </h1>
+          <p className="text-soft-gray text-xs md:text-sm mt-2.5 max-w-md mx-auto leading-relaxed">
+            Select the best package to connect with verified matches and find your perfect life partner.
           </p>
         </div>
-      </section>
 
-      {/* Pricing Cards */}
-      <section className="py-12 md:py-16 px-margin-mobile md:px-margin-desktop">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-5 md:gap-6 items-start">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative rounded-2xl flex flex-col h-full transition-all duration-300 ${plan.featured
-                    ? "border border-deep-maroon/30 shadow-lg md:-translate-y-2 bg-white"
-                    : "border border-slate-200 shadow-sm bg-white hover:border-slate-300 hover:shadow-md"
-                  }`}
-              >
-                {plan.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="bg-deep-maroon text-white text-[9px] font-label-caps font-semibold px-3.5 py-1 rounded-full uppercase tracking-[0.12em] shadow-sm">
-                      Most Popular
+        {/* Plan Comparison Table Card */}
+        <div className="bg-white border border-slate-200/60 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.02)] overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[780px] border-collapse text-center">
+              <thead>
+                <tr className="border-b border-slate-100 bg-slate-50/40">
+                  <th className="py-6 px-5 text-left font-semibold text-[11px] md:text-xs text-soft-gray uppercase tracking-wider w-[20%]">
+                    Features
+                  </th>
+                  <th className="py-6 px-5 border-l border-slate-100 w-[16%]">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Standard</span>
+                    <span className="text-xl md:text-2xl font-black text-slate-500 mt-1 block">Free</span>
+                    <span className="text-[8px] font-bold text-slate-400 uppercase tracking-widest block mt-1">LIFETIME</span>
+                    <span className="text-[8px] font-medium text-slate-400 uppercase tracking-wide block">FREE PLAN</span>
+                  </th>
+                  <th className="py-6 px-5 border-l border-slate-100 w-[16%] bg-slate-50/10">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Silver</span>
+                    <span className="text-xl md:text-2xl font-black text-deep-maroon/80 mt-1 block">₹400</span>
+                    <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest block mt-1">20% OFF</span>
+                    <span className="text-[8px] font-medium text-slate-400 uppercase tracking-wide block">MONTHLY</span>
+                  </th>
+                  <th className="py-6 px-5 border-l border-slate-100 w-[16%]">
+                    <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Gold</span>
+                    <span className="text-xl md:text-2xl font-black text-deep-maroon mt-1 block">₹600</span>
+                    <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest block mt-1">15% OFF</span>
+                    <span className="text-[8px] font-medium text-slate-400 uppercase tracking-wide block">MONTHLY</span>
+                  </th>
+                  <th className="py-6 px-5 border-l border-slate-100 w-[16%] bg-rose-50/5 relative">
+                    <div className="absolute -top-px left-0 right-0 h-1 bg-deep-maroon"></div>
+                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-deep-maroon text-white text-[7px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      Popular
                     </span>
-                  </div>
-                )}
+                    <span className="text-[10px] font-bold text-deep-maroon uppercase tracking-wider block mt-1">Platinum</span>
+                    <span className="text-xl md:text-2xl font-black text-deep-maroon mt-1 block">₹800</span>
+                    <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest block mt-1">10% OFF</span>
+                    <span className="text-[8px] font-medium text-slate-400 uppercase tracking-wide block">MONTHLY</span>
+                  </th>
+                  <th className="py-6 px-5 border-l border-slate-100 w-[16%] relative bg-amber-50/5">
+                    <div className="absolute -top-px left-0 right-0 h-1 bg-heritage-gold"></div>
+                    <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-heritage-gold text-white text-[7px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      Elite
+                    </span>
+                    <span className="text-[10px] font-bold text-heritage-gold uppercase tracking-wider block mt-1">Diamond</span>
+                    <span className="text-xl md:text-2xl font-black text-heritage-gold mt-1 block">₹1000</span>
+                    <span className="text-[8px] font-bold text-emerald-600 uppercase tracking-widest block mt-1">5% OFF</span>
+                    <span className="text-[8px] font-medium text-slate-400 uppercase tracking-wide block">MONTHLY</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Feature 1: Profile Listing */}
+                <tr className="border-b border-slate-100 hover:bg-slate-50/30 transition-colors">
+                  <td className="py-4.5 px-5 text-left font-semibold text-xs md:text-sm text-slate-700">
+                    Profile Listing
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-slate-50/10">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-rose-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-amber-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                </tr>
 
-                <div className="p-6 md:p-7 flex flex-col flex-1">
-                  <div className="mb-6 pb-6 border-b border-slate-100">
-                    <h3 className="text-sm font-semibold text-charcoal-text uppercase tracking-wide">
-                      {plan.name}
-                    </h3>
-                    <p className="text-soft-gray text-[11px] md:text-xs mt-1">
-                      {plan.subtitle}
-                    </p>
+                {/* Feature 2: View Photos & Horoscopes */}
+                <tr className="border-b border-slate-100 hover:bg-slate-50/30 transition-colors">
+                  <td className="py-4.5 px-5 text-left font-semibold text-xs md:text-sm text-slate-700">
+                    View Photos & Horoscopes
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-slate-50/10">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-rose-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-amber-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                </tr>
 
-                    <div className="mt-5 flex items-baseline gap-1.5">
-                      <span className="text-3xl md:text-[34px] font-bold text-charcoal-text leading-none">
-                        {plan.price}
-                      </span>
-                      {plan.period && (
-                        <span className="text-soft-gray text-[11px]">
-                          {plan.period}
-                        </span>
-                      )}
-                    </div>
-                  </div>
+                {/* Feature 3: Direct Chat & Messaging */}
+                <tr className="border-b border-slate-100 hover:bg-slate-50/30 transition-colors">
+                  <td className="py-4.5 px-5 text-left font-semibold text-xs md:text-sm text-slate-700">
+                    Direct Chat & Messaging
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-slate-50/10">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-rose-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-amber-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                </tr>
 
-                  <ul className="space-y-3 mb-7 flex-1">
-                    {plan.features.map((feature) => (
-                      <li
-                        key={feature}
-                        className="flex items-start gap-2.5 text-[12.5px] md:text-[13px] text-charcoal-text/90 leading-snug"
-                      >
-                        <span className="material-symbols-outlined text-deep-maroon shrink-0 mt-px" style={{ fontSize: "15px" }}>
-                          check
-                        </span>
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
+                {/* Feature 4: View Contact Details */}
+                <tr className="border-b border-slate-100 hover:bg-slate-50/30 transition-colors">
+                  <td className="py-4.5 px-5 text-left font-semibold text-xs md:text-sm text-slate-700">
+                    View Contact Details
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-slate-50/10">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-rose-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-amber-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                </tr>
 
-                  <button
-                    className={`w-full py-2.5 rounded-lg font-semibold text-[12.5px] transition-all cursor-pointer active:scale-[0.98] ${plan.featured
-                        ? "bg-deep-maroon hover:bg-primary text-white shadow-sm"
-                        : "bg-white border border-slate-200 hover:border-deep-maroon hover:text-deep-maroon text-charcoal-text"
-                      }`}
-                  >
-                    {plan.buttonText}
-                  </button>
-                </div>
-              </div>
-            ))}
+                {/* Feature 5: Relationship Manager */}
+                <tr className="border-b border-slate-100 hover:bg-slate-50/30 transition-colors">
+                  <td className="py-4.5 px-5 text-left font-semibold text-xs md:text-sm text-slate-700">
+                    Relationship Manager
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-slate-50/10">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-rose-50/5">
+                    <span className="material-symbols-outlined text-slate-300" style={{ fontSize: '18px' }}>cancel</span>
+                  </td>
+                  <td className="py-4.5 px-5 border-l border-slate-100 bg-amber-50/5">
+                    <span className="material-symbols-outlined text-emerald-600 font-semibold" style={{ fontSize: '18px' }}>check_circle</span>
+                  </td>
+                </tr>
+
+                {/* Action Row */}
+                <tr className="bg-slate-50/10">
+                  <td className="py-6 px-5 text-left font-bold text-xs md:text-sm text-slate-400 uppercase tracking-wide">
+                    Action
+                  </td>
+                  <td className="py-6 px-4 border-l border-slate-100">
+                    <button
+                      onClick={handleRegisterClick}
+                      className="border border-deep-maroon hover:bg-deep-maroon/5 text-deep-maroon font-bold text-[11px] md:text-xs py-2 px-3 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer w-full text-center"
+                    >
+                      Register
+                    </button>
+                  </td>
+                  <td className="py-6 px-4 border-l border-slate-100 bg-slate-50/10">
+                    <button
+                      onClick={handleRegisterClick}
+                      className="border border-deep-maroon hover:bg-deep-maroon/5 text-deep-maroon font-bold text-[11px] md:text-xs py-2 px-3 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer w-full text-center"
+                    >
+                      Register
+                    </button>
+                  </td>
+                  <td className="py-6 px-4 border-l border-slate-100">
+                    <button
+                      onClick={handleRegisterClick}
+                      className="border border-deep-maroon hover:bg-deep-maroon/5 text-deep-maroon font-bold text-[11px] md:text-xs py-2 px-3 rounded-lg shadow-sm hover:shadow transition-all cursor-pointer w-full text-center"
+                    >
+                      Register
+                    </button>
+                  </td>
+                  <td className="py-6 px-4 border-l border-slate-100 bg-rose-50/5">
+                    <button
+                      onClick={handleRegisterClick}
+                      className="bg-deep-maroon hover:bg-primary text-white font-bold text-[11px] md:text-xs py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer w-full text-center"
+                    >
+                      Register
+                    </button>
+                  </td>
+                  <td className="py-6 px-4 border-l border-slate-100 bg-amber-50/5">
+                    <button
+                      onClick={handleRegisterClick}
+                      className="bg-heritage-gold hover:bg-amber-600 text-white font-bold text-[11px] md:text-xs py-2 px-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] cursor-pointer w-full text-center"
+                    >
+                      Register
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-
-          <p className="text-center text-soft-gray text-[11px] mt-8">
-            All plans include profile verification review. Cancel or change your plan anytime.
-          </p>
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-14 md:py-20 px-margin-mobile md:px-margin-desktop bg-slate-50 border-t border-slate-100">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-display-lg text-xl md:text-2xl text-charcoal-text mb-3">
-            Start your journey today
-          </h2>
-          <p className="text-soft-gray mb-7 text-xs md:text-sm leading-relaxed max-w-md mx-auto">
-            Join thousands of families who trust Bharath Marriage to find meaningful, lasting relationships.
-          </p>
-          <button className="bg-deep-maroon hover:bg-primary text-white px-7 py-2.5 rounded-lg font-semibold text-xs md:text-[13px] transition-all cursor-pointer active:scale-[0.98] shadow-sm">
-            Register now
-          </button>
-        </div>
-      </section>
+        <p className="text-center text-soft-gray text-[10px] md:text-[11px] mt-6 max-w-md mx-auto leading-relaxed">
+          All packages include profile verification review. Cancel or modify your plan at any time.
+        </p>
+      </div>
     </div>
   );
 }

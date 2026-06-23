@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import HoroscopeChartsProfile from '../HoroscopeChartsProfile';
 
 export default function MyProfileView() {
   const [profileData, setProfileData] = useState({
@@ -301,10 +302,10 @@ export default function MyProfileView() {
                 <label className="block text-[9px] md:text-[10px] text-slate-400 font-semibold mb-0.5">Birth Time</label>
                 <input type="text" name="birthTime" value={profileData.birthTime} onChange={handleChange} disabled={!isEditing} className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 text-[11px] md:text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon" />
               </div>
-              <div className="col-span-1">
+              {/* <div className="col-span-1">
                 <label className="block text-[9px] md:text-[10px] text-slate-400 font-semibold mb-0.5">Janma Sista Dasa</label>
                 <input type="text" name="janmaSistaDasa" value={profileData.janmaSistaDasa} onChange={handleChange} disabled={!isEditing} className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 text-[11px] md:text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon" />
-              </div>
+              </div> */}
               <div className="col-span-1">
                 <label className="block text-[9px] md:text-[10px] text-slate-400 font-semibold mb-0.5">End Dasa</label>
                 <input type="text" name="endDasa" value={profileData.endDasa} onChange={handleChange} disabled={!isEditing} className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 text-[11px] md:text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon" />
@@ -322,6 +323,7 @@ export default function MyProfileView() {
                 <input type="text" name="starRasi" value={profileData.starRasi} onChange={handleChange} className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 text-[11px] md:text-xs bg-slate-50/50 text-charcoal-text focus:outline-none focus:ring-1 focus:ring-deep-maroon" />
               </div>
             </div>
+            <HoroscopeChartsProfile editMode={isEditing} />
           </div>
 
           <hr className="border-slate-100" />

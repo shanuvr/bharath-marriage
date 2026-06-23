@@ -4,7 +4,7 @@ import ProfileCard from '../ProfileCard';
 
 const recommendedProfiles = [
   {
-    id: 1,
+    id: "BKLH000000001",
     name: 'Aishwarya R.',
     age: 26,
     height: "5'4\"",
@@ -17,7 +17,7 @@ const recommendedProfiles = [
     premium: true,
   },
   {
-    id: 3,
+    id: "BKLH000000003",
     name: 'Meera Joseph',
     age: 25,
     height: "5'5\"",
@@ -30,7 +30,7 @@ const recommendedProfiles = [
     premium: true,
   },
   {
-    id: 7,
+    id: "BKLH000000007",
     name: 'Kavya Madhavan',
     age: 25,
     height: "5'3\"",
@@ -43,7 +43,7 @@ const recommendedProfiles = [
     premium: false,
   },
   {
-    id: 5,
+    id: "BKLH000000005",
     name: 'Neha Sharma',
     age: 27,
     height: "5'6\"",

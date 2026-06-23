@@ -3,7 +3,7 @@ import ProfileCard from '../ProfileCard';
 
 const initialShortlists = [
   {
-    id: 1,
+    id: "BKLH000000001",
     name: 'Aishwarya R.',
     age: 26,
     height: "5'4\"",
@@ -16,7 +16,7 @@ const initialShortlists = [
     premium: true,
   },
   {
-    id: 7,
+    id: "BKLH000000007",
     name: 'Kavya Madhavan',
     age: 25,
     height: "5'3\"",

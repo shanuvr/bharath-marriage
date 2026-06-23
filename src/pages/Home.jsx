@@ -1,14 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ProfileCard from '../../components/ProfileCard';
 import FAQSection from '../../components/Faq';
 import { Helmet } from 'react-helmet-async';
 import HeroRegistrationForm from '../../components/HeroRegistrationForm';
+import HeroSearch from '../../components/HeroSearch';
 
 
 const highlightedProfiles = [
   {
-    id: 1,
+    id: "BKLH000000001",
     name: "Aishwarya R.",
     age: 26,
     height: "5'4\"",
@@ -23,7 +24,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 2,
+    id: "BKLH000000002",
     name: "Adithya K.",
     age: 28,
     height: "5'11\"",
@@ -38,7 +39,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 3,
+    id: "BKLH000000003",
     name: "Meera Joseph",
     age: 25,
     height: "5'5\"",
@@ -53,7 +54,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 4,
+    id: "BKLH000000004",
     name: "Sandeep Singh",
     age: 29,
     height: "6'0\"",
@@ -68,7 +69,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 5,
+    id: "BKLH000000005",
     name: "Neha Sharma",
     age: 27,
     height: "5'6\"",
@@ -83,7 +84,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 6,
+    id: "BKLH000000006",
     name: "Arjun Reddy",
     age: 30,
     height: "6'1\"",
@@ -98,7 +99,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 7,
+    id: "BKLH000000007",
     name: "Kavya Madhavan",
     age: 25,
     height: "5'3\"",
@@ -113,7 +114,7 @@ const highlightedProfiles = [
     lastUpdated: '2d ago',
   },
   {
-    id: 8,
+    id: "BKLH000000008",
     name: "Vikram Malhotra",
     age: 29,
     height: "5'10\"",
@@ -131,7 +132,6 @@ const highlightedProfiles = [
 
 export default function Home() {
 
-  const navigate = useNavigate();
   const scrollContainerRef = useRef(null);
   const [storiesVisible, setStoriesVisible] = useState(false);
   const storiesRef = useRef(null);
@@ -141,6 +141,8 @@ export default function Home() {
   const howItWorksRef = useRef(null);
   const [profilesVisible, setProfilesVisible] = useState(false);
   const profilesRef = useRef(null);
+  const [registerVisible, setRegisterVisible] = useState(false);
+  const registerRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -202,6 +204,21 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRegisterVisible(true);
+        }
+      },
+      { threshold: 0.05 }
+    );
+    if (registerRef.current) {
+      observer.observe(registerRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
       const { scrollLeft, clientWidth } = scrollContainerRef.current;
@@ -211,21 +228,6 @@ export default function Home() {
         behavior: 'smooth'
       });
     }
-  };
-
-  const [lookingFor, setLookingFor] = useState('Bride');
-  const [community, setCommunity] = useState('');
-  const [location, setLocation] = useState('');
-  const [isFormModalOpen, setIsFormModalOpen] = useState(false);
-
-
-  // Quick Search age states
-  const [ageMin, setAgeMin] = useState('18');
-  const [ageMax, setAgeMax] = useState('40');
-  const [ageRange, setAgeRange] = useState('Any');
-
-  const handleQuickSearch = () => {
-    navigate(`/search?gender=${lookingFor}&age=${ageRange}&religion=${community}&location=${location}`);
   };
   const heroVideos = [
     "/hero-video.mp4",
@@ -259,11 +261,11 @@ export default function Home() {
         />
       </Helmet>
       {/* Hero Section */}
-      <section className="relative pt-20 overflow-hidden min-h-[85vh] flex items-center">
+      <section className="relative pt-16 sm:pt-20 pb-10 sm:pb-16 overflow-hidden min-h-[90vh] flex items-center justify-center">
         {/* Hero Background Video */}
         <div className="absolute inset-0 z-0 bg-charcoal-text">
           {/* Dark Overlay for Text/Nav Contrast */}
-          <div className="absolute inset-0 bg-black/45 z-10"></div>
+          <div className="absolute inset-0 dark-glass-scrim z-10"></div>
           <video
             key={currentVideo}
             className="w-full h-full object-cover object-top"
@@ -280,168 +282,93 @@ export default function Home() {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid md:grid-cols-[1.15fr_0.85fr] gap-8 md:gap-12 items-center py-8 md:py-12">
-          {/* Left Column: Heading + CTA Button */}
-          <div className="animate-elegant-fade-up text-left">
-            <h1 className="font-display-lg text-3xl sm:text-4xl md:text-5xl text-white mb-4 md:mb-6 leading-tight text-center md:text-left">
-              Two Souls, <br />
+        <div className="relative z-20 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full flex flex-col items-center justify-center text-center py-4 sm:py-12 md:py-16">
+          <div className="animate-elegant-fade-up w-full max-w-5xl mx-auto flex flex-col items-center">
+            <h1 className="font-display-lg text-2xl sm:text-4xl md:text-5xl text-white mb-1.5 sm:mb-3 leading-tight tracking-wide text-center text-shadow-premium">
+              Two Souls, <br className="sm:hidden" />
               <span className="text-heritage-gold">One Beautiful Journey</span>
             </h1>
+            <p className="text-white/90 font-body-lg text-[10px] sm:text-sm md:text-base mb-3 sm:mb-8 text-center max-w-xl mx-auto font-medium text-shadow-premium">
+              Discover verified profiles and genuine Malayali families
+            </p>
 
-            {/* CTA Button — mobile: centered/wide, desktop: left-aligned/auto */}
-            <div className="flex justify-center md:justify-start mt-4 md:mt-6">
-              <button
-                onClick={() => setIsFormModalOpen(true)}
-                className="group btn-premium-cta w-full max-w-[280px] sm:max-w-[320px] md:w-auto md:max-w-none py-3.5 px-8 md:py-4 md:px-10 text-xs md:text-sm"
-              >
-                <svg 
-                  className="w-4 h-4 md:w-4.5 md:h-4.5 transition-transform duration-300 group-hover:scale-120 group-hover:rotate-6" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor" 
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-                </svg>
-                Register Now
-              </button>
+            {/* Premium Glassmorphism Search Bar Component */}
+            <HeroSearch />
+
+            {/* Trust Badges */}
+            <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1.5 mt-4 sm:mt-6 animate-slide-up-fade" style={{ animationDelay: '0.15s' }}>
+              <span className="flex items-center gap-1 text-white/90 text-[10px] sm:text-xs font-semibold select-none drop-shadow-sm">
+                <span className="material-symbols-outlined text-heritage-gold text-[13px] sm:text-[15px]">verified_user</span>
+                5 Lakh+ Profiles
+              </span>
+              <span className="h-2.5 w-[1px] bg-white/20 hidden sm:inline"></span>
+              <span className="flex items-center gap-1 text-white/90 text-[10px] sm:text-xs font-semibold select-none drop-shadow-sm">
+                <span className="material-symbols-outlined text-heritage-gold text-[13px] sm:text-[15px]">gpp_good</span>
+                100% Verified
+              </span>
+              <span className="h-2.5 w-[1px] bg-white/20 hidden sm:inline"></span>
+              <span className="flex items-center gap-1 text-white/90 text-[10px] sm:text-xs font-semibold select-none drop-shadow-sm">
+                <span className="material-symbols-outlined text-heritage-gold text-[13px] sm:text-[15px]">favorite</span>
+                Free Registration
+              </span>
             </div>
           </div>
-
-          {/* Right Column: Registration Form — desktop only, space always reserved */}
-          <div className={`hidden md:block transition-all duration-500 ${isFormModalOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-            <HeroRegistrationForm />
-          </div>
-
         </div>
       </section>
 
 
-      {/* Mobile Registration Form Modal */}
-      {isFormModalOpen && (
-        <>
-          {/* Backdrop */}
-          <div
-            className="fixed inset-0 bg-black/60 z-[60] md:hidden animate-fade-in"
-            onClick={() => setIsFormModalOpen(false)}
-          />
-          {/* Bottom Sheet */}
-          <div className="fixed bottom-0 left-0 right-0 z-[70] md:hidden animate-slide-in-up max-h-[92vh] overflow-y-auto rounded-t-2xl shadow-2xl">
-            <div className="relative">
-              {/* Drag handle */}
-              <div className="flex justify-center pt-3 pb-1 bg-paper-white rounded-t-2xl">
-                <div className="w-10 h-1 rounded-full bg-slate-300" />
-              </div>
-              {/* Close button */}
-              <button
-                onClick={() => setIsFormModalOpen(false)}
-                className="absolute top-2 right-3 z-10 p-1.5 rounded-full bg-slate-100 hover:bg-slate-200 text-charcoal-text transition-colors cursor-pointer"
-              >
-                <span className="material-symbols-outlined text-[18px] leading-none">close</span>
-              </button>
-              <HeroRegistrationForm onClose={() => setIsFormModalOpen(false)} />
+      {/* Highlighted Profiles Section */}
+      <section ref={profilesRef} className="bg-white py-16 relative z-10 border-t border-slate-100">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
+
+          <div className={`mb-12 transition-all duration-300 ${profilesVisible ? 'animate-elegant-fade-up' : 'opacity-0'
+            }`}>
+            <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mb-4 uppercase tracking-wide">
+              Highlighted <span className="text-deep-maroon">Profiles</span>
+            </h2>
+            <p className="font-body-lg text-sm text-soft-gray max-w-xl mx-auto">
+              Explore our most active, verified premium members who are looking for serious commitments.
+            </p>
+          </div>
+
+          <div className="relative group/scroll w-full">
+            {/* Left navigation arrow */}
+            <button
+              onClick={() => scroll('left')}
+              className="absolute -left-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
+              aria-label="Scroll Left"
+            >
+              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_left</span>
+            </button>
+
+            <div
+              ref={scrollContainerRef}
+              className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden transition-all duration-300 ${profilesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
+                }`}
+            >
+              {highlightedProfiles.map((profile, index) => (
+                <div
+                  className="w-[210px] sm:w-[270px] shrink-0 snap-start"
+                  key={profile.id}
+                  style={profilesVisible ? { animationDelay: `${index * 80}ms` } : {}}
+                >
+                  <ProfileCard profile={profile} />
+                </div>
+              ))}
             </div>
-          </div>
-        </>
-      )}
 
-
-      <div className="relative z-30 -mt-6 sm:-mt-8 md:-mt-10 mx-auto w-full max-w-[290px] sm:max-w-[540px] md:max-w-[720px] lg:max-w-[980px] bg-white py-2.5 px-3 sm:py-4 sm:px-5 md:px-6 rounded-xl border border-slate-200/80 shadow-xl">
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2 sm:gap-3.5 items-center w-full">
-
-          {/* Looking For Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
-            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">I'm looking for a</label>
-            <select
-              value={lookingFor}
-              onChange={(e) => setLookingFor(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
+            {/* Right navigation arrow */}
+            <button
+              onClick={() => scroll('right')}
+              className="absolute -right-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
+              aria-label="Scroll Right"
             >
-              <option value="Bride">Female</option>
-              <option value="Groom">Male</option>
-            </select>
-            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
-              keyboard_arrow_down
-            </span>
+              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_right</span>
+            </button>
           </div>
-
-          {/* Age Range Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
-            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Age Range</label>
-            <select
-              value={ageRange}
-              onChange={(e) => {
-                const val = e.target.value;
-                setAgeRange(val);
-                const [min, max] = val.split('-');
-                setAgeMin(min);
-                setAgeMax(max);
-              }}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
-            >
-              <option value="18-70">Any</option>
-              <option value="18-40">18 - 40</option>
-              <option value="18-25">18 - 25</option>
-              <option value="26-30">26 - 30</option>
-              <option value="31-35">31 - 35</option>
-              <option value="36-40">36 - 40</option>
-            </select>
-            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
-              keyboard_arrow_down
-            </span>
-          </div>
-
-          {/* Location Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
-            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Location</label>
-            <select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
-            >
-              <option value="">Any Location</option>
-              <option value="Bangalore">Bangalore</option>
-              <option value="Chennai">Chennai</option>
-              <option value="Kochi">Kochi</option>
-              <option value="Mumbai">Mumbai</option>
-              <option value="Delhi">Delhi</option>
-              <option value="Hyderabad">Hyderabad</option>
-              <option value="USA">USA</option>
-            </select>
-            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
-              keyboard_arrow_down
-            </span>
-          </div>
-
-          {/* Religion Dropdown */}
-          <div className="relative border border-slate-300 rounded-lg py-1 px-2 sm:py-1.5 sm:px-3 bg-white text-left w-full">
-            <label className="block text-[8px] sm:text-[10px] text-slate-400 font-medium leading-none mb-0.5">Religion</label>
-            <select
-              value={community}
-              onChange={(e) => setCommunity(e.target.value)}
-              className="w-full border-none bg-transparent font-semibold text-charcoal-text text-[10px] sm:text-xs md:text-sm p-0 focus:ring-0 focus:outline-none cursor-pointer appearance-none pr-5 sm:pr-6"
-            >
-              <option value="">Select...</option>
-              <option value="Hindu">Hindu</option>
-              <option value="Christian">Christian</option>
-              <option value="Muslim">Muslim</option>
-              <option value="Sikh">Sikh</option>
-            </select>
-            <span className="absolute right-2 sm:right-3 bottom-1.5 sm:bottom-2.5 material-symbols-outlined text-[14px] sm:text-[16px] text-slate-400 pointer-events-none">
-              keyboard_arrow_down
-            </span>
-          </div>
-
-          {/* Search Button */}
-          <button
-            onClick={handleQuickSearch}
-            className="col-span-2 lg:col-span-1 flex items-center justify-center gap-1.5 bg-deep-maroon text-white font-semibold rounded-lg hover:bg-primary transition-all active:scale-95 cursor-pointer text-[11px] sm:text-sm shrink-0 w-full h-[36px] sm:h-[46px] shadow-md hover:shadow-lg"
-          >
-            <span className="material-symbols-outlined text-[15px] sm:text-[18px]">search</span>
-            Search
-          </button>
 
         </div>
-      </div>
+      </section>
 
       {/* Success Stories Section */}
       <section className="bg-gradient-to-br from-white via-rose-50/25 to-amber-50/15 py-20 relative z-10 border-t border-slate-100/60">
@@ -540,59 +467,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Highlighted Profiles Section */}
-      <section ref={profilesRef} className="bg-white py-12 relative z-10 border-t border-slate-100">
-        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop text-center">
-
-          <div className={`mb-12 transition-all duration-300 ${profilesVisible ? 'animate-elegant-fade-up' : 'opacity-0'
-            }`}>
-            <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-2 font-semibold">
-              PREMIUM MATCHES
-            </span>
-            <h2 className="font-display-lg text-3xl md:text-4xl text-charcoal-text mb-4 uppercase tracking-wide">
-              Highlighted <span className="text-deep-maroon">Profiles</span>
-            </h2>
-            <p className="font-body-lg text-sm text-soft-gray max-w-xl mx-auto">
-              Explore our most active, verified premium members who are looking for serious commitments.
-            </p>
-          </div>
-
-          <div className="relative group/scroll w-full">
-            {/* Left navigation arrow */}
-            <button
-              onClick={() => scroll('left')}
-              className="absolute -left-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
-              aria-label="Scroll Left"
-            >
-              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_left</span>
-            </button>
-
-            <div
-              ref={scrollContainerRef}
-              className={`flex gap-4 sm:gap-6 overflow-x-auto pb-6 pt-2 snap-x snap-mandatory text-left scroll-smooth w-full scrollbar-hidden transition-all duration-300 ${profilesVisible ? 'animate-slide-from-bottom' : 'opacity-0'
-                }`}
-            >
-              {highlightedProfiles.map((profile, index) => (
-                <div
-                  className="w-[210px] sm:w-[270px] shrink-0 snap-start"
-                  key={profile.id}
-                  style={profilesVisible ? { animationDelay: `${index * 80}ms` } : {}}
-                >
-                  <ProfileCard profile={profile} />
+      {/* Below-Fold Registration Section */}
+      <section ref={registerRef} className="bg-slate-50 py-16 sm:py-20 relative z-10 border-t border-b border-slate-100">
+        <div className="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            {/* Left side: Copy and Value Propositions */}
+            <div className={`lg:col-span-6 space-y-6 text-left transition-all duration-700 ${registerVisible ? 'animate-slide-from-left' : 'opacity-0'}`}>
+              <span className="font-label-caps text-xs text-heritage-gold tracking-widest block mb-1 font-semibold uppercase">
+                START YOUR JOURNEY
+              </span>
+              <h2 className="font-display-lg text-3xl sm:text-4xl text-charcoal-text uppercase tracking-wide leading-tight">
+                Begin Your <br />
+                <span className="text-deep-maroon">Love Story Today</span>
+              </h2>
+              <p className="font-body-lg text-sm sm:text-base text-soft-gray leading-relaxed max-w-xl">
+                Creating your profile is completely free, quick, and secure. Join thousands of Malayali families who trust Bharath Marriage for finding compatible, verified lifepartners.
+              </p>
+              
+              {/* Trust Indicators / Checklist */}
+              <div className="space-y-3.5 pt-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <span className="material-symbols-outlined text-[18px] leading-none">check</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-charcoal-text">Quick 2-minute registration and profile creation</p>
                 </div>
-              ))}
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <span className="material-symbols-outlined text-[18px] leading-none">check</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-charcoal-text">Set your strict partner preferences and matching filters</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                    <span className="material-symbols-outlined text-[18px] leading-none">check</span>
+                  </div>
+                  <p className="text-xs sm:text-sm font-semibold text-charcoal-text">100% control over privacy of photos and contact info</p>
+                </div>
+              </div>
             </div>
 
-            {/* Right navigation arrow */}
-            <button
-              onClick={() => scroll('right')}
-              className="absolute -right-4 top-1/2 -translate-y-1/2 z-30 bg-white hover:bg-deep-maroon text-charcoal-text hover:text-white rounded-full p-2.5 shadow-lg border border-slate-200/80 transition-all duration-300 active:scale-90 cursor-pointer flex items-center justify-center opacity-90 hover:opacity-100"
-              aria-label="Scroll Right"
-            >
-              <span className="material-symbols-outlined text-[20px] font-semibold">chevron_right</span>
-            </button>
-          </div>
+            <div id="register" className={`scroll-mt-24 lg:col-span-6 w-full max-w-lg mx-auto transition-all duration-700 ${registerVisible ? 'animate-slide-from-right' : 'opacity-0'}`}>
+              <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-slate-200/80">
+                <h3 className="font-display-lg text-xl sm:text-2xl text-deep-maroon text-center mb-6 uppercase tracking-wider">
+                  Register For Free
+                </h3>
+                <HeroRegistrationForm />
+              </div>
+            </div>
 
+          </div>
         </div>
       </section>
 

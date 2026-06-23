@@ -188,6 +188,14 @@ export default function InboxView() {
                     <p className="text-[9px] text-soft-gray truncate">{activeChat.age} yrs · {activeChat.profession} · {activeChat.location}</p>
                   </div>
 
+                  <button
+                    onClick={() => alert(`Starting video call with ${activeChat.name}...`)}
+                    className="p-1.5 rounded-full text-slate-500 hover:bg-slate-100 hover:text-deep-maroon transition-all cursor-pointer flex items-center justify-center shrink-0 mr-1"
+                    title="Start Video Call"
+                  >
+                    <span className="material-symbols-outlined text-[18px]">videocam</span>
+                  </button>
+
                   <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-full shrink-0 ${
                     activeChat.online ? 'bg-emerald-50 text-emerald-600' : 'bg-slate-100 text-slate-400'
                   }`}>
