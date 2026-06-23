@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 const HOUSE_GRID = [
   [0, 0, 12], [0, 1, 1],  [0, 2, 2],  [0, 3, 3],
@@ -73,7 +73,7 @@ function JathakamChart({ title, data, symbol }) {
   );
 }
 
-export default function HoroscopeCharts({
+const HoroscopeCharts = forwardRef(function HoroscopeCharts({
   grahanila = {
     12: ['ചൊ'], 11: ['ശ'], 10: ['കെ'], 8: ['രാ'],
     7: ['ശു'], 5: ['ഗു'], 4: ['ബു'], 3: ['സൂ'], 1: ['ല', 'ച'],
@@ -82,9 +82,9 @@ export default function HoroscopeCharts({
     11: ['ശ', 'ചൊ'], 10: ['കെ'], 9: ['രാ'], 7: ['ശു'],
     6: ['ഗു'], 4: ['ബു'], 3: ['സൂ'], 2: ['ച'], 1: ['ല'],
   }
-}) {
+}, ref) {
   return (
-    <div className="mt-6 flex flex-col gap-6">
+    <div ref={ref} className="mt-6 flex flex-col gap-6">
       <div className="flex flex-col sm:flex-row gap-8 justify-center items-start">
 
         <div className="flex flex-col items-center gap-1">
@@ -104,4 +104,6 @@ export default function HoroscopeCharts({
       </div>
     </div>
   );
-}
+});
+
+export default HoroscopeCharts;

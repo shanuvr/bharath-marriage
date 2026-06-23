@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import HoroscopeCharts from '../../../components/HoroscopeCharts';
+import { downloadHoroscope } from '../../utils/downloadHoroscope';
 
 
 const profiles = [
@@ -13,6 +14,7 @@ const profiles = [
     religion: 'Hindu - Nair',
     education: 'M.Tech',
     profession: 'Software Engineer',
+    employedIn: 'India',
     location: 'Bangalore',
     state: 'Karnataka, India',
     income: 'Rs. 16 - 20 LPA',
@@ -27,6 +29,7 @@ const profiles = [
     religion: 'Hindu - Iyer',
     education: 'MBA',
     profession: 'Product Manager',
+    employedIn: 'India',
     location: 'Chennai',
     state: 'Tamil Nadu, India',
     income: 'Rs. 20 - 28 LPA',
@@ -41,6 +44,7 @@ const profiles = [
     religion: 'Christian - Syrian Catholic',
     education: 'MD - Pediatrics',
     profession: 'Doctor',
+    employedIn: 'India',
     location: 'Kochi',
     state: 'Kerala, India',
     income: 'Rs. 18 - 24 LPA',
@@ -55,6 +59,7 @@ const profiles = [
     religion: 'Sikh - Jat',
     education: 'B.Tech',
     profession: 'Merchant Navy Officer',
+    employedIn: 'India',
     location: 'Delhi',
     state: 'NCR, India',
     income: 'Rs. 24 - 32 LPA',
@@ -69,6 +74,7 @@ const profiles = [
     religion: 'Hindu - Brahmin',
     education: 'M.S. Data Science',
     profession: 'Data Scientist',
+    employedIn: 'India',
     location: 'Hyderabad',
     state: 'Telangana, India',
     income: 'Rs. 18 - 24 LPA',
@@ -83,6 +89,7 @@ const profiles = [
     religion: 'Hindu - Reddy',
     education: 'B.Tech + MS',
     profession: 'Hardware Engineer',
+    employedIn: 'USA',
     location: 'Austin',
     state: 'Texas, USA',
     income: 'USD 140k - 180k',
@@ -97,6 +104,7 @@ const profiles = [
     religion: 'Hindu - Nair',
     education: 'BFA - Design',
     profession: 'UI/UX Designer',
+    employedIn: 'India',
     location: 'Ernakulam',
     state: 'Kerala, India',
     income: 'Rs. 10 - 14 LPA',
@@ -111,6 +119,7 @@ const profiles = [
     religion: 'Hindu - Punjabi',
     education: 'Chartered Accountant',
     profession: 'Finance Manager',
+    employedIn: 'India',
     location: 'Delhi',
     state: 'NCR, India',
     income: 'Rs. 22 - 30 LPA',
@@ -189,6 +198,7 @@ export default function ProfileDetails() {
   const professionalDetails = [
     ['Education', profile.education],
     ['Occupation', profile.profession],
+    ['Employed In', profile.employedIn || 'India'],
   ];
 
   const locationDetails = [
@@ -500,10 +510,20 @@ export default function ProfileDetails() {
 
               {isHindu && (
                 <div className="py-4 border-t border-slate-100/60 mt-2">
-                  <h2 className="font-display-lg text-[13px] tracking-wider text-deep-maroon font-bold uppercase border-b border-heritage-gold/20 pb-1.5 mb-3 flex items-center gap-2">
-                    <span className="material-symbols-outlined text-[18px] text-deep-maroon">cake</span>
-                    Horoscope Details
-                  </h2>
+                  <div className="flex items-center justify-between border-b border-heritage-gold/20 pb-1.5 mb-3">
+                    <h2 className="font-display-lg text-[13px] tracking-wider text-deep-maroon font-bold uppercase flex items-center gap-2">
+                      <span className="material-symbols-outlined text-[18px] text-deep-maroon">cake</span>
+                      Horoscope Details
+                    </h2>
+                    <button
+                      onClick={() => downloadHoroscope(profile)}
+                      disabled={downloading}
+                      className="flex items-center gap-1.5 bg-deep-maroon hover:bg-deep-maroon/90 disabled:opacity-60 disabled:cursor-not-allowed text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg shadow-sm transition-all active:scale-95 cursor-pointer"
+                    >
+                      <span className="material-symbols-outlined text-[14px]">download</span>
+                      Download
+                    </button>
+                  </div>
 
                   <div className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
                     {horoscopeDetails.map(([label, value]) => (

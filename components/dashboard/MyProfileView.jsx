@@ -6,7 +6,7 @@ export default function MyProfileView() {
     name: 'aishwaraya',
     gender: 'Female',
     age: '25',
-    maritalStatus: 'Unmarried',
+    maritalStatus: 'Never Married',
     height: '5ft 6in',
     profileCreatedFor: 'Myself',
     education: 'B.Tech + MS',
@@ -152,10 +152,8 @@ export default function MyProfileView() {
                   onChange={handleChange} disabled={!isEditing}
                   className="w-full border border-slate-200 rounded-lg py-1.5 px-2.5 text-[11px] md:text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 >
-                  <option value="Unmarried">Unmarried</option>
-                  <option value="Divorced">Divorced</option>
-                  <option value="Widowed">Widowed</option>
-                  <option value="Separated">Separated</option>
+                  <option value="Never Married">Never Married</option>
+                  <option value="Second Marriage">Second Marriage</option>
                 </select>
               </div>
 

@@ -31,9 +31,7 @@ const districtOptions = [
 
 const maritalStatusOptions = [
   { value: 'Never Married', label: 'Never Married' },
-  { value: 'Divorced', label: 'Divorced' },
-  { value: 'Widowed', label: 'Widowed' },
-  { value: '', label: 'Any Status' }
+  { value: 'Second Marriage', label: 'Second Marriage' }
 ];
 
 const ageRangeOptions = [
@@ -44,16 +42,6 @@ const ageRangeOptions = [
   { value: '36-40', label: '36 - 40' }
 ];
 
-const professionOptions = [
-  { value: '', label: 'Any Profession' },
-  { value: 'Advocate', label: 'Advocate' },
-  { value: 'Doctor', label: 'Doctor' },
-  { value: 'Engineer', label: 'Engineer' },
-  { value: 'Teacher', label: 'Teacher' },
-  { value: 'Govt Employee', label: 'Govt Sector' },
-  { value: 'Nurse', label: 'Nurse' },
-  { value: 'Others', label: 'Others' }
-];
 
 export default function HeroSearch() {
   const navigate = useNavigate();
@@ -67,7 +55,6 @@ export default function HeroSearch() {
   // Advanced filters state
   const [maritalStatus, setMaritalStatus] = useState('Never Married');
   const [ageRange, setAgeRange] = useState('');
-  const [profession, setProfession] = useState('');
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -83,7 +70,7 @@ export default function HeroSearch() {
   }, []);
 
   const handleQuickSearch = () => {
-    navigate(`/search?gender=${lookingFor}&religion=${religion}&caste=${caste}&location=${location}&maritalStatus=${maritalStatus}&age=${ageRange}&profession=${profession}`);
+    navigate(`/search?gender=${lookingFor}&religion=${religion}&caste=${caste}&location=${location}&maritalStatus=${maritalStatus}&age=${ageRange}`);
   };
 
   return (
@@ -258,7 +245,7 @@ export default function HeroSearch() {
 
       {/* Advanced Filters Section */}
       {showAdvanced && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3.5 mt-2.5 pt-2.5 border-t border-white/20 animate-slide-up-fade">
+        <div className="grid grid-cols-2 gap-2 md:gap-3.5 mt-2.5 pt-2.5 border-t border-white/20 animate-slide-up-fade">
           
           {/* Marital Status Dropdown */}
           <div className="relative w-full">
@@ -330,45 +317,6 @@ export default function HeroSearch() {
                   >
                     <span>{option.label}</span>
                     {ageRange === option.value && (
-                      <span className="material-symbols-outlined text-sm text-deep-maroon">check</span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Profession Dropdown */}
-          <div className="relative w-full col-span-2 sm:col-span-1">
-            <button
-              type="button"
-              onClick={() => setActiveDropdown(activeDropdown === 'profession' ? null : 'profession')}
-              className="relative border border-white/30 rounded-lg py-1 px-2 sm:py-1.5 sm:px-2.5 bg-transparent text-left w-full hover:bg-white/10 transition-all cursor-pointer flex flex-col justify-center min-h-[34px] sm:min-h-[40px]"
-            >
-              <span className="block text-[6.5px] sm:text-[9px] text-white/70 font-semibold leading-none mb-0.5 select-none uppercase tracking-wider">Profession</span>
-              <span className="block font-bold text-white text-[10px] sm:text-xs leading-none">
-                {professionOptions.find(o => o.value === profession)?.label || 'Any Profession'}
-              </span>
-              <span className={`absolute right-1.5 sm:right-2.5 top-1/2 -translate-y-1/2 material-symbols-outlined text-[11px] sm:text-[15px] text-white/80 transition-transform duration-200 pointer-events-none ${activeDropdown === 'profession' ? 'rotate-180' : ''}`}>
-                keyboard_arrow_down
-              </span>
-            </button>
-            {activeDropdown === 'profession' && (
-              <div className="absolute left-0 right-0 mt-1 w-full bg-white rounded-lg shadow-xl border border-slate-100 py-1 z-55 animate-fade-in text-left max-h-60 overflow-y-auto">
-                {professionOptions.map(option => (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      setProfession(option.value);
-                      setActiveDropdown(null);
-                    }}
-                    className={`w-full text-left px-3 py-2 text-[10px] sm:text-xs font-semibold hover:bg-slate-50 transition-colors flex justify-between items-center ${
-                      profession === option.value ? 'text-deep-maroon bg-deep-maroon/5 font-bold' : 'text-charcoal-text font-medium'
-                    }`}
-                  >
-                    <span>{option.label}</span>
-                    {profession === option.value && (
                       <span className="material-symbols-outlined text-sm text-deep-maroon">check</span>
                     )}
                   </button>

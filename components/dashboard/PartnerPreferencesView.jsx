@@ -125,8 +125,7 @@ export default function PartnerPreferencesView() {
                   className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-slate-50/50 text-charcoal-text disabled:opacity-60 disabled:bg-slate-100/50 disabled:cursor-not-allowed disabled:border-slate-100 focus:outline-none focus:ring-1 focus:ring-deep-maroon"
                 >
                   <option value="Never Married">Never Married</option>
-                  <option value="Divorced / Widowed">Divorced / Widowed</option>
-                  <option value="Any Status">Any Status</option>
+                  <option value="Second Marriage">Second Marriage</option>
                 </select>
               </div>
 

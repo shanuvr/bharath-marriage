@@ -459,9 +459,7 @@ export default function Search() {
                       className="w-full border border-slate-200 rounded-lg py-2 px-3 text-xs bg-white"
                     >
                       <option value="Never Married">Never Married</option>
-                      <option value="Divorced">Divorced</option>
-                      <option value="Widowed">Widowed</option>
-                      <option value="">Any Status</option>
+                      <option value="Second Marriage">Second Marriage</option>
                     </select>
                   </div>
 
